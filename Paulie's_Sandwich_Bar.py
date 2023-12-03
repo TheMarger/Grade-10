@@ -419,7 +419,6 @@ cash = 0
 multiplier = 'LOCKED'
 Shop_Rating = "LOCKED"
 cash_color = colors.GREEN + colors.BOLD + "Cash:" + colors.END 
-ChangeAVGDisplay = False
-print("POO")   
-#start = GameMenu()
+ChangeAVGDisplay = False  
+start = GameMenu()
 
