@@ -46,27 +46,67 @@ def DoUpgrades():
     global Shop_Rating
     global playing
     global multiplier
+    global multiplier_cost
+    global Shop_Rating_Cost
+    global cash 
+    global seperater
+         
     while playing == True:
         os.system('cls')
+        
+        if multiplier != 'LOCKED':
+            if multiplier == 20:
+                multiplier_cost = "MAX"
+            else:
+                #if cash >= multiplier_cost:
+                multiplier_cost = int(multiplier ** 2.5)
+        else:
+            pass
+        if Shop_Rating != 'LOCKED':
+            if len(Shop_Rating.split()) == 5:
+                Shop_Rating_Cost = 'MAX'
+            else:
+                Shop_Rating_Cost = len(Shop_Rating.split()) * 25
+        else:
+            pass
+        
         print(f"""\n
-Upgrade cash multiplier. (Current: {multiplier}), {colors.BOLD + 'enter [M]' + colors.END}
-Upgrade Shop Rating. (Current: {Shop_Rating}), {colors.BOLD + 'enter [S]' + colors.END}    
+Upgrade cash multiplier. (Current: {multiplier}), {colors.BOLD + 'enter [M]' + colors.END}, cost: [{multiplier_cost}]
+{seperater}
+Upgrade Shop Rating. (Current: {Shop_Rating}), {colors.BOLD + 'enter [S]' + colors.END}, cost: [{Shop_Rating_Cost}] \n  
 To exit, {colors.BOLD + 'enter [X]' + colors.END}
           """)
         val = input("> ")
         if val == 'M' or val == 'm':
-            if multiplier == 'LOCKED':
-                multiplier = 1
+            if multiplier == 20:
+                print("Max multiplier reached")
+                time.sleep(1)
             else:
-                multiplier += 1
+                if multiplier != 'LOCKED':
+                    if cash >= multiplier_cost:
+                        cash -= multiplier_cost
+                        multiplier += 1
+                    else:
+                        print("Not enough cash!")
+                        time.sleep(1)
+                else:
+                    print("Multiplier Locked!")
+                    time.sleep(1)
         elif val == 'S' or val == 's':
-            if Shop_Rating == 'LOCKED':
-                Shop_Rating = '*'
-            elif Shop_Rating == '* * * * *':
+            if Shop_Rating == '* * * * *':
                 print("Max Shop Rating reached")
                 time.sleep(1)
             else:
-                Shop_Rating += ' *'
+                if Shop_Rating != 'LOCKED':
+                    if cash >= Shop_Rating_Cost:
+                        cash -= Shop_Rating_Cost
+                        Shop_Rating += ' *'
+                    else:
+                        print("Not enough cash!")
+                        time.sleep(1)
+                else:
+                    print("Shop Rating Locked!")
+                    time.sleep(1)
         elif val == 'X' or val == 'x':
             GameMenu()
         else:
@@ -79,16 +119,24 @@ def DoRewards():
 def DoInformation():
     global playing
     global colors
+    global seperater
     while playing:
         os.system('cls')
         print(f"""\nChoose Inquiry:\n
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} enter [O]
+{seperater}
 {colors.BOLD + colors.UNDERLINE + 'Upgrades:' + colors.END} enter [U]
-{colors.BOLD + colors.UNDERLINE + 'Rewards:' + colors.END} enter [R]  
+{seperater}
+{colors.BOLD + colors.UNDERLINE + 'Rewards:' + colors.END} enter [R]
+{seperater}  
 {colors.BOLD + colors.UNDERLINE + 'Settings' + colors.END} enter [S]
+{seperater}
 {colors.BOLD + colors.UNDERLINE + 'Information' + colors.END} enter [I]
+{seperater}
 {colors.BOLD + colors.UNDERLINE + 'Cash' + colors.END} enter [C]
+{seperater}
 {colors.BOLD + colors.UNDERLINE + 'Multipliers' + colors.END} enter [M]
+{seperater}
 {colors.BOLD + colors.UNDERLINE + 'Shop Rating' + colors.END} enter [H]
               """)
         inquiry = input("> ")
@@ -111,6 +159,143 @@ gamemodes may vary providing their own synopsis.
                 GameMenu()
             else:
                 pass
+        elif inquiry == 'U' or inquiry == 'u':
+            os.system('cls')
+            print(f"""
+{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
+The order station is where the customer selected order is broken into 
+sections, with each ingrediant having it's own random difficulty. This difficulty 
+will be averaged by default, and be displayed at the top of the screen (this can 
+be shanged in settings to show the numeral level of difficulty for more precision). 
+The game will wait for you to input that you're ready and begin to ask you a random
+math question based on the formula for each ingrediant difficulty. This gamemode is 
+where you can earn cash, shop rating, and levels for your restaurant. Specialized 
+gamemodes may vary providing their own synopsis.               
+              
+              """)
+            WhatNext = input("Go Back? (Y/N): ")
+            if WhatNext == "N" or WhatNext == "n":
+                GameMenu()
+            else:
+                pass
+        elif inquiry == 'R' or inquiry == 'r':
+            os.system('cls')
+            print(f"""
+{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
+The order station is where the customer selected order is broken into 
+sections, with each ingrediant having it's own random difficulty. This difficulty 
+will be averaged by default, and be displayed at the top of the screen (this can 
+be shanged in settings to show the numeral level of difficulty for more precision). 
+The game will wait for you to input that you're ready and begin to ask you a random
+math question based on the formula for each ingrediant difficulty. This gamemode is 
+where you can earn cash, shop rating, and levels for your restaurant. Specialized 
+gamemodes may vary providing their own synopsis.               
+              
+              """)
+            WhatNext = input("Go Back? (Y/N): ")
+            if WhatNext == "N" or WhatNext == "n":
+                GameMenu()
+            else:
+                pass
+        elif inquiry == 'S' or inquiry == 's':
+            os.system('cls')
+            print(f"""
+{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
+The order station is where the customer selected order is broken into 
+sections, with each ingrediant having it's own random difficulty. This difficulty 
+will be averaged by default, and be displayed at the top of the screen (this can 
+be shanged in settings to show the numeral level of difficulty for more precision). 
+The game will wait for you to input that you're ready and begin to ask you a random
+math question based on the formula for each ingrediant difficulty. This gamemode is 
+where you can earn cash, shop rating, and levels for your restaurant. Specialized 
+gamemodes may vary providing their own synopsis.               
+              
+              """)
+            WhatNext = input("Go Back? (Y/N): ")
+            if WhatNext == "N" or WhatNext == "n":
+                GameMenu()
+            else:
+                pass
+        elif inquiry == 'I' or inquiry == 'i':
+            os.system('cls')
+            print(f"""
+{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
+The order station is where the customer selected order is broken into 
+sections, with each ingrediant having it's own random difficulty. This difficulty 
+will be averaged by default, and be displayed at the top of the screen (this can 
+be shanged in settings to show the numeral level of difficulty for more precision). 
+The game will wait for you to input that you're ready and begin to ask you a random
+math question based on the formula for each ingrediant difficulty. This gamemode is 
+where you can earn cash, shop rating, and levels for your restaurant. Specialized 
+gamemodes may vary providing their own synopsis.               
+              
+              """)
+            WhatNext = input("Go Back? (Y/N): ")
+            if WhatNext == "N" or WhatNext == "n":
+                GameMenu()
+            else:
+                pass
+        elif inquiry == 'C' or inquiry == 'c':
+            os.system('cls')
+            print(f"""
+{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
+The order station is where the customer selected order is broken into 
+sections, with each ingrediant having it's own random difficulty. This difficulty 
+will be averaged by default, and be displayed at the top of the screen (this can 
+be shanged in settings to show the numeral level of difficulty for more precision). 
+The game will wait for you to input that you're ready and begin to ask you a random
+math question based on the formula for each ingrediant difficulty. This gamemode is 
+where you can earn cash, shop rating, and levels for your restaurant. Specialized 
+gamemodes may vary providing their own synopsis.               
+              
+              """)
+            WhatNext = input("Go Back? (Y/N): ")
+            if WhatNext == "N" or WhatNext == "n":
+                GameMenu()
+            else:
+                pass
+        elif inquiry == 'M' or inquiry == 'm':
+            os.system('cls')
+            print(f"""
+{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
+The order station is where the customer selected order is broken into 
+sections, with each ingrediant having it's own random difficulty. This difficulty 
+will be averaged by default, and be displayed at the top of the screen (this can 
+be shanged in settings to show the numeral level of difficulty for more precision). 
+The game will wait for you to input that you're ready and begin to ask you a random
+math question based on the formula for each ingrediant difficulty. This gamemode is 
+where you can earn cash, shop rating, and levels for your restaurant. Specialized 
+gamemodes may vary providing their own synopsis.               
+              
+              """)
+            WhatNext = input("Go Back? (Y/N): ")
+            if WhatNext == "N" or WhatNext == "n":
+                GameMenu()
+            else:
+                pass
+        elif inquiry == 'H' or inquiry == 'h':
+            os.system('cls')
+            print(f"""
+{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
+The order station is where the customer selected order is broken into 
+sections, with each ingrediant having it's own random difficulty. This difficulty 
+will be averaged by default, and be displayed at the top of the screen (this can 
+be shanged in settings to show the numeral level of difficulty for more precision). 
+The game will wait for you to input that you're ready and begin to ask you a random
+math question based on the formula for each ingrediant difficulty. This gamemode is 
+where you can earn cash, shop rating, and levels for your restaurant. Specialized 
+gamemodes may vary providing their own synopsis.               
+              
+              """)
+            WhatNext = input("Go Back? (Y/N): ")
+            if WhatNext == "N" or WhatNext == "n":
+                GameMenu()
+            else:
+                pass
+        else:
+            print("Please enter a defined value")
+            time.sleep(1)
+        
 
 def DoSettings():
     global OverallRating
@@ -374,7 +559,12 @@ Game Cash Multiplier = {colors.BOLD + colors.PURPLE + str(multiplier) + colors.E
 Total Cash Earned = {colors.BOLD + colors.GREEN + str(TotalSeshCash) + colors.END}
 
               """)
-        
+        if NumCorrect == 4:
+            if multiplier == 'LOCKED':
+                delete_multiple_lines(1)
+                print(f"""{seperater}
+{colors.BOLD + colors.UNDERLINE + colors.PURPLE + 'MULTIPLIER UNLOCKED!' + colors.END}\n""")
+                multiplier = 1
         
         while playing:
             PlAgn = input("Play again? (Y/N): ")
@@ -418,6 +608,8 @@ seperater = "----------------------------------------------------------------"
 cash = 0
 multiplier = 'LOCKED'
 Shop_Rating = "LOCKED"
+multiplier_cost = "LOCKED"
+Shop_Rating_Cost = "LOCKED"
 cash_color = colors.GREEN + colors.BOLD + "Cash:" + colors.END 
 ChangeAVGDisplay = False  
 start = GameMenu()
