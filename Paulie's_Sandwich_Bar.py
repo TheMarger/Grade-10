@@ -112,9 +112,123 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
         else:
             print("Enter a defined option")
             time.sleep(1)
-            
+
+
 def DoRewards():
-    pass
+    global cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors
+    page = 1
+    while playing == True:
+        current_time_sec = time.time() - start_time
+        current_time_min = int(current_time_sec / 60)
+        Cash_Earned = 0
+        Spin_Period = 15
+        Time_To_Wait_Min = 15 - current_time_min
+        Time_To_Wait_Countdown = colors.CYAN + colors.BOLD + f"{Time_To_Wait_Min}" + colors.END
+        if Time_To_Wait_Min < 0:
+            Time_To_Wait_Countdown = colors.BG_GREEN + colors.BOLD + "   READY!   " + colors.END 
+        
+         
+        os.system('cls')
+        print(colors.BOLD + colors.BG_RED + colors.ITALIC + " REWARDS " + colors.END)
+        class section:  
+            ONE = f"""
+    |-------------------------|              
+    |                         |
+    |        playtime:        |
+    |-------------------------|
+    |          {colors.UNDERLINE + colors.BOLD + colors.PURPLE + str(current_time_min) + ' min' + colors.END + '          |'}           
+    |-------------------------|
+    |                         |
+    |    Earn 1 cash every:   |  *Upgrade this by increasing your 
+    |        5 minutes!       |     store rating!
+    |                         |
+    |-------------------------|
+    |                         |
+    | Click [C] To Claim: {colors.BOLD + colors.GREEN + str(int(current_time_min / 5)) + colors.END + "   |"}
+    |                         |
+    |-------------------------|        
+            """
+            TWO = f"""
+    |-------------------------|              
+    |                         |
+    |     {colors.BG_MAGENTA + colors.BOLD + "  SPIN TO WIN:  " + colors.END}    |
+    |-------------------------|
+    |      every:  {colors.UNDERLINE + colors.BOLD + colors.PURPLE + str(Spin_Period) + ' min' + colors.END + '     |'}           
+    |-------------------------|
+    |                         |
+    |     Time To Wait:       |
+    |         {Time_To_Wait_Countdown} min          |
+    |                         |
+    |-------------------------|
+    |                         |
+    |    {colors.BOLD + colors.RED + str("ENTER [S] TO SPIN") + colors.END + "    |"}
+    |                         |
+    |-------------------------|        
+            """
+            SPIN = f"""
+    |
+    |
+    |        
+    |        
+    |        
+    |        
+    |
+    |
+    |
+    |
+    |-----------------------------------------------------------------|        
+            """
+        
+        if page == 1: 
+            print(f"""
+{section.ONE}
+
+Enter [>] for next page  
+Enter [<] for previous page
+Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(page) + colors.END}                                                                                                                       
+Enter [R] to refresh
+                """)
+        elif page == 2:
+            print(f"""
+{section.TWO}
+
+Enter [>] for next page
+Enter [<] for previous page
+Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(page) + colors.END}
+Enter [R] to refresh
+                """)
+        
+        val = input("> ")
+        if val == 'C' or val == 'c':
+            Cash_Earned = int(current_time_min / 5)
+            cash += Cash_Earned
+            print("Claimed!")
+            time.sleep(1)
+        elif val == '>':
+            if page == 2:
+                print("No next page")
+                time.sleep(1)
+            else:
+                page += 1
+        elif val == '<':
+            if page == 1:
+                print("No previous page")
+                time.sleep(1)
+            else:
+                page -= 1 
+        elif val == 'X' or val == 'x':
+            GameMenu()
+        elif val == 'R' or val == 'r':
+            pass
+        elif val == 'S' or val == 's':
+            if Time_To_Wait_Min < 0:
+                os.system('cls')
+                
+        else:
+            print("Please enter a denfined value")
+            time.sleep(1)
+            
+        
 
 def DoInformation():
     global playing
@@ -138,6 +252,8 @@ def DoInformation():
 {colors.BOLD + colors.UNDERLINE + 'Multipliers' + colors.END} enter [M]
 {seperater}
 {colors.BOLD + colors.UNDERLINE + 'Shop Rating' + colors.END} enter [H]
+
+Enter [X] to exit
               """)
         inquiry = input("> ")
         if inquiry == 'O' or inquiry == 'o':
@@ -292,6 +408,8 @@ gamemodes may vary providing their own synopsis.
                 GameMenu()
             else:
                 pass
+        elif inquiry == 'X' or inquiry == 'x':
+            GameMenu()
         else:
             print("Please enter a defined value")
             time.sleep(1)
@@ -597,6 +715,15 @@ class colors:
    BOLD = '\033[1m'
    UNDERLINE = '\033[4m'
    END = '\033[0m'
+   ITALIC = '\033[3m'
+   BG_BLACK = '\033[40m'
+   BG_RED = '\033[41m'
+   BG_GREEN = '\033[42m'
+   BG_YELLOW = '\033[43m'
+   BG_BLUE = '\033[44m'
+   BG_MAGENTA = '\033[45m'
+   BG_CYAN = '\033[46m'
+   BG_WHITE = '\033[47m'
 
 def delete_multiple_lines(n=1):
     """Delete the last line in the STDOUT."""
@@ -604,6 +731,7 @@ def delete_multiple_lines(n=1):
         sys.stdout.write("\x1b[1A")  # cursor up one line
         sys.stdout.write("\x1b[2K")  # delete the last line
 
+start_time = time.time()
 seperater = "----------------------------------------------------------------"
 cash = 0
 multiplier = 'LOCKED'
