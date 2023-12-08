@@ -1,4 +1,4 @@
-import os, time, random, sys
+import os, time, random, sys, re
 
 def GameMenu():
     global Shop_Rating
@@ -38,10 +38,39 @@ def GameMenu():
             DoUpgrades()
         elif val == 'R' or val == 'r':
             DoRewards()
+        elif val == '$menu$':
+            DoDevMenu()
         else:
             print("Please enter a defined option")
             time.sleep(1)
-            
+
+
+def DoDevMenu():
+    global multiplier, Shop_Rating, Shop_Rating_Cost, cash, playing, multiplier_cost
+    print("All changes occured here will be reflected when the menu is closed.")
+    while playing:
+        command = input("Dev Command > ")
+        if "cash=" in command:
+            new_cash_values = [int(num) for num in re.findall(r'\d+', command)]
+            if new_cash_values:
+                cash = new_cash_values[0]
+                print(f"Updated cash value: {cash}")
+                time.sleep(1)
+            else:
+                print("No numeric value found in the command.")
+                time.sleep(1)
+        elif "multi=" in command:
+            new_multi_values = [int(num) for num in re.findall(r'\d+', command)]
+            if new_multi_values:
+                multiplier = new_multi_values[0]
+                print(f"Updated multiplier value: {multiplier}")
+                time.sleep(1)
+            else:
+                print("No numeric value found in the command.")
+                time.sleep(1)
+        elif command == "X" or command == "x":
+            GameMenu()
+                
 def DoUpgrades():
     global Shop_Rating
     global playing
@@ -55,15 +84,14 @@ def DoUpgrades():
         os.system('cls')
         
         if multiplier != 'LOCKED':
-            if multiplier == 20:
+            if multiplier >= 20:
                 multiplier_cost = "MAX"
             else:
-                #if cash >= multiplier_cost:
                 multiplier_cost = int(multiplier ** 2.5)
         else:
             pass
         if Shop_Rating != 'LOCKED':
-            if len(Shop_Rating.split()) == 5:
+            if len(Shop_Rating.split()) >= 5:
                 Shop_Rating_Cost = 'MAX'
             else:
                 Shop_Rating_Cost = len(Shop_Rating.split()) * 25
@@ -117,10 +145,20 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
 def DoRewards():
     global cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors
     page = 1
+    current_time_sec = time.time() - start_time
+    current_time_min = 50 #int(current_time_sec / 60)
+    Cash_Earned = current_time_min / 5
+    Cash_Reset = False
     while playing == True:
-        current_time_sec = time.time() - start_time
-        current_time_min = int(current_time_sec / 60)
-        Cash_Earned = 0
+        if Cash_Reset == True:
+            cash += Cash_Earned
+            Cash_Earned = 0
+            current_time_min = 0
+            print("Claimed!")
+            time.sleep(1)
+            Cash_Reset = False
+        else:
+            pass
         Spin_Period = 15
         Time_To_Wait_Min = 15 - current_time_min
         Time_To_Wait_Countdown = colors.CYAN + colors.BOLD + f"{Time_To_Wait_Min}" + colors.END
@@ -144,7 +182,7 @@ def DoRewards():
     |                         |
     |-------------------------|
     |                         |
-    | Click [C] To Claim: {colors.BOLD + colors.GREEN + str(int(current_time_min / 5)) + colors.END + "   |"}
+    | Click [C] To Claim: {colors.BOLD + colors.GREEN + str(int(Cash_Earned)) + colors.END + "   |"}
     |                         |
     |-------------------------|        
             """
@@ -157,7 +195,7 @@ def DoRewards():
     |-------------------------|
     |                         |
     |     Time To Wait:       |
-    |         {Time_To_Wait_Countdown} min          |
+    |        {Time_To_Wait_Countdown} min          |
     |                         |
     |-------------------------|
     |                         |
@@ -166,17 +204,19 @@ def DoRewards():
     |-------------------------|        
             """
             SPIN = f"""
-    |
-    |
-    |        
-    |        
-    |        
-    |        
-    |
-    |
-    |
-    |
-    |-----------------------------------------------------------------|        
+    |------------------------------------------------------------------|
+    |             |             |             |             |          |
+    |-------------|-------------|-------------|-------------|----------|
+    |             |             |             |             |          |
+    |             |             |             |             |          |
+    |             |             |             |             |          |
+    |             |             |             |             |          | 
+    |             |             |             |             |          |
+    |             |             |             |             |          |
+    |             |             |             |             |          |
+    |------------------------------------------------------------------|        
+    
+                            {colors.BOLD + colors.YELLOW + " ENTER [P] TO SPIN! " + colors.END}
             """
         
         if page == 1: 
@@ -198,14 +238,23 @@ Enter [X] to exit                               Current page: {colors.DARKCYAN +
 Enter [R] to refresh
                 """)
         
+        elif page == "SPIN":
+            print(f"""
+{section.SPIN}
+
+
+Enter [<] for previous page
+Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(page) + colors.END}
+Enter [R] to refresh
+                """)
         val = input("> ")
         if val == 'C' or val == 'c':
-            Cash_Earned = int(current_time_min / 5)
-            cash += Cash_Earned
-            print("Claimed!")
-            time.sleep(1)
+            if page == 1:
+                Cash_Reset = True
+            else:
+                pass
         elif val == '>':
-            if page == 2:
+            if page == 2 or page == "SPIN":
                 print("No next page")
                 time.sleep(1)
             else:
@@ -214,6 +263,8 @@ Enter [R] to refresh
             if page == 1:
                 print("No previous page")
                 time.sleep(1)
+            elif page == "SPIN":
+                page = 2
             else:
                 page -= 1 
         elif val == 'X' or val == 'x':
@@ -221,9 +272,16 @@ Enter [R] to refresh
         elif val == 'R' or val == 'r':
             pass
         elif val == 'S' or val == 's':
-            if Time_To_Wait_Min < 0:
-                os.system('cls')
-                
+            if page == 2:
+                if Time_To_Wait_Min < 0:
+                    os.system('cls')
+                    page = "SPIN"
+                else:
+                    print("SPIN NOT READY")
+                    time.sleep(1)
+            else:
+                print("Please enter a denfined value")
+                time.sleep(1) 
         else:
             print("Please enter a denfined value")
             time.sleep(1)
@@ -270,11 +328,16 @@ where you can earn cash, shop rating, and levels for your restaurant. Specialize
 gamemodes may vary providing their own synopsis.               
               
               """)
-            WhatNext = input("Go Back? (Y/N): ")
-            if WhatNext == "N" or WhatNext == "n":
-                GameMenu()
-            else:
-                pass
+            while playing:
+                WhatNext = input("Go Back? (Y/N): ")
+                if WhatNext == "N" or WhatNext == "n":
+                    GameMenu()
+                elif WhatNext == "Y" or WhatNext == "y":
+                    break
+                else:
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    delete_multiple_lines(2)
         elif inquiry == 'U' or inquiry == 'u':
             os.system('cls')
             print(f"""
@@ -289,11 +352,16 @@ where you can earn cash, shop rating, and levels for your restaurant. Specialize
 gamemodes may vary providing their own synopsis.               
               
               """)
-            WhatNext = input("Go Back? (Y/N): ")
-            if WhatNext == "N" or WhatNext == "n":
-                GameMenu()
-            else:
-                pass
+            while playing:
+                WhatNext = input("Go Back? (Y/N): ")
+                if WhatNext == "N" or WhatNext == "n":
+                    GameMenu()
+                elif WhatNext == "Y" or WhatNext == "y":
+                    break
+                else:
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    delete_multiple_lines(2)
         elif inquiry == 'R' or inquiry == 'r':
             os.system('cls')
             print(f"""
@@ -308,11 +376,16 @@ where you can earn cash, shop rating, and levels for your restaurant. Specialize
 gamemodes may vary providing their own synopsis.               
               
               """)
-            WhatNext = input("Go Back? (Y/N): ")
-            if WhatNext == "N" or WhatNext == "n":
-                GameMenu()
-            else:
-                pass
+            while playing:
+                WhatNext = input("Go Back? (Y/N): ")
+                if WhatNext == "N" or WhatNext == "n":
+                    GameMenu()
+                elif WhatNext == "Y" or WhatNext == "y":
+                    break
+                else:
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    delete_multiple_lines(2)
         elif inquiry == 'S' or inquiry == 's':
             os.system('cls')
             print(f"""
@@ -327,11 +400,16 @@ where you can earn cash, shop rating, and levels for your restaurant. Specialize
 gamemodes may vary providing their own synopsis.               
               
               """)
-            WhatNext = input("Go Back? (Y/N): ")
-            if WhatNext == "N" or WhatNext == "n":
-                GameMenu()
-            else:
-                pass
+            while playing:
+                WhatNext = input("Go Back? (Y/N): ")
+                if WhatNext == "N" or WhatNext == "n":
+                    GameMenu()
+                elif WhatNext == "Y" or WhatNext == "y":
+                    break
+                else:
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    delete_multiple_lines(2)
         elif inquiry == 'I' or inquiry == 'i':
             os.system('cls')
             print(f"""
@@ -346,11 +424,16 @@ where you can earn cash, shop rating, and levels for your restaurant. Specialize
 gamemodes may vary providing their own synopsis.               
               
               """)
-            WhatNext = input("Go Back? (Y/N): ")
-            if WhatNext == "N" or WhatNext == "n":
-                GameMenu()
-            else:
-                pass
+            while playing:
+                WhatNext = input("Go Back? (Y/N): ")
+                if WhatNext == "N" or WhatNext == "n":
+                    GameMenu()
+                elif WhatNext == "Y" or WhatNext == "y":
+                    break
+                else:
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    delete_multiple_lines(2)
         elif inquiry == 'C' or inquiry == 'c':
             os.system('cls')
             print(f"""
@@ -365,11 +448,16 @@ where you can earn cash, shop rating, and levels for your restaurant. Specialize
 gamemodes may vary providing their own synopsis.               
               
               """)
-            WhatNext = input("Go Back? (Y/N): ")
-            if WhatNext == "N" or WhatNext == "n":
-                GameMenu()
-            else:
-                pass
+            while playing:
+                WhatNext = input("Go Back? (Y/N): ")
+                if WhatNext == "N" or WhatNext == "n":
+                    GameMenu()
+                elif WhatNext == "Y" or WhatNext == "y":
+                    break
+                else:
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    delete_multiple_lines(2)
         elif inquiry == 'M' or inquiry == 'm':
             os.system('cls')
             print(f"""
@@ -384,11 +472,16 @@ where you can earn cash, shop rating, and levels for your restaurant. Specialize
 gamemodes may vary providing their own synopsis.               
               
               """)
-            WhatNext = input("Go Back? (Y/N): ")
-            if WhatNext == "N" or WhatNext == "n":
-                GameMenu()
-            else:
-                pass
+            while playing:
+                WhatNext = input("Go Back? (Y/N): ")
+                if WhatNext == "N" or WhatNext == "n":
+                    GameMenu()
+                elif WhatNext == "Y" or WhatNext == "y":
+                    break
+                else:
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    delete_multiple_lines(2)
         elif inquiry == 'H' or inquiry == 'h':
             os.system('cls')
             print(f"""
@@ -403,11 +496,16 @@ where you can earn cash, shop rating, and levels for your restaurant. Specialize
 gamemodes may vary providing their own synopsis.               
               
               """)
-            WhatNext = input("Go Back? (Y/N): ")
-            if WhatNext == "N" or WhatNext == "n":
-                GameMenu()
-            else:
-                pass
+            while playing:
+                WhatNext = input("Go Back? (Y/N): ")
+                if WhatNext == "N" or WhatNext == "n":
+                    GameMenu()
+                elif WhatNext == "Y" or WhatNext == "y":
+                    break
+                else:
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    delete_multiple_lines(2)
         elif inquiry == 'X' or inquiry == 'x':
             GameMenu()
         else:
