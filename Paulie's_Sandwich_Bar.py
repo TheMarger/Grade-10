@@ -325,10 +325,11 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
             print("Enter a defined option")
             time.sleep(1)
             
-def DoOrder(Menu):
+def DoOrder():
     global OverallScore
     global OverallRating
     global ratings
+    global Menu
     order = []
     ratings = []
     
@@ -388,7 +389,7 @@ def DoOrderStation():
     global OverallRating
     global OverallScore
     global ChangeAVGDisplay
-    order = DoOrder(Menu)
+    order = DoOrder()
     difficulties = [['Easy', 1], ['Medium', 2], ['Hard', 3]]
     DifficultyRaw = difficulties[OverallRating]
     level = DifficultyRaw[1]
