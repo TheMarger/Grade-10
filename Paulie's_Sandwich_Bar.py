@@ -575,20 +575,24 @@ def DoOrder():
     for i in range(len(ratings)):
         OverallScore += ratings[i]
     
-    if OverallScore <= 5:
+    if OverallScore <= 6:
         OverallRating = 0
-    elif OverallScore > 5 and OverallScore < 9:
+    elif OverallScore > 6 and OverallScore < 10:
         OverallRating = 1
-    else:
+    elif OverallScore > 9 and OverallScore < 11:
         OverallRating = 2
+    else:
+        OverallRating = 3
     
     for i in range(len(ratings)):
         if ratings[i] == 1:
             ratings[i] = colors.BOLD + colors.GREEN + 'Easy' + colors.END
         elif ratings[i] == 2:
             ratings[i] = colors.BOLD + colors.YELLOW + 'Medium' + colors.END
-        else:
+        elif ratings[i] == 3:
             ratings[i] = colors.BOLD + colors.RED + 'Hard' + colors.END
+        else:
+            ratings[i] = colors.BOLD + colors.PURPLE + 'EXTREME' + colors.END
         
     return order
     
@@ -606,7 +610,7 @@ def DoOrderStation():
     global OverallScore
     global ChangeAVGDisplay
     order = DoOrder()
-    difficulties = [['Easy', 1], ['Medium', 2], ['Hard', 3]]
+    difficulties = [['Easy', 1], ['Medium', 2], ['Hard', 3], ['EXTREME', 4]]
     DifficultyRaw = difficulties[OverallRating]
     level = DifficultyRaw[1]
     Difficulty = DifficultyRaw[0]
@@ -615,16 +619,20 @@ def DoOrderStation():
             print(f"\n\nDiffuculty: {colors.BOLD + colors.GREEN + Difficulty + colors.END}\n{seperater}")
         elif level == 2:
             print(f"\n\nDiffuculty: {colors.BOLD + colors.YELLOW + Difficulty + colors.END}\n{seperater}")
-        else:
+        elif level == 3:
             print(f"\n\nDiffuculty: {colors.BOLD + colors.RED + Difficulty + colors.END}\n{seperater}")
+        else:
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.PURPLE + Difficulty + colors.END}\n{seperater}")
     else:
         if level == 1:
             print(f"\n\nDiffuculty: {colors.BOLD + colors.GREEN + str(OverallScore) + colors.END}\n{seperater}")
         elif level == 2:
             print(f"\n\nDiffuculty: {colors.BOLD + colors.YELLOW + str(OverallScore) + colors.END}\n{seperater}")
-        else:
+        elif level == 3:
             print(f"\n\nDiffuculty: {colors.BOLD + colors.RED + str(OverallScore) + colors.END}\n{seperater}")
-    
+        else:
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.PURPLE + str(OverallScore) + colors.END}\n{seperater}")
+            
     print(f"""\n Customer Order: \n
 Bread:  {order[0]} [{ratings[0]}]
 Vegetables:  {order[1]} [{ratings[1]}]
@@ -798,10 +806,10 @@ def DoVariables():
     pass
 
 class Menu:
-    breads = [['regular', 1], ['sesame', 2], ['old-fashioned',3], ['4-cheese', 1], ['italian', 2], ['Chicago style', 3]]
-    vegetables = [['tomato', 1], ['cucumber', 2], ['carrot', 3], ['peppers', 1], ['jalapeno', 2], ['onion', 3]]
-    sauces = [['mayonnaise', 1], ['teriyaki', 2], ['ketchup', 3], ['mustard', 1], ['relish', 2], ['Hot sauce', 3]]
-    meats = [['salami', 1], ['pepperoni', 2], ['chicken', 3], ['beef', 1], ['pork', 2], ['bacon', 3]]
+    breads = [['regular', 1], ['sesame', 2], ['old-fashioned',3], ['4-cheese', 1], ['italian', 2], ['Chicago style', 3], ['Golden Yeast', 4]]
+    vegetables = [['tomato', 1], ['cucumber', 2], ['carrot', 3], ['peppers', 1], ['jalapeno', 2], ['onion', 3], ['Golden Root', 4]]
+    sauces = [['mayonnaise', 1], ['teriyaki', 2], ['ketchup', 3], ['mustard', 1], ['relish', 2], ['Hot sauce', 3], ['Golden Drool', 4]]
+    meats = [['salami', 1], ['pepperoni', 2], ['chicken', 3], ['beef', 1], ['pork', 2], ['bacon', 3], ['Golden Ham', 4]]
 
 class colors:
    PURPLE = '\033[95m'
