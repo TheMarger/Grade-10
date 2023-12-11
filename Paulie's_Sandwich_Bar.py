@@ -7,17 +7,20 @@ def GameMenu():
     global seperater
     global colors
     global playing
+    global Name
     playing = True
     while playing:
         os.system('cls')
-        print(f"""\n{colors.BOLD + colors.UNDERLINE + "Welcome To Paulie's Sandwich bar!" + colors.END}\n 
+        print(f"""\n{colors.BOLD + colors.UNDERLINE + "Welcome To " + Name + " Sandwich bar!" + colors.END}\n
+    Store              {colors.BOLD + "Enter [S]" + colors.END}
+    {seperater}
     Order Station      {colors.BOLD + "Enter [O]" + colors.END}
     {seperater}
     Upgrades           {colors.BOLD + "Enter [U]" + colors.END}
     {seperater}
     Rewards            {colors.BOLD + "Enter [R]" + colors.END}
     {seperater}   
-    Settings           {colors.BOLD + "Enter [S]" + colors.END}
+    Settings           {colors.BOLD + "Enter [C]" + colors.END}
     {seperater} 
     Information        {colors.BOLD + "Enter [I]" + colors.END}
     {seperater}
@@ -29,7 +32,7 @@ def GameMenu():
         if val == 'O' or val == 'o':
             DoOrderStation()
         elif val == 'S' or val == 's':
-            DoSettings()
+            pass
         elif val == 'I' or val == 'i':
             DoInformation()
         elif val == 'X' or val == 'x':
@@ -38,6 +41,8 @@ def GameMenu():
             DoUpgrades()
         elif val == 'R' or val == 'r':
             DoRewards()
+        elif val == 'C' or val == 'c':
+            DoSettings()
         elif val == '$menu$':
             DoDevMenu()
         else:
@@ -519,6 +524,7 @@ def DoSettings():
     global playing
     global colors
     global ChangeAVGDisplay
+    global Name
     while playing == True:
         os.system('cls')
         if ChangeAVGDisplay == False:
@@ -526,15 +532,21 @@ def DoSettings():
         else:
             ScaleForm = "Numerical"
         print(f"""\n
-Change average difficulty scale form (Current: {ScaleForm}), {colors.BOLD + 'enter [N]' + colors.END}    
+Change average difficulty scale form (Current: {ScaleForm}), {colors.BOLD + 'enter [D]' + colors.END} 
+{seperater} Change
+Change Store Name (Current: {Name}), {colors.BOLD + 'enter [N]' + colors.END}
+    
 To exit, {colors.BOLD + 'enter [X]' + colors.END}
           """)
         val = input("> ")
-        if val == 'N' or val == 'n':
+        if val == 'D' or val == 'd':
             if ChangeAVGDisplay == False:
                 ChangeAVGDisplay = True
             else:
                 ChangeAVGDisplay = False
+        elif val == 'N' or val == 'n':
+            NewName = input("Enter New Name: ")
+            Name = NewName
         elif val == 'X' or val == 'x':
             GameMenu()
         else:
@@ -575,11 +587,11 @@ def DoOrder():
     for i in range(len(ratings)):
         OverallScore += ratings[i]
     
-    if OverallScore <= 6:
+    if OverallScore <= 7:
         OverallRating = 0
-    elif OverallScore > 6 and OverallScore < 10:
+    elif OverallScore > 7 and OverallScore < 11:
         OverallRating = 1
-    elif OverallScore > 9 and OverallScore < 11:
+    elif OverallScore > 10 and OverallScore < 12:
         OverallRating = 2
     else:
         OverallRating = 3
@@ -845,6 +857,7 @@ multiplier = 'LOCKED'
 Shop_Rating = "LOCKED"
 multiplier_cost = "LOCKED"
 Shop_Rating_Cost = "LOCKED"
+Name = "Rafay's"
 cash_color = colors.GREEN + colors.BOLD + "Cash:" + colors.END 
 ChangeAVGDisplay = False  
 start = GameMenu()
