@@ -7,11 +7,36 @@ def GameMenu():
     global seperater
     global colors
     global playing
-    global Name
+    global Name, customers
     playing = True
     while playing:
         os.system('cls')
-        print(f"""\n{colors.BOLD + colors.UNDERLINE + "Welcome To " + Name + " Sandwich bar!" + colors.END}\n
+        if DisplayCustomers == True:
+            print(f"""\n{colors.BOLD + colors.UNDERLINE + "Welcome To " + Name + " Sandwich bar!" + colors.END}\n
+    Store              {colors.BOLD + "Enter [S]" + colors.END}
+    {seperater}
+    Order Station      {colors.BOLD + "Enter [O]" + colors.END}
+    {seperater}
+    Upgrades           {colors.BOLD + "Enter [U]" + colors.END}
+    {seperater}
+    Rewards            {colors.BOLD + "Enter [R]" + colors.END}
+    {seperater}   
+    Settings           {colors.BOLD + "Enter [C]" + colors.END}
+    {seperater} 
+    Information        {colors.BOLD + "Enter [I]" + colors.END}
+    {seperater}
+    Exit               {colors.BOLD + "Enter [X]" + colors.END}
+                                            Cash: {colors.GREEN + colors.BOLD + str(cash) + colors.END}
+                                            Multiplier: {colors.PURPLE + colors.BOLD + str(multiplier) + colors.END}
+                                            Shop Rating: {colors.CYAN + colors.BOLD + str(Shop_Rating) + colors.END}\n
+                                            
+                                            |------------------------
+                                            |
+                                            | Current Customers: {customers}
+                                            |
+                                            """)
+        else:
+            print(f"""\n{colors.BOLD + colors.UNDERLINE + "Welcome To " + Name + " Sandwich bar!" + colors.END}\n
     Store              {colors.BOLD + "Enter [S]" + colors.END}
     {seperater}
     Order Station      {colors.BOLD + "Enter [O]" + colors.END}
@@ -32,7 +57,7 @@ def GameMenu():
         if val == 'O' or val == 'o':
             DoOrderStation()
         elif val == 'S' or val == 's':
-            pass
+            DoStore()
         elif val == 'I' or val == 'i':
             DoInformation()
         elif val == 'X' or val == 'x':
@@ -49,9 +74,33 @@ def GameMenu():
             print("Please enter a defined option")
             time.sleep(1)
 
-
-def DoDevMenu():
+def DoStore():
     global multiplier, Shop_Rating, Shop_Rating_Cost, cash, playing, multiplier_cost
+    while playing == True:
+        os.system('cls')
+        print("""
+|----------------------------------------------------------------|
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|                              |                                 |
+|----------------------------------------------------------------|              
+              """)
+        val = input("> ")
+        if val == 'X' or val == 'x':
+            GameMenu()
+def DoDevMenu():
+    global multiplier, Shop_Rating, Shop_Rating_Cost, cash, playing, multiplier_cost, Dungen_Cooldown, Spin_Period
     print("All changes occured here will be reflected when the menu is closed.")
     while playing:
         command = input("Dev Command > ")
@@ -69,6 +118,15 @@ def DoDevMenu():
             if new_multi_values:
                 multiplier = new_multi_values[0]
                 print(f"Updated multiplier value: {multiplier}")
+                time.sleep(1)
+            else:
+                print("No numeric value found in the command.")
+                time.sleep(1)
+        elif "DunCool=" in command:
+            new_Dungen_values = [int(num) for num in re.findall(r'\d+', command)]
+            if new_Dungen_values:
+                Dungen_Cooldown = new_Dungen_values[0]
+                print(f"Updated Dungen Cooldown value: {Dungen_Cooldown}")
                 time.sleep(1)
             else:
                 print("No numeric value found in the command.")
@@ -148,27 +206,30 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
 
 
 def DoRewards():
-    global cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors
-    page = 1
+    global cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors, Cash_Reset
+    global current_time_min, current_time_sec, page, Dungen_Cooldown, Spin_Period
     current_time_sec = time.time() - start_time
-    current_time_min = 50 #int(current_time_sec / 60)
+    current_time_min = int(current_time_sec / 3)
     Cash_Earned = current_time_min / 5
-    Cash_Reset = False
     while playing == True:
         if Cash_Reset == True:
             cash += Cash_Earned
             Cash_Earned = 0
             current_time_min = 0
+            current_time_sec = 0
             print("Claimed!")
             time.sleep(1)
             Cash_Reset = False
         else:
             pass
-        Spin_Period = 15
-        Time_To_Wait_Min = 15 - current_time_min
-        Time_To_Wait_Countdown = colors.CYAN + colors.BOLD + f"{Time_To_Wait_Min}" + colors.END
-        if Time_To_Wait_Min < 0:
-            Time_To_Wait_Countdown = colors.BG_GREEN + colors.BOLD + "   READY!   " + colors.END 
+        Dungen_Time_To_Wait_Min = Dungen_Cooldown - current_time_min
+        Dungen_Time_To_Wait_Countdown = colors.CYAN + colors.BOLD + f"{Dungen_Time_To_Wait_Min}" + colors.END
+        if Dungen_Time_To_Wait_Min < 0:
+            Dungen_Time_To_Wait_Countdown = colors.BG_CYAN + colors.BOLD + "   READY!   " + colors.END 
+        Spin_Time_To_Wait_Min = Spin_Period - current_time_min
+        Spin_Time_To_Wait_Countdown = colors.CYAN + colors.BOLD + f"{Spin_Time_To_Wait_Min}" + colors.END
+        if Spin_Time_To_Wait_Min < 0:
+            Spin_Time_To_Wait_Countdown = colors.BG_GREEN + colors.BOLD + "   READY!   " + colors.END 
         
          
         os.system('cls')
@@ -200,7 +261,7 @@ def DoRewards():
     |-------------------------|
     |                         |
     |     Time To Wait:       |
-    |        {Time_To_Wait_Countdown} min          |
+    |         {Spin_Time_To_Wait_Countdown} min          |
     |                         |
     |-------------------------|
     |                         |
@@ -208,9 +269,27 @@ def DoRewards():
     |                         |
     |-------------------------|        
             """
+            THREE = f"""
+    |-------------------------|              
+    |                         |
+    |     {colors.BG_YELLOW + colors.BOLD + "  MATH DUNGEN  " + colors.END}     |
+    |-------------------------|
+    |      every:  {colors.UNDERLINE + colors.BOLD + colors.PURPLE + str(Dungen_Cooldown) + ' min' + colors.END + '     |'}           
+    |-------------------------|
+    |                         |
+    |     Time To Wait:       |
+    |        {Dungen_Time_To_Wait_Countdown} min           |
+    |                         |
+    |-------------------------|
+    |                         |
+    |    {colors.BOLD + colors.RED + str("ENTER [M] TO START") + colors.END + "   |"}
+    |                         |
+    |-------------------------|       
+            """
+                
             SPIN = f"""
     |------------------------------------------------------------------|
-    |             |             |             |             |          |
+    | Common      | Rare        | Legendary   | Mythical    | Upgrades |
     |-------------|-------------|-------------|-------------|----------|
     |             |             |             |             |          |
     |             |             |             |             |          |
@@ -224,6 +303,9 @@ def DoRewards():
                             {colors.BOLD + colors.YELLOW + " ENTER [P] TO SPIN! " + colors.END}
             """
         
+            DUGNEN = f"""
+    {colors.BOLD + colors.YELLOW + " WELCOME TO THE MATH DUNGEN! " + colors.END}
+            """
         if page == 1: 
             print(f"""
 {section.ONE}
@@ -236,6 +318,15 @@ Enter [R] to refresh
         elif page == 2:
             print(f"""
 {section.TWO}
+
+Enter [>] for next page
+Enter [<] for previous page
+Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(page) + colors.END}
+Enter [R] to refresh
+                """)
+        elif page == 3:
+            print(f"""
+{section.THREE}
 
 Enter [>] for next page
 Enter [<] for previous page
@@ -259,7 +350,7 @@ Enter [R] to refresh
             else:
                 pass
         elif val == '>':
-            if page == 2 or page == "SPIN":
+            if page == 3 or page == "SPIN":
                 print("No next page")
                 time.sleep(1)
             else:
@@ -273,16 +364,28 @@ Enter [R] to refresh
             else:
                 page -= 1 
         elif val == 'X' or val == 'x':
+            page=1
             GameMenu()
         elif val == 'R' or val == 'r':
-            pass
+            DoRewards()
         elif val == 'S' or val == 's':
             if page == 2:
-                if Time_To_Wait_Min < 0:
+                if Spin_Time_To_Wait_Min < 0:
                     os.system('cls')
                     page = "SPIN"
                 else:
                     print("SPIN NOT READY")
+                    time.sleep(1)
+            else:
+                print("Please enter a denfined value")
+                time.sleep(1)
+        elif val == 'M' or val == 'm':
+            if page == 3:
+                if Dungen_Time_To_Wait_Min < 0:
+                    os.system('cls')
+                    page = "SPIN"
+                else:
+                    print("DUNGEN NOT READY")
                     time.sleep(1)
             else:
                 print("Please enter a denfined value")
@@ -523,7 +626,7 @@ def DoSettings():
     global OverallScore
     global playing
     global colors
-    global ChangeAVGDisplay
+    global ChangeAVGDisplay, DisplayCustomers
     global Name
     while playing == True:
         os.system('cls')
@@ -531,11 +634,17 @@ def DoSettings():
             ScaleForm = "Average"
         else:
             ScaleForm = "Numerical"
+        if DisplayCustomers == False:
+            display = "Regular"
+        else:
+            display = "Promt"
         print(f"""\n
 Change average difficulty scale form (Current: {ScaleForm}), {colors.BOLD + 'enter [D]' + colors.END} 
-{seperater} Change
+{seperater} 
 Change Store Name (Current: {Name}), {colors.BOLD + 'enter [N]' + colors.END}
-    
+{seperater}
+Change Customer prompt menu (Current: {display}), {colors.BOLD + 'enter [C]' + colors.END}
+
 To exit, {colors.BOLD + 'enter [X]' + colors.END}
           """)
         val = input("> ")
@@ -547,6 +656,11 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
         elif val == 'N' or val == 'n':
             NewName = input("Enter New Name: ")
             Name = NewName
+        elif val == 'C' or val == 'c':
+            if DisplayCustomers == False:
+                DisplayCustomers = True
+            else:
+                DisplayCustomers = False
         elif val == 'X' or val == 'x':
             GameMenu()
         else:
@@ -625,7 +739,7 @@ def DoOrderStation():
     difficulties = [['Easy', 1], ['Medium', 2], ['Hard', 3], ['EXTREME', 4]]
     DifficultyRaw = difficulties[OverallRating]
     level = DifficultyRaw[1]
-    Difficulty = DifficultyRaw[0]
+    Difficulty = DifficultyRaw[0] 
     if ChangeAVGDisplay == False:
         if level == 1:
             print(f"\n\nDiffuculty: {colors.BOLD + colors.GREEN + Difficulty + colors.END}\n{seperater}")
@@ -845,20 +959,27 @@ class colors:
    BG_WHITE = '\033[47m'
 
 def delete_multiple_lines(n=1):
-    """Delete the last line in the STDOUT."""
     for _ in range(n):
         sys.stdout.write("\x1b[1A")  # cursor up one line
         sys.stdout.write("\x1b[2K")  # delete the last line
 
 start_time = time.time()
 seperater = "----------------------------------------------------------------"
-cash = 0
+cash = float(0).__round__(2)
 multiplier = 'LOCKED'
 Shop_Rating = "LOCKED"
 multiplier_cost = "LOCKED"
 Shop_Rating_Cost = "LOCKED"
-Name = "Rafay's"
+Name = "Paulie's"
+customers = 0
+page = 1
+DisplayCustomers = False
 cash_color = colors.GREEN + colors.BOLD + "Cash:" + colors.END 
+Cash_Reset = False
+Spin_Period = 15
+Dungen_Cooldown = 0
+current_time_sec = time.time() - start_time
+current_time_min = int(current_time_sec / 60)
 ChangeAVGDisplay = False  
 start = GameMenu()
 
