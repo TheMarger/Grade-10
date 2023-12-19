@@ -29,7 +29,7 @@ def GameMenu():
                                             Cash: {colors.GREEN + colors.BOLD + str(cash) + colors.END}
                                             Multiplier: {colors.PURPLE + colors.BOLD + str(multiplier) + colors.END}
                                             Shop Rating: {colors.CYAN + colors.BOLD + str(Shop_Rating) + colors.END}\n
-                                            
+
                                             |------------------------
                                             |
                                             | Current Customers: {customers}
@@ -61,7 +61,24 @@ def GameMenu():
         elif val == 'I' or val == 'i':
             DoInformation()
         elif val == 'X' or val == 'x':
-            exit()
+            while playing:
+              choice = input(f"Are you sure you want to exit? (Y/N): ")
+              if choice == "Y" or choice == "y":
+                os.system('cls')
+                print(f"""
+                \n\n\n\n\n\n
+                {colors.BOLD + colors.UNDERLINE + 
+                'Thank you for playing!' + colors.END}
+                
+                """)
+                time.sleep(2)
+                exit()
+              elif choice == "N" or choice == "n":
+                GameMenu()
+              else:
+                print("Please enter a defined option")
+                time.sleep(1)
+                delete_multiple_lines(2)
         elif val == "U" or val == 'u':
             DoUpgrades()
         elif val == 'R' or val == 'r':
@@ -133,7 +150,7 @@ def DoDevMenu():
                 time.sleep(1)
         elif command == "X" or command == "x":
             GameMenu()
-                
+
 def DoUpgrades():
     global Shop_Rating
     global playing
@@ -142,10 +159,10 @@ def DoUpgrades():
     global Shop_Rating_Cost
     global cash 
     global seperater
-         
+
     while playing == True:
         os.system('cls')
-        
+
         if multiplier != 'LOCKED':
             if multiplier >= 20:
                 multiplier_cost = "MAX"
@@ -160,7 +177,7 @@ def DoUpgrades():
                 Shop_Rating_Cost = len(Shop_Rating.split()) * 25
         else:
             pass
-        
+
         print(f"""\n
 Upgrade cash multiplier. (Current: {multiplier}), {colors.BOLD + 'enter [M]' + colors.END}, cost: [{multiplier_cost}]
 {seperater}
@@ -207,7 +224,7 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
 
 def DoRewards():
     global cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors, Cash_Reset
-    global current_time_min, current_time_sec, page, Dungen_Cooldown, Spin_Period
+    global current_time_min, current_time_sec, page, Dungen_Cooldown, Spin_Period, section
     current_time_sec = time.time() - start_time
     current_time_min = int(current_time_sec / 3)
     Cash_Earned = current_time_min / 5
@@ -230,8 +247,8 @@ def DoRewards():
         Spin_Time_To_Wait_Countdown = colors.CYAN + colors.BOLD + f"{Spin_Time_To_Wait_Min}" + colors.END
         if Spin_Time_To_Wait_Min < 0:
             Spin_Time_To_Wait_Countdown = colors.BG_GREEN + colors.BOLD + "   READY!   " + colors.END 
-        
-         
+
+
         os.system('cls')
         print(colors.BOLD + colors.BG_RED + colors.ITALIC + " REWARDS " + colors.END)
         class section:  
@@ -286,7 +303,7 @@ def DoRewards():
     |                         |
     |-------------------------|       
             """
-                
+
             SPIN = f"""
     |------------------------------------------------------------------|
     | Common      | Rare        | Legendary   | Mythical    | Upgrades |
@@ -299,13 +316,29 @@ def DoRewards():
     |             |             |             |             |          |
     |             |             |             |             |          |
     |------------------------------------------------------------------|        
-    
+
                             {colors.BOLD + colors.YELLOW + " ENTER [P] TO SPIN! " + colors.END}
             """
-        
-            DUGNEN = f"""
+
+            DUNGEN = f"""
     {colors.BOLD + colors.YELLOW + " WELCOME TO THE MATH DUNGEN! " + colors.END}
-            """
+
+|--------------------------------------------------------------------------  |
+| What Is Dungen?          | Previous Games  | Points Scored | Cash Earned |
+|--------------------------|-----------------|---------------|-------------|
+| Math Dungen is where     |                 |               |             |
+| you can earn money and   |                 |               |             |
+| rewards for your         |                 |               |             |
+| restaurant by completing |                 |               |             |
+| waves of math questions! |                 |               |             |
+|                          |                 |               |             |
+| Press [D] to Begin!      |                 |               |             | 
+|                          |                 |               |             |
+|                          |                 |               |             |
+|                          |                 |               |             |  
+|--------------------------------------------------------------------------| 
+    
+    """
         if page == 1: 
             print(f"""
 {section.ONE}
@@ -333,7 +366,7 @@ Enter [<] for previous page
 Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(page) + colors.END}
 Enter [R] to refresh
                 """)
-        
+
         elif page == "SPIN":
             print(f"""
 {section.SPIN}
@@ -379,11 +412,16 @@ Enter [R] to refresh
             else:
                 print("Please enter a denfined value")
                 time.sleep(1)
+        elif val == 'P' or val == 'p':
+          if page == "SPIN":
+            DoSpin()
+          else:
+            print("Please enter a denfined value")
+            time.sleep(1)
         elif val == 'M' or val == 'm':
             if page == 3:
                 if Dungen_Time_To_Wait_Min < 0:
-                    os.system('cls')
-                    page = "SPIN"
+                    DoDungen()
                 else:
                     print("DUNGEN NOT READY")
                     time.sleep(1)
@@ -393,8 +431,17 @@ Enter [R] to refresh
         else:
             print("Please enter a denfined value")
             time.sleep(1)
-            
-        
+          
+def DoDungen():
+  global playing, cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, section 
+  while playing == True:
+    os.system('cls')
+    print(section.DUNGEN)
+    val = input("> ")
+
+def DoSpin():
+  pass
+
 
 def DoInformation():
     global playing
@@ -434,7 +481,7 @@ The game will wait for you to input that you're ready and begin to ask you a ran
 math question based on the formula for each ingrediant difficulty. This gamemode is 
 where you can earn cash, shop rating, and levels for your restaurant. Specialized 
 gamemodes may vary providing their own synopsis.               
-              
+
               """)
             while playing:
                 WhatNext = input("Go Back? (Y/N): ")
@@ -458,7 +505,7 @@ The game will wait for you to input that you're ready and begin to ask you a ran
 math question based on the formula for each ingrediant difficulty. This gamemode is 
 where you can earn cash, shop rating, and levels for your restaurant. Specialized 
 gamemodes may vary providing their own synopsis.               
-              
+
               """)
             while playing:
                 WhatNext = input("Go Back? (Y/N): ")
@@ -482,7 +529,7 @@ The game will wait for you to input that you're ready and begin to ask you a ran
 math question based on the formula for each ingrediant difficulty. This gamemode is 
 where you can earn cash, shop rating, and levels for your restaurant. Specialized 
 gamemodes may vary providing their own synopsis.               
-              
+
               """)
             while playing:
                 WhatNext = input("Go Back? (Y/N): ")
@@ -506,7 +553,7 @@ The game will wait for you to input that you're ready and begin to ask you a ran
 math question based on the formula for each ingrediant difficulty. This gamemode is 
 where you can earn cash, shop rating, and levels for your restaurant. Specialized 
 gamemodes may vary providing their own synopsis.               
-              
+
               """)
             while playing:
                 WhatNext = input("Go Back? (Y/N): ")
@@ -530,7 +577,7 @@ The game will wait for you to input that you're ready and begin to ask you a ran
 math question based on the formula for each ingrediant difficulty. This gamemode is 
 where you can earn cash, shop rating, and levels for your restaurant. Specialized 
 gamemodes may vary providing their own synopsis.               
-              
+
               """)
             while playing:
                 WhatNext = input("Go Back? (Y/N): ")
@@ -554,7 +601,7 @@ The game will wait for you to input that you're ready and begin to ask you a ran
 math question based on the formula for each ingrediant difficulty. This gamemode is 
 where you can earn cash, shop rating, and levels for your restaurant. Specialized 
 gamemodes may vary providing their own synopsis.               
-              
+
               """)
             while playing:
                 WhatNext = input("Go Back? (Y/N): ")
@@ -578,7 +625,7 @@ The game will wait for you to input that you're ready and begin to ask you a ran
 math question based on the formula for each ingrediant difficulty. This gamemode is 
 where you can earn cash, shop rating, and levels for your restaurant. Specialized 
 gamemodes may vary providing their own synopsis.               
-              
+
               """)
             while playing:
                 WhatNext = input("Go Back? (Y/N): ")
@@ -602,7 +649,7 @@ The game will wait for you to input that you're ready and begin to ask you a ran
 math question based on the formula for each ingrediant difficulty. This gamemode is 
 where you can earn cash, shop rating, and levels for your restaurant. Specialized 
 gamemodes may vary providing their own synopsis.               
-              
+
               """)
             while playing:
                 WhatNext = input("Go Back? (Y/N): ")
@@ -619,7 +666,7 @@ gamemodes may vary providing their own synopsis.
         else:
             print("Please enter a defined value")
             time.sleep(1)
-        
+
 
 def DoSettings():
     global OverallRating
@@ -666,7 +713,7 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
         else:
             print("Enter a defined option")
             time.sleep(1)
-            
+
 def DoOrder():
     global OverallScore
     global OverallRating
@@ -674,33 +721,33 @@ def DoOrder():
     global Menu
     order = []
     ratings = []
-    
+
     breadRAW = random.choice(Menu.breads)
     bread = breadRAW[0]
     ratings.append(breadRAW[1])
     order.append(bread)
-    
+
     vegetablesRAW = random.choice(Menu.vegetables)
     vegetables = vegetablesRAW[0]
     ratings.append(vegetablesRAW[1])
     order.append(vegetables)
-    
+
     saucesRAW = random.choice(Menu.sauces)
     sauces = saucesRAW[0]
     ratings.append(saucesRAW[1])
     order.append(sauces)
-    
+
     meatsRAW = random.choice(Menu.meats)
     meats = meatsRAW[0]
     ratings.append(meatsRAW[1])
     order.append(meats)
-    
+
     OverallScore = 0
     OverallRating = 0
-    
+
     for i in range(len(ratings)):
         OverallScore += ratings[i]
-    
+
     if OverallScore <= 7:
         OverallRating = 0
     elif OverallScore > 7 and OverallScore < 11:
@@ -709,7 +756,7 @@ def DoOrder():
         OverallRating = 2
     else:
         OverallRating = 3
-    
+
     for i in range(len(ratings)):
         if ratings[i] == 1:
             ratings[i] = colors.BOLD + colors.GREEN + 'Easy' + colors.END
@@ -719,9 +766,9 @@ def DoOrder():
             ratings[i] = colors.BOLD + colors.RED + 'Hard' + colors.END
         else:
             ratings[i] = colors.BOLD + colors.PURPLE + 'EXTREME' + colors.END
-        
+
     return order
-    
+
 
 def DoOrderStation():
     os.system('cls')
@@ -758,14 +805,14 @@ def DoOrderStation():
             print(f"\n\nDiffuculty: {colors.BOLD + colors.RED + str(OverallScore) + colors.END}\n{seperater}")
         else:
             print(f"\n\nDiffuculty: {colors.BOLD + colors.PURPLE + str(OverallScore) + colors.END}\n{seperater}")
-            
+
     print(f"""\n Customer Order: \n
 Bread:  {order[0]} [{ratings[0]}]
 Vegetables:  {order[1]} [{ratings[1]}]
 Sauces:  {order[2]} [{ratings[2]}]
 Meats:  {order[3]} [{ratings[3]}]\n
 {seperater}""")
-    
+
     while playing == True:
         print(colors.CYAN + colors.BOLD + "[S] - Variables" + colors.END)
         print(colors.RED + colors.BOLD + "\n[R] - Ready" + colors.END)
@@ -783,7 +830,7 @@ Meats:  {order[3]} [{ratings[3]}]\n
             print("Please enter a defined option")
             time.sleep(1)
             delete_multiple_lines(7)
-        
+
 def DoSandwichMaker():
     global cash
     global cash_color
@@ -835,7 +882,7 @@ def DoSandwichMaker():
                 answer2 = answer1 / num3
             answer = answer2
             print(f"({num1} {opr1} {num2}) {opr2} {num3}")
-        
+
         while playing:    
             try:
                 response = float(input("Answer: "))
@@ -845,7 +892,7 @@ def DoSandwichMaker():
                 delete_multiple_lines(2)
             else:
                 break
-                
+
         if response == answer.__round__(2): 
             print(f"Good Job!\n{cash_color} + 1")
             SeshCash += 1
@@ -860,15 +907,15 @@ def DoSandwichMaker():
             delete_multiple_lines(4)
     else:
         os.system("cls")
-        
+
         SeshMultiplier = 0
-        
+
         for i in range(len(CorrectAns)):
             if CorrectAns[i] == 1:
                 CorrectAns[i] = colors.BOLD + colors.GREEN + "COMPLETE" + colors.END
             else:
                 CorrectAns[i] = colors.BOLD + colors.RED + "FAILED" + colors.END
-                
+
         if NumCorrect <= 1:
             SeshMultiplier = 1
         elif NumCorrect == 2:
@@ -877,14 +924,14 @@ def DoSandwichMaker():
             SeshMultiplier = 1.5
         else:
             SeshMultiplier = 2 
-        
+
         if multiplier != 'LOCKED':
             TotalSeshCash = (SeshCash * SeshMultiplier) * multiplier
             cash += (SeshCash * SeshMultiplier) * multiplier
         else:
             TotalSeshCash = SeshCash * SeshMultiplier
             cash += SeshCash * SeshMultiplier
-        
+
         print(f"""\nOrder Complete!
 \nOrder Invoice:\n
 Bread:  {CorrectAns[0]}
@@ -895,14 +942,14 @@ Meat:   {CorrectAns[2]}
 {seperater}
 Sauce:  {CorrectAns[3]}
               """)
-        
+
         if NumCorrect < len(Shop_Rating.split()) and Shop_Rating != "LOCKED":
             print(f"Customer Satisfaction Score = {colors.BOLD + colors.RED + str(NumCorrect) + colors.END}")
         elif NumCorrect == len(Shop_Rating.split()) and Shop_Rating != "LOCKED":
             print(f"Customer Satisfaction Score = {colors.BOLD + colors.YELLOW + str(NumCorrect) + colors.END}")
         else:
             print(f"Customer Satisfaction Score = {colors.BOLD + colors.GREEN + str(NumCorrect) + colors.END}")
-            
+
         print(f"""{seperater}
 Session Cash Multiplier = {colors.BOLD + colors.PURPLE + str(SeshMultiplier) + colors.END}
 Game Cash Multiplier = {colors.BOLD + colors.PURPLE + str(multiplier) + colors.END}
@@ -916,7 +963,7 @@ Total Cash Earned = {colors.BOLD + colors.GREEN + str(TotalSeshCash) + colors.EN
                 print(f"""{seperater}
 {colors.BOLD + colors.UNDERLINE + colors.PURPLE + 'MULTIPLIER UNLOCKED!' + colors.END}\n""")
                 multiplier = 1
-        
+
         while playing:
             PlAgn = input("Play again? (Y/N): ")
             if PlAgn == "Y" or PlAgn == 'y':
@@ -927,7 +974,7 @@ Total Cash Earned = {colors.BOLD + colors.GREEN + str(TotalSeshCash) + colors.EN
                 print("Please enter a defined option")
                 time.sleep(2)
                 delete_multiple_lines(2)
-                
+
 def DoVariables():
     pass
 
@@ -982,4 +1029,3 @@ current_time_sec = time.time() - start_time
 current_time_min = int(current_time_sec / 60)
 ChangeAVGDisplay = False  
 start = GameMenu()
-
