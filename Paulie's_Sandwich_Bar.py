@@ -112,6 +112,12 @@ def DoStore():
 |  |---|---|---|---|---|---|   |  |--------------------------|   |                                 
 |                              |                                 |
 |----------------------------------------------------------------|              
+              
+Enter [S] to enter SHOP
+Enter [I] to enter INVENTORY
+
+Enter [X] to EXIT              
+              
               """)
         val = input("> ")
         if val == 'X' or val == 'x':
