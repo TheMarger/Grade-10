@@ -1,4 +1,4 @@
-import os, time, random, sys, re
+import os, time, random, sys, re, operator
 
 def GameMenu():
     global Shop_Rating
@@ -657,7 +657,7 @@ Enter [X] to EXIT
                 print("No following page!")
                 time.sleep(1)
         elif val == '<':
-            if Items_Page > 0:
+            if Items_Page > 1:
                 Items_Page -= 1
             else:
                 print("No following page!")
@@ -901,7 +901,7 @@ def DoRewards():
 
 Enter [>] for next page  
 Enter [<] for previous page
-Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(page) + colors.END}                                                                                                                       
+Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(Rewards_Page) + colors.END}                                                                                                                       
 Enter [R] to refresh
                 """)
         elif Rewards_Page == 2:
@@ -910,7 +910,7 @@ Enter [R] to refresh
 
 Enter [>] for next page
 Enter [<] for previous page
-Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(page) + colors.END}
+Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(Rewards_Page) + colors.END}
 Enter [R] to refresh
                 """)
         elif Rewards_Page == 3:
@@ -919,7 +919,7 @@ Enter [R] to refresh
 
 Enter [>] for next page
 Enter [<] for previous page
-Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(page) + colors.END}
+Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(Rewards_Page) + colors.END}
 Enter [R] to refresh
                 """)
 
@@ -929,39 +929,39 @@ Enter [R] to refresh
 
 
 Enter [<] for previous page
-Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(page) + colors.END}
+Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(Rewards_Page) + colors.END}
 Enter [R] to refresh
                 """)
         val = input("> ")
         if val == 'C' or val == 'c':
-            if page == 1:
+            if Rewards_Page == 1:
                 Cash_Reset = True
             else:
                 pass
         elif val == '>':
-            if page == 3 or page == "SPIN":
+            if Rewards_Page == 3 or Rewards_Page == "SPIN" or Rewards_Page == "DUNGEN":
                 print("No next page")
                 time.sleep(1)
             else:
-                page += 1
+                Rewards_Page += 1
         elif val == '<':
-            if page == 1:
+            if Rewards_Page == 1:
                 print("No previous page")
                 time.sleep(1)
-            elif page == "SPIN":
-                page = 2
+            elif Rewards_Page == "SPIN":
+                Rewards_Page = 2
             else:
-                page -= 1 
+                Rewards_Page -= 1 
         elif val == 'X' or val == 'x':
-            page=1
+            Rewards_Page = 1
             GameMenu()
         elif val == 'R' or val == 'r':
             DoRewards()
         elif val == 'S' or val == 's':
-            if page == 2:
+            if Rewards_Page == 2:
                 if Spin_Time_To_Wait_Min < 0:
                     os.system('cls')
-                    page = "SPIN"
+                    Rewards_Page = "SPIN"
                 else:
                     print("SPIN NOT READY")
                     time.sleep(1)
@@ -969,13 +969,13 @@ Enter [R] to refresh
                 print("Please enter a denfined value")
                 time.sleep(1)
         elif val == 'P' or val == 'p':
-          if page == "SPIN":
+          if Rewards_Page == "SPIN":
             DoSpin()
           else:
             print("Please enter a denfined value")
             time.sleep(1)
         elif val == 'M' or val == 'm':
-            if page == 3:
+            if Rewards_Page == 3:
                 if Dungen_Time_To_Wait_Min < 0:
                     DoDungen()
                 else:
@@ -989,15 +989,31 @@ Enter [R] to refresh
             time.sleep(1)
           
 def DoDungen():
-  global playing, cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, section 
-  while playing == True:
-    os.system('cls')
-    print(section.DUNGEN)
-    val = input("> ")
+    global playing, cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, section
+    global ratings, operation 
+  
+    while playing == True:
+        os.system('cls')
+        print(section.DUNGEN)
+        val = input("> ")
+        if val == 'D' or val == 'd':
+            Wrong = False
+            AmountCorrect = 0
+            while Wrong == False:
+                os.system('cls')
+                a = random.randint(1, 100)
+                b = random.randint(1, 100)
+                c = random.randint(1, 100)
+                opr1 = random.choice(operator)
+                opr2 = random.choice(operator)
+                #question = a op[opr1] b op[opr2] c 
+                #print(op['+'])
+                
+                
+                
 
 def DoSpin():
   pass
-
 
 def DoInformation():
     global playing
@@ -1325,7 +1341,31 @@ def DoOrder():
 
     return order
 
-
+#def OrderMenu():
+#    global cash
+#    global seperater
+#    global Menu
+#    global playing
+#    global colors
+#    global level
+#    global ratings
+#    global OverallRating
+#    global OverallScore
+#    global ChangeAVGDisplay, customers, NumOrders
+#    class ORDERS:
+#        CUSTOM1 = []
+#        CUSTOM2 = []
+#        CUSTOM3 = []
+#        CUSTOM4 = []
+#        CUSTOM5 = []
+#    
+#    if customers <= 5:
+#        for i in range(customers.Count()):
+#            ORDERS[i] = DoOrderStation()
+#    else:
+#        pass
+        
+    
 def DoOrderStation():
     os.system('cls')
     global cash
@@ -1396,7 +1436,7 @@ def DoSandwichMaker():
     global ratings
     global playing
     global SeshCash
-    global multiplier
+    global multiplier, operation
     SeshCash = 0
     CorrectAns = []
     NumCorrect = 0 
