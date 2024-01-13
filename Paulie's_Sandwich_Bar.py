@@ -1,4 +1,4 @@
-import os, time, random, sys, re, operator
+import os, time, random, sys, re
 
 def GameMenu():
     global Shop_Rating
@@ -10,7 +10,7 @@ def GameMenu():
     global Name, customers
     playing = True
     while playing:
-        os.system('cls')
+        os.system('clear')
         if DisplayCustomers == True:
             print(f"""\n{colors.BOLD + colors.UNDERLINE + "Welcome To " + Name + " Sandwich bar!" + colors.END}\n
     Store              {colors.BOLD + "Enter [S]" + colors.END}
@@ -64,12 +64,12 @@ def GameMenu():
             while playing:
               choice = input(f"Are you sure you want to exit? (Y/N): ")
               if choice == "Y" or choice == "y":
-                os.system('cls')
+                os.system('clear')
                 print(f"""
                 \n\n\n\n\n\n
                 {colors.BOLD + colors.UNDERLINE + 
                 'Thank you for playing!' + colors.END}
-                
+
                 """)
                 time.sleep(2)
                 playing = False
@@ -94,7 +94,7 @@ def GameMenu():
 def DoStore():
     global multiplier, Shop_Rating, Shop_Rating_Cost, cash, playing, multiplier_cost
     while playing == True:
-        os.system('cls')
+        os.system('clear')
         print(f"""
 |----------------------------------------------------------------|
 |                              |                                 |
@@ -112,12 +112,12 @@ def DoStore():
 |  |---|---|---|---|---|---|   |  |--------------------------|   |                                 
 |                              |                                 |
 |----------------------------------------------------------------|              
-              
+
 Enter [S] to enter SHOP
 Enter [I] to enter INVENTORY
 
 Enter [X] to EXIT              
-              
+
               """)
         val = input("> ")
         if val == 'X' or val == 'x':
@@ -129,11 +129,11 @@ Enter [X] to EXIT
         else:
             print("Please enter a definned option")
             time.sleep(1)
-            
+
 def DoShop():
     global multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm
     while playing == True:
-        os.system('cls')
+        os.system('clear')
         print(f"""
 |-----------------------------------------------------------------------------------------------|
 |   Customers: {colors.PURPLE + colors.UNDERLINE + str(customers) + colors.END}                                                      Shop Rating: {colors.BLUE + colors.UNDERLINE + str(Shop_Rating) + colors.END}       |
@@ -155,11 +155,11 @@ def DoShop():
 |    |     |    |      |      |                                                  |              |
 |    |     |    |      |      |                                                  |              |
 |-----------------------------------------------------------------------------------------------|            
-              
+
 Enter [R] to refresh page
 
 Enter [X] to EXIT              
-              
+
               """)
         val = input("> ")
         if val == 'X' or val == 'x':
@@ -171,16 +171,16 @@ Enter [X] to EXIT
             time.sleep(1)
 
 def DoInventory():
-    global multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm, Items_Page
+    global multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm, Items_Page, Inventory_Slot, Item_Values
     while playing == True:
-        os.system('cls')
-        isLocked = False
-        isEquipped = False
-            
+        os.system('clear')
+        print("Currently Equipped Item: ", colors.BOLD + str(Inventory_Slot) + colors.END)
+
+
         class Items:  
             DUSTY_BROOM = f"""
     |-------------------------|              
-    | {isLocked} {isEquipped} |
+    | {Item_Values['DUSTY_BROOM']['is_locked']}      {Item_Values['DUSTY_BROOM']['is_equipped']} |
     |       Dusty Broom       |
     |-------------------------|
     |             {colors.UNDERLINE + colors.BOLD + colors.BROWN + str('COMMON') + colors.END + '             |'}           
@@ -191,13 +191,13 @@ def DoInventory():
     |                         |
     |-------------------------|
     |                         |
-    |  [C] To Unlock/Equip    |
+    |  [C] To Equip/Unequip   |
     |                         |
     |-------------------------|        
             """
             KELP_SEVICHE_HAT = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['KELP_SEVICHE_HAT']['is_locked']}      {Item_Values['KELP_SEVICHE_HAT']['is_equipped']} |
     |   Kelp Seviche Hat      |
     |-------------------------|
     |         {colors.UNDERLINE + colors.BOLD + colors.BLUE + 'RARE' + colors.END}          |           
@@ -208,13 +208,13 @@ def DoInventory():
     |                         |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+    |  [C] To Equip/Unequip   |
     |                         |
     |-------------------------|        
             """
             GOLDEN_TUXEDO = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['GOLDEN_TUXEDO']['is_locked']}      {Item_Values['GOLDEN_TUXEDO']['is_equipped']} |
     |     Golden Tuxedo       |
     |-------------------------|
     |         {colors.UNDERLINE + colors.BOLD + colors.YELLOW + 'LEGEND' + colors.END}          |           
@@ -225,13 +225,13 @@ def DoInventory():
     |                         |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+    |  [C] To Equip/Unequip   |
     |                         |
     |-------------------------|        
             """
             RUST_BUCKET = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['RUST_BUCKET']['is_locked']}      {Item_Values['RUST_BUCKET']['is_equipped']} |
     |      Rust Bucket        |
     |-------------------------|
     |      {colors.UNDERLINE + colors.BOLD + colors.BROWN + 'COMMON' + colors.END}       |           
@@ -242,13 +242,13 @@ def DoInventory():
     |                         |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+    |  [C] To Equip/Unequip   |
     |                         |
     |-------------------------|        
             """
             TACO_TUESDAY_STICKER = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['TACO_TUESDAY_STICKER']['is_locked']}      {Item_Values['TACO_TUESDAY_STICKER']['is_equipped']} |
     |  Taco Tuesday Sticker   |
     |-------------------------|
     |      {colors.UNDERLINE + colors.BOLD + colors.BLUE + 'RARE' + colors.END}       |           
@@ -259,13 +259,13 @@ def DoInventory():
     |   + 1x shop multiplier  |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+[C] To Equip/Unequip        |
     |                         |
     |-------------------------|        
             """
             GOLDEN_GLOVES = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['GOLDEN_GLOVES']['is_locked']}      {Item_Values['GOLDEN_GLOVES']['is_equipped']} |
     |      Golden Gloves      |
     |-------------------------|
     |     {colors.UNDERLINE + colors.BOLD + colors.YELLOW + 'LEGEND' + colors.END}       |           
@@ -276,13 +276,13 @@ def DoInventory():
     |                         |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+[C] To Equip/Unequip        |
     |                         |
     |-------------------------|        
             """
             CHUM_SIGN = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['CHUM_SIGN']['is_locked']}      {Item_Values['CHUM_SIGN']['is_equipped']} |
     |       Chum Sign         |
     |-------------------------|
     |      {colors.UNDERLINE + colors.BOLD + colors.BROWN + 'COMMON' + colors.END}       |           
@@ -293,13 +293,13 @@ def DoInventory():
     |                         |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+[C] To Equip/Unequip        |
     |                         |
     |-------------------------|        
             """
             MACRONALD_DONALD = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['MACRONALD_DONALD']['is_locked']}      {Item_Values['MACRONALD_DONALD']['is_equipped']} |
     |   MacRonald Donald      |
     |-------------------------|
     |      {colors.UNDERLINE + colors.BOLD + colors.BLUE + 'RARE' + colors.END}       |           
@@ -310,16 +310,16 @@ def DoInventory():
     |    + 1x shop multiplier |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+[C] To Equip/Unequip        |
     |                         |
     |-------------------------|        
             """
             PLATINUM_TOWEL = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['PLATINUM_TOWEL']['is_locked']}      {Item_Values['PLATINUM_TOWEL']['is_equipped']} |
     |     Platinum Towel      |
     |-------------------------|
-    |     {colors.UNDERLINE + colors.BOLD + colors.YELLOW + 'LEGEND' + colors.END}       |           
+    |          {colors.UNDERLINE + colors.BOLD + colors.YELLOW + 'LEGEND' + colors.END}       |           
     |-------------------------|
     |                         |
     | + triple order wait time|
@@ -327,41 +327,43 @@ def DoInventory():
     |                         |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+[C] To Equip/Unequip        |
     |                         |
     |-------------------------|        
             """
             HOLY_DUSTY_BROOM = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['HOLY_DUSTY_BROOM']['is_locked']}      {Item_Values['HOLY_DUSTY_BROOM']['is_equipped']} |
     |    Holy Dusty Broom     |
     |-------------------------|
-    |   {colors.UNDERLINE + colors.BOLD + colors.PURPLE + 'MYTHICAL' + colors.END}       |           
-    |-------------------------|
-    |                         |
-    | + triple order wait time|
-    |      + 1x c/min         |
-    |     + 2x shop multiplier|
+    |         {colors.UNDERLINE + colors.BOLD + colors.PURPLE + 'MYTHICAL' + colors.END}       |           
+    |-------------------------|                         
+    |  + 1 shop rating        |
+    |  + 3x game multiplier   |
+    |  + 2x shop multiplier   |
+    |  + 2x order wait time   |
+    |  + 1x c/min             |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+[C] To Equip/Unequip        |
     |                         |
     |-------------------------|        
             """
             HOLY_RUST_BUCKET = f"""
     |-------------------------|              
-    |  {isLocked} {isEquipped}|
+    | {Item_Values['HOLY_RUST_BUCKET']['is_locked']}      {Item_Values['HOLY_RUST_BUCKET']['is_equipped']} |
     |    Holy Rust Bucket     |
     |-------------------------|
-    |   {colors.UNDERLINE + colors.BOLD + colors.PURPLE + 'MYTHICAL' + colors.END}       |            
+    |         {colors.UNDERLINE + colors.BOLD + colors.PURPLE + 'MYTHICAL' + colors.END}       |            
     |-------------------------|
     |                         |
     | + triple order wait time|
     |    + 1x c/min           |
     |    + 2x shop multiplier |
+    |    - 0.5x staff cost    |
     |-------------------------|      
     |                         |
-    |  [C] To Unlock/Equip    |
+[C] To Equip/Unequip        |
     |                         |
     |-------------------------|        
             """
@@ -369,14 +371,19 @@ def DoInventory():
         RareItems = [Items.KELP_SEVICHE_HAT, Items.TACO_TUESDAY_STICKER, Items.MACRONALD_DONALD]
         LegendItems = [Items.GOLDEN_TUXEDO, Items.GOLDEN_GLOVES, Items.PLATINUM_TOWEL]
         MythicItems = [Items.HOLY_DUSTY_BROOM, Items.HOLY_RUST_BUCKET]
-            
+
+        for i in Item_Values:
+          if Item_Values[i]['is_equipped'] == colors.BOLD + colors.GREEN + "EQUIPPED" + colors.END:
+            Inventory_Slot = i
+            break
+          else:
+            Inventory_Slot = []
+
+        
         if Items_Page == 1:
-            
-            isLocked = "UNLOCKED"
-            isEquipped = False
-            
+
             print(f"""
-              
+
                            {CommonItems[0]}              
 
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}       
@@ -384,25 +391,12 @@ Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 2:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {CommonItems[1]}              
 
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}       
@@ -410,25 +404,12 @@ Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 3:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {CommonItems[2]}              
 
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}       
@@ -436,219 +417,115 @@ Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 4:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {RareItems[0]}
-                                     
+
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}                     
 Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 5:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {RareItems[1]}          
-                           
+
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}       
 Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 6:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {RareItems[2]} 
-                                    
+
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}                     
 Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 7:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {LegendItems[0]} 
-                                    
+
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}                     
 Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 8:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {LegendItems[1]}    
-                                 
+
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}                     
 Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 9:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {LegendItems[2]} 
-                                    
+
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}                     
 Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 10:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {MythicItems[0]} 
-                                    
+
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}                     
 Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         elif Items_Page == 11:
-            
-            isLocked = False
-            isEquipped = False
-            
-            if isLocked == False:
-                isLocked = colors.BOLD + colors.BG_MAGENTA + 'LOCKED' + colors.END
-            else:
-                isLocked = colors.BOLD + colors.BG_CYAN + 'UNLOCKED' + colors.END
-                
-            if isEquipped == False:
-                isEquipped = colors.BOLD + 'READY' + colors.END            
-            else:
-                isEquipped = colors.BOLD + colors.YELLOW + 'EQUIPPED' + colors.END
-            
+
             print(f"""
-              
+
                            {MythicItems[1]} 
-                                    
+
                                                                  Page: {colors.BOLD + colors.RED + str(Items_Page) + colors.END}                     
 Enter [>] for next page
 Enter [<] for previous page
 
 Enter [X] to EXIT              
-              
+
               """)
         else:
             pass
-    
+
         val = input("> ")
         if val == '>':
             if Items_Page < 11:
@@ -665,6 +542,25 @@ Enter [X] to EXIT
         elif val == 'x' or val == 'X':
             Items_Page = 1
             DoStore()
+        elif val == 'c' or val == 'C':
+          for i in range(Items_Page):
+            if i == 1:
+                item = "DUSTY_BROOM"
+            elif i == 2:
+                item = "RUST_BUCKET"
+            if Item_Values[item]["is_locked"] == colors.RED + colors.BOLD + "LOCKED" + colors.END:
+                print("Item Locked!")
+                time.sleep(1)
+            elif Item_Values[item]["is_equipped"] == colors.BOLD + colors.GREEN + "EQUIPPED" + colors.END:
+                Item_Values[item]["is_equipped"] = colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+                print(colors.BOLD + colors.RED + "UNEQUIPPED" + colors.END)
+                time.sleep(1)
+            else:
+                Item_Values[item]["is_equipped"] = colors.BOLD + colors.GREEN + "EQUIPPED" + colors.END
+                print(Item_Values[item]['is_equipped'])
+                print("Item Equipped!")
+                time.sleep(1)
+              
         else:
             print("Please enter a defined option")
             time.sleep(1)
@@ -717,7 +613,7 @@ def DoUpgrades():
     global seperater
 
     while playing == True:
-        os.system('cls')
+        os.system('clear')
 
         if multiplier != 'LOCKED':
             if multiplier >= 20:
@@ -780,7 +676,7 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
 
 def DoRewards():
     global cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors, Cash_Reset
-    global current_time_min, current_time_sec, Rewards_Page, Dungen_Cooldown, Spin_Period, section
+    global current_time_min, current_time_sec, Rewards_Page, Dungen_Cooldown, Spin_Period, section, Last_Dungen_Score, High_Dungen_Score
     current_time_sec = time.time() - start_time
     current_time_min = int(current_time_sec / 3)
     Cash_Earned = current_time_min / 5
@@ -805,7 +701,7 @@ def DoRewards():
             Spin_Time_To_Wait_Countdown = colors.BG_GREEN + colors.BOLD + "   READY!   " + colors.END 
 
 
-        os.system('cls')
+        os.system('clear')
         print(colors.BOLD + colors.BG_RED + colors.ITALIC + " REWARDS " + colors.END)
         class section:  
             ONE = f"""
@@ -879,21 +775,24 @@ def DoRewards():
             DUNGEN = f"""
     {colors.BOLD + colors.YELLOW + " WELCOME TO THE MATH DUNGEN! " + colors.END}
 
-|--------------------------------------------------------------------------  |
-| What Is Dungen?          | Previous Games  | Points Scored | Cash Earned |
-|--------------------------|-----------------|---------------|-------------|
-| Math Dungen is where     |                 |               |             |
-| you can earn money and   |                 |               |             |
-| rewards for your         |                 |               |             |
-| restaurant by completing |                 |               |             |
-| waves of math questions! |                 |               |             |
-|                          |                 |               |             |
-| Press [D] to Begin!      |                 |               |             | 
-|                          |                 |               |             |
-|                          |                 |               |             |
-|                          |                 |               |             |  
-|--------------------------------------------------------------------------| 
-    
+|------------------------------------------------------------|
+| What Is Dungen?          | Previous Score  | High Score    | 
+|--------------------------|-----------------|---------------|
+| Math Dungen is where     |                 |               |             
+| you can earn money and   | {colors.UNDERLINE + str(Last_Dungen_Score) + colors.END}               | {colors.RED + colors.UNDERLINE + str(High_Dungen_Score) + colors.END}             |             
+| rewards for your         |                 |               |             
+| restaurant by completing |                 |               |             
+| simple math questions!   |                 |               |             
+| The gamemode runs until  |                 |               |
+| a questions is got wrong.|                 |               |             
+|                          |                 |               |
+|                          |                 |               |  
+|  Press [D] to Begin!     |                 |               |             
+|                          |                 |               |             
+|                          |                 |               |             
+|                          |                 |               |             
+|-------------------------------------------------------------
+
     """
         if Rewards_Page == 1: 
             print(f"""
@@ -960,7 +859,7 @@ Enter [R] to refresh
         elif val == 'S' or val == 's':
             if Rewards_Page == 2:
                 if Spin_Time_To_Wait_Min < 0:
-                    os.system('cls')
+                    os.system('clear')
                     Rewards_Page = "SPIN"
                 else:
                     print("SPIN NOT READY")
@@ -987,30 +886,114 @@ Enter [R] to refresh
         else:
             print("Please enter a denfined value")
             time.sleep(1)
-          
+
 def DoDungen():
     global playing, cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, section
-    global ratings, operation 
-  
+    global ratings, DungenMultiplier, Dungen_Cooldown, High_Dungen_Score, Last_Dungen_Score
+
     while playing == True:
-        os.system('cls')
+        os.system('clear')
         print(section.DUNGEN)
         val = input("> ")
         if val == 'D' or val == 'd':
+            operation = ['+', '-', '*', '/']
             Wrong = False
-            AmountCorrect = 0
+            SeshCash = 0
+            NumCorrect = 0
+ 
             while Wrong == False:
-                os.system('cls')
-                a = random.randint(1, 100)
-                b = random.randint(1, 100)
-                c = random.randint(1, 100)
-                opr1 = random.choice(operator)
-                opr2 = random.choice(operator)
-                #question = a op[opr1] b op[opr2] c 
-                #print(op['+'])
-                
-                
-                
+                os.system('clear')
+                num1 = random.randint(1, 100)
+                num2 = random.randint(1, 100)
+                opr1 = random.choice(operation)
+                if opr1 == operation[0]:
+                  answer = num1 + num2
+                elif opr1 == operation[1]:
+                  answer = num1 - num2
+                elif opr1 == operation[2]:
+                  answer = num1 * num2
+                else:
+                  answer = num1 / num2
+
+                print(f"{num1} {opr1} {num2}")
+  
+                while playing:    
+                  try:
+                    response = float(input("Answer: "))
+                  except:
+                    print("Please input a number value")
+                    time.sleep(2)
+                    delete_multiple_lines(2)
+                  else:
+                    break
+  
+                if response == answer.__round__(2): 
+                  print(f"Good Job!\n{cash_color} + 1")
+                  SeshCash += 1
+                  NumCorrect += 1
+                  time.sleep(2)
+                  delete_multiple_lines(5)
+                else:
+                  print(("Incorrect!"))
+                  Wrong = True
+                  time.sleep(2)
+                  delete_multiple_lines(4)
+            else:
+              os.system("clear")
+
+              if isinstance(multiplier, int):
+                TotalSeshCash = (SeshCash * DungenMultiplier) * multiplier
+              else:
+                TotalSeshCash = (SeshCash * DungenMultiplier) * 1
+
+              if isinstance(TotalSeshCash, str):
+                TotalSeshCash = 0
+
+              cash += TotalSeshCash
+
+              HighScore = False
+
+              if NumCorrect > High_Dungen_Score:
+                High_Dungen_Score = NumCorrect
+                HighScore = True
+
+              Last_Dungen_Score = NumCorrect 
+
+              
+      
+              print(f"""{seperater}
+
+              Questions Correct (Score): {NumCorrect}
+              {seperater}
+              Dungen Cash Multiplier = {colors.BOLD + colors.PURPLE + str(DungenMultiplier) + colors.END}
+              {seperater}
+              Game Cash Multiplier = {colors.BOLD + colors.PURPLE + str(multiplier) + colors.END}
+              {seperater}
+              Total Cash Earned = {colors.BOLD + colors.GREEN + str(TotalSeshCash) + colors.END}
+
+              [X] Exit To Rewards Page
+    
+                  """)
+
+              if HighScore == True:
+                print(f"{colors.BOLD + colors.YELLOW + 'New High Score!' + colors.END}")
+          
+    
+              while playing:
+                Choice = input("> ")
+                if Choice == "X" or Choice == 'x':
+                  Dungen_Cooldown = 5
+                  DoRewards()
+                else:
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    delete_multiple_lines(2)
+              
+              
+  
+  
+
+
 
 def DoSpin():
   pass
@@ -1020,7 +1003,7 @@ def DoInformation():
     global colors
     global seperater
     while playing:
-        os.system('cls')
+        os.system('clear')
         print(f"""\nChoose Inquiry:\n
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} enter [O]
 {seperater}
@@ -1042,7 +1025,7 @@ Enter [X] to exit
               """)
         inquiry = input("> ")
         if inquiry == 'O' or inquiry == 'o':
-            os.system('cls')
+            os.system('clear')
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1066,7 +1049,7 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'U' or inquiry == 'u':
-            os.system('cls')
+            os.system('clear')
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1090,7 +1073,7 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'R' or inquiry == 'r':
-            os.system('cls')
+            os.system('clear')
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1114,7 +1097,7 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'S' or inquiry == 's':
-            os.system('cls')
+            os.system('clear')
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1138,7 +1121,7 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'I' or inquiry == 'i':
-            os.system('cls')
+            os.system('clear')
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1162,7 +1145,7 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'C' or inquiry == 'c':
-            os.system('cls')
+            os.system('clear')
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1186,7 +1169,7 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'M' or inquiry == 'm':
-            os.system('cls')
+            os.system('clear')
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1210,7 +1193,7 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'H' or inquiry == 'h':
-            os.system('cls')
+            os.system('clear')
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1248,7 +1231,7 @@ def DoSettings():
     global ChangeAVGDisplay, DisplayCustomers
     global Name
     while playing == True:
-        os.system('cls')
+        os.system('clear')
         if ChangeAVGDisplay == False:
             ScaleForm = "Average"
         else:
@@ -1364,10 +1347,10 @@ def DoOrder():
 #            ORDERS[i] = DoOrderStation()
 #    else:
 #        pass
-        
-    
+
+
 def DoOrderStation():
-    os.system('cls')
+    os.system('clear')
     global cash
     global seperater
     global Menu
@@ -1440,8 +1423,8 @@ def DoSandwichMaker():
     SeshCash = 0
     CorrectAns = []
     NumCorrect = 0 
+    operation = ['+', '-', '*', '/']
     for i in range(len(ratings)): 
-        operation = ['+', '-', '*', '/']
         num1 = random.randint(1, 100) 
         num2 = random.randint(1, 100)
         num3 = random.randint(1, 100)
@@ -1505,7 +1488,7 @@ def DoSandwichMaker():
             time.sleep(2)
             delete_multiple_lines(4)
     else:
-        os.system("cls")
+        os.system("clear")
 
         SeshMultiplier = 0
 
@@ -1605,12 +1588,66 @@ class colors:
    BG_CYAN = '\033[46m'
    BG_WHITE = '\033[47m'
 
+Item_Values = {
+  "DUSTY_BROOM": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "RUST_BUCKET": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "CHUM_SIGN": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "KELP_SEVICHE_HAT": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "TACO_TUESDAY_HAT": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "TACO_TUESDAY_STICKER": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "MACRONALD_DONALD": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "GOLDEN_TUXEDO": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "GOLDEN_GLOVES": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "PLATINUM_TOWEL": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "HOLY_DUSTY_BROOM": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+  "HOLY_RUST_BUCKET": {
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
+  },
+
+}
+
+
 def delete_multiple_lines(n=1):
     for _ in range(n):
         sys.stdout.write("\x1b[1A")  # cursor up one line
         sys.stdout.write("\x1b[2K")  # delete the last line
 
 start_time = time.time()
+Inventory_Slot = []
 seperater = "----------------------------------------------------------------"
 cash = float(0).__round__(2)
 multiplier = 'LOCKED'
@@ -1621,7 +1658,10 @@ Name = "Paulie's"
 cpm = 0
 StaffNum = 0
 customers = 0
-Shop_Multiplier = 0
+Shop_Multiplier = 1
+DungenMultiplier = 1
+Last_Dungen_Score = 0
+High_Dungen_Score = 0
 Rewards_Page = 1
 Items_Page = 1
 DisplayCustomers = False
