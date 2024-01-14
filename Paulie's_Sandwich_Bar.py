@@ -1808,8 +1808,8 @@ def DoOrder():
 
 def DoOrderMenu():
     global cash, Order1_time, Order2_time, Order3_time
-    global seperater
-    global Menu
+    global seperater, Customer_Wait_Time    
+    global Menu, Shop_Rating
     global playing
     global colors, NoOrder, NoRatings
     global level, Ovr_Scores1, Ovr_Scores2, Ovr_Scores3, Ovr_Ratings1, Ovr_Ratings2, Ovr_Ratings3
@@ -1923,24 +1923,55 @@ Enter [C] to complete order 3
             GameMenu()
             
         
-        try:
-            if Order_Page == 1:
-                if customers != 0:
-                    if time.time() - Order1_time < 10:
-                        DoOrderStation(Order1, Ratings1, Ovr_Ratings1, Ovr_Scores1)
-                    else:
-                        print("Too slow, customer left! shop rating - 1")
+
+        if Order_Page == 1:
+            if customers != 0:
+                if time.time() - Order1_time < Customer_Wait_Time:
+                    DoOrderStation(Order1, Ratings1, Ovr_Ratings1, Ovr_Scores1)
+                else:
+                    if Shop_Rating != "LOCKED":
+                        print("Too slow, customer left!")
+                        time.sleep(1)
+                        Shop_Rating = Shop_Rating.replace("*", "", 1).replace(" ", "", 1)
+                        print(colors.BOLD + colors.PURPLE + "SHOP RATING - 1" + colors.END)
                         time.sleep(1)
                         ResetOrders(Ratings1)
-            elif Order_Page == 2:
-                if customers >= 2:
+                    else:
+                        print("Too slow, customer left!")
+                        time.sleep(1)
+                        ResetOrders(Ratings1)
+        elif Order_Page == 2:
+            if customers >= 2:
+                if time.time() - Order2_time < Customer_Wait_Time:
                     DoOrderStation(Order2, Ratings2, Ovr_Ratings2, Ovr_Scores2)
-            elif Order_Page == 3:
-                if customers == 3:
+                else:
+                    if Shop_Rating != "LOCKED":
+                        print("Too slow, customer left!")
+                        Shop_Rating = Shop_Rating.replace("*", "", 1).replace(" ", "", 1)
+                        print(colors.BOLD + colors.PURPLE + "SHOP RATING - 1" + colors.END)
+                        time.sleep(1)
+                        ResetOrders(Ratings2)
+                    else:
+                        print("Too slow, customer left!")
+                        time.sleep(1)
+                        ResetOrders(Ratings2)
+                        
+        elif Order_Page == 3:
+            if customers == 3:
+                if time.time() - Order3_time < Customer_Wait_Time:
                     DoOrderStation(Order3, Ratings3, Ovr_Ratings3, Ovr_Scores3)
-            else:
-                pass
-        except NameError:
+                else:
+                    if Shop_Rating != "LOCKED":
+                        print("Too slow, customer left!")
+                        Shop_Rating = Shop_Rating.replace("*", "", 1).replace(" ", "", 1)
+                        print(colors.BOLD + colors.PURPLE + "SHOP RATING - 1" + colors.END)
+                        time.sleep(1)
+                        ResetOrders(Ratings3)
+                    else:
+                        print("Too slow, customer left!")
+                        time.sleep(1)
+                        ResetOrders(Ratings3)
+        else:
             pass
         
      
@@ -1974,11 +2005,13 @@ def ResetOrders(ratings):
         Ovr_Ratings2 = Ovr_Ratings3
         Ovr_Scores2 = Ovr_Scores3
         Order3 = []
+        Order3_time = 0
         Ratings3 = []
         Ovr_Ratings3 = 0
         Ovr_Scores3 = 0
     else:
         Order3 = []
+        Order3_time = 0
         Ratings3 = []
         Ovr_Ratings3 = 0
         Ovr_Scores3 = 0
@@ -2297,7 +2330,7 @@ Order3_time = 0
 NoOrder = ['NaN', 'NaN', 'NaN', 'NaN', 'NaN']
 NoRatings = ['NaN', 'NaN', 'NaN', 'NaN', 'NaN']
 
-FirstOpening = False
+FirstOpening = True
 
 OrderPage = 0
 
@@ -2309,15 +2342,15 @@ Dungen_start_time = time.time()
 Inventory_Slot = []
 seperater = "----------------------------------------------------------------"
 cash = 0
-multiplier = 1
-Shop_Rating = "* * * * *"
+multiplier = "LOCKED"
+Shop_Rating = "LOCKED"
 multiplier_cost = "LOCKED"
 Shop_Rating_Cost = "LOCKED"
 Name = "Paulie's"
 cpm = 0
 StaffNum = 0
 customers = 0
-Customer_Wait_Time = 3
+Customer_Wait_Time = 300
 Shop_Multiplier = 1
 DungenMultiplier = 1
 Last_Dungen_Score = 0
@@ -2328,9 +2361,9 @@ DisplayCustomers = False
 cash_color = colors.GREEN + colors.BOLD + "Cash:" + colors.END 
 Cash_Reset = False
 cpm_Reset = False
-Spin_Period = 0
+Spin_Period = 15
 Spin_Overide = False
-Dungen_Cooldown = 0
+Dungen_Cooldown = 60
 current_time_sec = time.time() - start_time
 current_time_min = int(current_time_sec / 60)
 cpm_current_time_min = int(current_time_sec / 60)
