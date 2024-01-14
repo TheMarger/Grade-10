@@ -1957,16 +1957,19 @@ def ResetOrders(ratings):
         Ratings1 = Ratings2
         Ratings2 = Ratings3
         Order2 = Order3
+        Order2_time = Order3_time
         Ovr_Ratings1 = Ovr_Ratings2
         Ovr_Ratings2 = Ovr_Ratings3
         Ovr_Scores1 = Order2_time
         Ovr_Scores2 = Ovr_Scores3
         Order3 = []
+        Order3_time = 0
         Ratings3 = []
         Ovr_Ratings3 = 0
         Ovr_Scores3 = 0
     elif ratings == Ratings2:
         Order2 = Order3
+        Order2_time = Order3_time
         Ratings2 = Ratings3
         Ovr_Ratings2 = Ovr_Ratings3
         Ovr_Scores2 = Ovr_Scores3
