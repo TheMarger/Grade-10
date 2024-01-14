@@ -10,7 +10,8 @@ def GameMenu():
     global Name, customers
     playing = True
     while playing:
-        os.system('clear')
+        os.system('cls')
+
         if DisplayCustomers == True:
             print(f"""\n{colors.BOLD + colors.UNDERLINE + "Welcome To " + Name + " Sandwich bar!" + colors.END}\n
     Store              {colors.BOLD + "Enter [S]" + colors.END}
@@ -55,7 +56,7 @@ def GameMenu():
                                             Shop Rating: {colors.CYAN + colors.BOLD + str(Shop_Rating) + colors.END}\n""")
         val = input("> ")
         if val == 'O' or val == 'o':
-            DoOrderStation()
+            DoOrderMenu()
         elif val == 'S' or val == 's':
             DoStore()
         elif val == 'I' or val == 'i':
@@ -64,7 +65,8 @@ def GameMenu():
             while playing:
               choice = input(f"Are you sure you want to exit? (Y/N): ")
               if choice == "Y" or choice == "y":
-                os.system('clear')
+                os.system('cls')
+        
                 print(f"""
                 \n\n\n\n\n\n
                 {colors.BOLD + colors.UNDERLINE + 
@@ -87,6 +89,8 @@ def GameMenu():
             DoSettings()
         elif val == '$menu$':
             DoDevMenu()
+        elif val == 't':
+            DoOrderMenu()
         else:
             print("Please enter a defined option")
             time.sleep(1)
@@ -94,7 +98,8 @@ def GameMenu():
 def DoStore():
     global multiplier, Shop_Rating, Shop_Rating_Cost, cash, playing, multiplier_cost
     while playing == True:
-        os.system('clear')
+        os.system('cls')
+
         print(f"""
 |----------------------------------------------------------------|
 |                              |                                 |
@@ -131,10 +136,18 @@ Enter [X] to EXIT
             time.sleep(1)
 
 def DoShop():
-    global multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm
+    global cpm_current_time_min, current_time_sec, StaffNum, Ratings1, Ratings2, Ratings3, Order1, Order2, Order3, multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm
     while playing == True:
-        os.system('clear')
-        print(f"""
+        os.system('cls')
+        if Shop_Rating != "LOCKED" and multiplier != "LOCKED":
+            cpm = (((customers + len(Shop_Rating.split())) * Shop_Multiplier) * (multiplier / 3))
+        elif Shop_Rating == "LOCKED" and multiplier != "LOCKED":
+            cpm = (((customers + 0) * Shop_Multiplier) * (multiplier / 3))
+        else:
+            cpm = (((customers + 0) * Shop_Multiplier) * (1))
+
+        if customers == 0:
+            print(f"""
 |-----------------------------------------------------------------------------------------------|
 |   Customers: {colors.PURPLE + colors.UNDERLINE + str(customers) + colors.END}                                                      Shop Rating: {colors.BLUE + colors.UNDERLINE + str(Shop_Rating) + colors.END}       |
 |-----------------------                                                                        |
@@ -147,33 +160,190 @@ def DoShop():
 |                                                                                     -----     |
 |                                                                                     |O O|     |
 |                                                                                     |-|-|     |
-|                                                                                       |       |
+|      Press [C] for Customer                                                           |       |
 |                                                                                |\    /|\      |
 |    |   _______________      |                                                  |--------------|
-|    |          |             |                                                  |              |
-|    |______    |      _______|                                                  |              |
-|    |     |    |      |      |                                                  |              |
+|    |          |             |                                                  | Enter [T]    |
+|    |______    |      _______|                                                  | to hire      |
+|    |     |    |      |      |                                                  | staff        |
 |    |     |    |      |      |                                                  |              |
 |-----------------------------------------------------------------------------------------------|            
 
 Enter [R] to refresh page
+Enter [C] for Customer
+Enter [M] for CPM page
 
 Enter [X] to EXIT              
 
               """)
+        elif customers == 1:
+            print(f"""
+|-----------------------------------------------------------------------------------------------|
+|   Customers: {colors.PURPLE + colors.UNDERLINE + str(customers) + colors.END}                                                      Shop Rating: {colors.BLUE + colors.UNDERLINE + str(Shop_Rating) + colors.END}       |
+|-----------------------                                                                        |
+|   Cash/min: {colors.GREEN + colors.UNDERLINE + str(cpm) + '/min' + colors.END}                                                                             |
+|-----------------------                                                                        |
+|   Multiplier: {colors.RED + colors.UNDERLINE + str(multiplier) + colors.END}                                                                          |
+|-----------------------                                                                        |
+|   Shop Multiplier: {colors.BLUE + colors.UNDERLINE + str(Shop_Multiplier) + colors.END}                                                                          |
+|-----------------------                                                            Staff: {colors.CYAN + str(StaffNum) + colors.END}    |
+|                                                                                     -----     |
+|                                                                                     |O O|     |
+|                                                                                     |-|-|     |
+|      Press [C] for Customer          -----                                            |       |
+|                                      | | |                                     |\    /|\      |
+|    |   _______________      |          |                                       |--------------|
+|    |          |             |         /|\                                      |  Enter [T]   |
+|    |______    |      _______|          |                                       |  to hire     |
+|    |     |    |      |      |          |                                       |  staff       |
+|    |     |    |      |      |         /|\                                      |              |
+|-----------------------------------------------------------------------------------------------|            
+
+Enter [R] to refresh page
+Enter [C] for Customer
+Enter [M] for CPM page
+
+Enter [X] to EXIT              
+
+              """)
+        elif customers == 2:
+            print(f"""
+|-----------------------------------------------------------------------------------------------|
+|   Customers: {colors.PURPLE + colors.UNDERLINE + str(customers) + colors.END}                                                      Shop Rating: {colors.BLUE + colors.UNDERLINE + str(Shop_Rating) + colors.END}       |
+|-----------------------                                                                        |
+|   Cash/min: {colors.GREEN + colors.UNDERLINE + str(cpm) + '/min' + colors.END}                                                                             |
+|-----------------------                                                                        |
+|   Multiplier: {colors.RED + colors.UNDERLINE + str(multiplier) + colors.END}                                                                          |
+|-----------------------                                                                        |
+|   Shop Multiplier: {colors.BLUE + colors.UNDERLINE + str(Shop_Multiplier) + colors.END}                                                                          |
+|-----------------------                                                            Staff: {colors.CYAN + str(StaffNum) + colors.END}    |
+|                                                                                     -----     |
+|                                                                                     |O O|     |
+|                                                                                     |-|-|     |
+|      Press [C] for Customer          -----       __                                   |       |
+|                                      |'|'|      /__\__                         |\    /|\      |
+|    |   _______________      |          |        ['_']                          |--------------|
+|    |          |             |         /|\         |                            | Enter [T]    |
+|    |______    |      _______|          |         /|\                           | to hire      |
+|    |     |    |      |      |          |          |                            | staff        |
+|    |     |    |      |      |         /|\        /|\                           |              |
+|-----------------------------------------------------------------------------------------------|            
+
+Enter [R] to refresh page
+Enter [C] for Customer
+Enter [M] for CPM page
+
+Enter [X] to EXIT              
+
+              """)
+        
+        else:
+            print(f"""
+|-----------------------------------------------------------------------------------------------|
+|   Customers: {colors.PURPLE + colors.UNDERLINE + str(customers) + colors.END}                                                      Shop Rating: {colors.BLUE + colors.UNDERLINE + str(Shop_Rating) + colors.END}       |
+|-----------------------                                                                        |
+|   Cash/min: {colors.GREEN + colors.UNDERLINE + str(cpm) + '/min' + colors.END}                                                                             |
+|-----------------------                                                                        |
+|   Multiplier: {colors.RED + colors.UNDERLINE + str(multiplier) + colors.END}                                                                          |
+|-----------------------                                                                        |
+|   Shop Multiplier: {colors.BLUE + colors.UNDERLINE + str(Shop_Multiplier) + colors.END}                                                                          |
+|-----------------------                                                            Staff: {colors.CYAN + str(StaffNum) + colors.END}    |
+|                                                                                     -----     |
+|                                                                                     |O O|     |
+|                                                              _                      |-|-|     |
+|      Press [C] for Customer          -----       __         / \                       |       |
+|                                      |'|'|      /__\__     <===>               |\    /|\      |
+|    |   _______________      |          |        ['_']      [+_+]               |--------------|
+|    |          |             |         /|\         |         ||                 | Enter [T]    |
+|    |______    |      _______|          |         /|\     ()|  |()              | to hire      |
+|    |     |    |      |      |          |          |      / |__| \              | staff        |
+|    |     |    |      |      |         /|\        /|\       /  \                |              |
+|-----------------------------------------------------------------------------------------------|            
+
+Enter [R] to refresh page
+Enter [C] for Customer
+Enter [M] for CPM page
+
+Enter [X] to EXIT              
+
+              """)
+        
         val = input("> ")
         if val == 'X' or val == 'x':
             DoStore()
+        elif val == 'C' or val == 'c':
+            if customers < 3:
+                if customers == 0:
+                    customers += 1
+                    Order1_RAW = DoOrder()
+                    Order1 = Order1_RAW[0]
+                    Ratings1 = Order1_RAW[1]
+                elif customers == 1:
+                    customers += 1
+                    Order2_RAW = DoOrder()
+                    Order2 = Order2_RAW[0]
+                    Ratings2 = Order2_RAW[1]
+                else:
+                    customers += 1
+                    Order3_RAW = DoOrder()
+                    Order3 = Order3_RAW[0]
+                    Ratings3 = Order3_RAW[1]
+            else:
+                print("too many customers right now")
+                time.sleep(1)
+            print("Customer Enters!\nComplete their order soon!")
+            time.sleep(1)
         elif val == 'R' or val == 'r':
             DoShop()
+        elif val == 'M' or val == 'm':
+            ex = False
+            Cash_Earned = cpm * cpm_current_time_min
+            while ex == False:
+                os.system('cls')
+
+                print(f"""
+    |-------------------------|              
+    |                         |
+    |        playtime:        |
+    |-------------------------|
+    |          {colors.UNDERLINE + colors.BOLD + colors.PURPLE + str(current_time_min) + ' min' + colors.END + '          |'}           
+    |-------------------------|
+    |                         |
+    |     CPM:{colors.BOLD + colors.CYAN + str(cpm) + colors.END}                |     
+    |                         |
+    |-------------------------|
+    |                         |
+    | Click [C] To Claim: {colors.BOLD + colors.GREEN + str(int(Cash_Earned)) + colors.END + "   |"}
+    |                         |
+    |-------------------------|
+    
+    Enter         
+                      """)
+                inval = input("> ")
+                if inval == '':
+                    pass
+                
+        elif val == 't' or val == 'T':
+            Staff_Cost = StaffNum * 200
+            prompt = input(f"Would you like to purchase 1 staff for {Staff_Cost} cash? (y/n): ")
+            if prompt == 'y' or prompt == 'Y':
+                if cash >= Staff_Cost:
+                    cash -= Staff_Cost
+                    StaffNum += 1
+                    Shop_Multiplier += 1
+                else:
+                    print("Not enough cash!")
+                    time.sleep(1)
+             
         else:
             print("Please enter a defined option")
-            time.sleep(1)
-
+            time.sleep(1)          
+        
 def DoInventory():
     global multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm, Items_Page, Inventory_Slot, Item_Values
     while playing == True:
-        os.system('clear')
+        os.system('cls')
+
         print("Currently Equipped Item: ", colors.BOLD + str(Inventory_Slot) + colors.END)
 
 
@@ -542,13 +712,38 @@ Enter [X] to EXIT
         elif val == 'x' or val == 'X':
             Items_Page = 1
             DoStore()
-        elif val == 'c' or val == 'C':
-          for i in range(Items_Page):
-            if i == 1:
+        elif val == 'c' or val == 'C':       
+            if Items_Page == 1:
                 item = "DUSTY_BROOM"
-            elif i == 2:
+            elif Items_Page == 2:
                 item = "RUST_BUCKET"
-            if Item_Values[item]["is_locked"] == colors.RED + colors.BOLD + "LOCKED" + colors.END:
+            elif Items_Page == 3:
+                item = "CHUM_SIGN"
+            elif Items_Page == 4:
+                item = "KELP_SEVICHE_HAT"
+            elif Items_Page == 5:
+                item = "TACO_TUESDAY_HAT"
+            elif Items_Page == 6:
+                item = "TACO_TUESDAY_STICKER"
+            elif Items_Page == 7:
+                item = "MACRONALD_DONALD"
+            elif Items_Page == 8:
+                item = "GOLDEN_TUXEDO"
+            elif Items_Page == 9:
+                item = "GOLDEN_GLOVES"
+            elif Items_Page == 10:
+                item = "PLATINUM_TOWEL"
+            elif Items_Page == 11:
+                item = "HOLY_DUSTY_BROOM"
+            elif Items_Page == 12:
+                item = "HOLY_RUST_BUCKET"
+            else:
+                item = None
+            #try:
+            if Inventory_Slot != [] and Inventory_Slot != list(Item_Values)[Items_Page-1]:
+                print("Unequip current item prior to equipping new one")
+                time.sleep(1)
+            elif Item_Values[item]["is_locked"] == colors.RED + colors.BOLD + "LOCKED" + colors.END:
                 print("Item Locked!")
                 time.sleep(1)
             elif Item_Values[item]["is_equipped"] == colors.BOLD + colors.GREEN + "EQUIPPED" + colors.END:
@@ -560,13 +755,17 @@ Enter [X] to EXIT
                 print(Item_Values[item]['is_equipped'])
                 print("Item Equipped!")
                 time.sleep(1)
+            #except:
+            #    os.system('cls')
+            #  
+            #    print("ERROR")
+            #    time.sleep(1)
+            #    GameMenu()
+                    
               
         else:
             print("Please enter a defined option")
             time.sleep(1)
-
-
-
 
 def DoDevMenu():
     global multiplier, Shop_Rating, Shop_Rating_Cost, cash, playing, multiplier_cost, Dungen_Cooldown, Spin_Period
@@ -613,7 +812,8 @@ def DoUpgrades():
     global seperater
 
     while playing == True:
-        os.system('clear')
+        os.system('cls')
+
 
         if multiplier != 'LOCKED':
             if multiplier >= 20:
@@ -673,35 +873,38 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
             print("Enter a defined option")
             time.sleep(1)
 
-
 def DoRewards():
-    global cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors, Cash_Reset
-    global current_time_min, current_time_sec, Rewards_Page, Dungen_Cooldown, Spin_Period, section, Last_Dungen_Score, High_Dungen_Score
-    current_time_sec = time.time() - start_time
-    current_time_min = int(current_time_sec / 3)
-    Cash_Earned = current_time_min / 5
+    global Cash_start_time, Spin_start_time, Dungen_start_time, cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors, Cash_Reset
+    global Rewards_Page, Dungen_Cooldown, Spin_Period, section, Last_Dungen_Score, High_Dungen_Score
+    Cash_current_time_sec = time.time() - Cash_start_time
+    Spin_current_time_sec = time.time() - Spin_start_time
+    Dungen_current_time_sec = time.time() - Dungen_start_time
+    Cash_current_time_min = int(Cash_current_time_sec / 3)
+    Spin_current_time_min = int(Spin_current_time_sec / 3)
+    Dungen_current_time_min = int(Dungen_current_time_sec / 3)
+    Cash_Earned = Cash_current_time_min / 5
     while playing == True:
         if Cash_Reset == True:
             cash += Cash_Earned
             Cash_Earned = 0
-            current_time_min = 0
-            current_time_sec = 0
+            Cash_start_time = time.time()
             print("Claimed!")
             time.sleep(1)
             Cash_Reset = False
         else:
             pass
-        Dungen_Time_To_Wait_Min = Dungen_Cooldown - current_time_min
+        Dungen_Time_To_Wait_Min = Dungen_Cooldown - Dungen_current_time_min
         Dungen_Time_To_Wait_Countdown = colors.CYAN + colors.BOLD + f"{Dungen_Time_To_Wait_Min}" + colors.END
         if Dungen_Time_To_Wait_Min < 0:
             Dungen_Time_To_Wait_Countdown = colors.BG_CYAN + colors.BOLD + "   READY!   " + colors.END 
-        Spin_Time_To_Wait_Min = Spin_Period - current_time_min
+        Spin_Time_To_Wait_Min = Spin_Period - Spin_current_time_min
         Spin_Time_To_Wait_Countdown = colors.CYAN + colors.BOLD + f"{Spin_Time_To_Wait_Min}" + colors.END
         if Spin_Time_To_Wait_Min < 0:
             Spin_Time_To_Wait_Countdown = colors.BG_GREEN + colors.BOLD + "   READY!   " + colors.END 
 
 
-        os.system('clear')
+        os.system('cls')
+
         print(colors.BOLD + colors.BG_RED + colors.ITALIC + " REWARDS " + colors.END)
         class section:  
             ONE = f"""
@@ -709,11 +912,11 @@ def DoRewards():
     |                         |
     |        playtime:        |
     |-------------------------|
-    |          {colors.UNDERLINE + colors.BOLD + colors.PURPLE + str(current_time_min) + ' min' + colors.END + '          |'}           
+    |          {colors.UNDERLINE + colors.BOLD + colors.PURPLE + str(Cash_current_time_min) + ' min' + colors.END + '          |'}           
     |-------------------------|
     |                         |
-    |    Earn 1 cash every:   |  *Upgrade this by increasing your 
-    |        5 minutes!       |     store rating!
+    |    Earn 1 cash every:   |  
+    |        5 minutes!       |     
     |                         |
     |-------------------------|
     |                         |
@@ -807,6 +1010,7 @@ Enter [R] to refresh
             print(f"""
 {section.TWO}
 
+Enter [F] to skip cooldown
 Enter [>] for next page
 Enter [<] for previous page
 Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(Rewards_Page) + colors.END}
@@ -859,7 +1063,8 @@ Enter [R] to refresh
         elif val == 'S' or val == 's':
             if Rewards_Page == 2:
                 if Spin_Time_To_Wait_Min < 0:
-                    os.system('clear')
+                    os.system('cls')
+            
                     Rewards_Page = "SPIN"
                 else:
                     print("SPIN NOT READY")
@@ -867,8 +1072,16 @@ Enter [R] to refresh
             else:
                 print("Please enter a denfined value")
                 time.sleep(1)
+        elif val == 'f' or val == 'F':
+            if Rewards_Page == 2:
+                skip_cost = 200 * Spin_Time_To_Wait_Countdown
+                prompt = input(f"Would you like pay {skip_cost} to skip cooldown? (y/n): ")
+                if prompt == 'y' or prompt == 'Y':
+                    if cash >= skip_cost
+                        cash -= skip_cost
         elif val == 'P' or val == 'p':
           if Rewards_Page == "SPIN":
+            Spin_start_time = time.time()
             DoSpin()
           else:
             print("Please enter a denfined value")
@@ -876,6 +1089,7 @@ Enter [R] to refresh
         elif val == 'M' or val == 'm':
             if Rewards_Page == 3:
                 if Dungen_Time_To_Wait_Min < 0:
+                    Dungen_start_time = time.time()
                     DoDungen()
                 else:
                     print("DUNGEN NOT READY")
@@ -892,7 +1106,8 @@ def DoDungen():
     global ratings, DungenMultiplier, Dungen_Cooldown, High_Dungen_Score, Last_Dungen_Score
 
     while playing == True:
-        os.system('clear')
+        os.system('cls')
+
         print(section.DUNGEN)
         val = input("> ")
         if val == 'D' or val == 'd':
@@ -902,7 +1117,8 @@ def DoDungen():
             NumCorrect = 0
  
             while Wrong == False:
-                os.system('clear')
+                os.system('cls')
+        
                 num1 = random.randint(1, 100)
                 num2 = random.randint(1, 100)
                 opr1 = random.choice(operation)
@@ -939,7 +1155,7 @@ def DoDungen():
                   time.sleep(2)
                   delete_multiple_lines(4)
             else:
-              os.system("clear")
+              os.system("cls")
 
               if isinstance(multiplier, int):
                 TotalSeshCash = (SeshCash * DungenMultiplier) * multiplier
@@ -982,28 +1198,129 @@ def DoDungen():
               while playing:
                 Choice = input("> ")
                 if Choice == "X" or Choice == 'x':
-                  Dungen_Cooldown = 5
                   DoRewards()
                 else:
                     print("Please enter a defined option")
                     time.sleep(1)
                     delete_multiple_lines(2)
               
-              
-  
-  
+#de:
+#    global multiplier, Shop_Rating, Shop_Rating_Cost, Staff_Cost, Shop_Multiplier, cash, Customer_Wait_Time, playing, cpm, multiplier_cost, StaffNum, customers, cpm, Items_Page, Inventory_Slot, Item_Values
+#
+#    if Inventory_Slot:
+#        processed_items = set()
 
+#        for item_key, item_value in Item_Values.items():
+#            if item_key not in processed_items and Inventory_Slot == item_key:
+#                processed_items.add(item_key)  # Add the processed item to the set
+#                if item_key == "DUSTY_BROOM":
+#                    customers += 1
+#                    Shop_Multiplier += 0.25
+#                elif item_key == "RUST_BUCKET":
+#                    customers += 1
+#                    Staff_Cost *= 0.75
+#                elif item_key == "CHUM_SIGN":
+#                    StaffNum += 1
+#                    cpm += 1
+#                    customers -= 1
+#               elif item_key == "KELP_SEVICHE_HAT":
+#                    customers += 2
+#                    StaffNum += 1
+#                    Shop_Multiplier += 0.5
+#                elif item_key == "TACO_TUESDAY_HAT":
+#                    Shop_Multiplier += 1
+#                    StaffNum += 2
+#                elif item_key == "TACO_TUESDAY_STICKER":
+#                    Shop_Multiplier += 1
+#                    customers += 1
+#                elif item_key == "MACRONALD_DONALD":
+#                    StaffNum += 3
+#                    Shop_Multiplier += 2
+#                    cpm += 1
+#                elif item_key == "GOLDEN_TUXEDO":
+#                    customers += 3
+#                    Shop_Multiplier += 2
+#                    Staff_Cost *= 0.5
+#                    StaffNum += 2
+#                elif item_key == "GOLDEN_GLOVES":
+#                    Customer_Wait_Time *= 3
+#                    multiplier *= 2
+#                    StaffNum += 2
+#                elif item_key == "PLATINUM_TOWEL":
+#                    Shop_Rating += ' *'
+#                    multiplier *= 3
+#                    Shop_Multiplier *= 2
+#                    Customer_Wait_Time *= 2
+#                    cpm += 1
+#                elif item_key == "HOLY_DUSTY_BROOM":
+#                    Customer_Wait_Time *= 3
+#                    Staff_Cost *= 0.5
+#                    cpm += 1
+#                    multiplier *= 2
+#                elif item_key == "HOLY_RUST_BUCKET":
+#                    # Add conditions for HOLY_RUST_BUCKET
+#                    pass  # Placeholder, add your conditions for HOLY_RUST_BUCKET here
+#
+#    else:  # Reset the conditions if Inventory_Slot is empty
+#        multiplier = 1
+#        Shop_Rating = ""
+#        Shop_Rating_Cost = 0
+#        Staff_Cost = 1
+#        Shop_Multiplier = 1
+#        cash = 0
+#        Customer_Wait_Time = 1
+#        cpm = 0
+#        multiplier_cost = 10
+#        StaffNum = 0
+#        customers = 0
+#
+#    return multiplier, customers, Staff_Cost, Shop_Rating, StaffNum, Customer_Wait_Time, cpm, Shop_Multiplier
 
-
+                                                       
 def DoSpin():
-  pass
+    global Item_Values, colors
+    CommonItems = ["DUSTY_BROOM", "RUST_BUCKET", "CHUM_SIGN"]
+    RareItems = ["KELP_SEVICHE_HAT", "TACO_TUESDAY_STICKER", "MACRONALD_DONALD"]
+    LegendItems = ["GOLDEN_TUXEDO", "GOLDEN_GLOVES", "PLATINUM_TOWEL"]
+    MythicItems = ["HOLY_DUSTY_BROOM", "HOLY_RUST_BUCKET"]
 
+    Item_Rolled = random.choice(list(Item_Values.keys()))
+    if Item_Rolled in CommonItems:
+        Item_Rarity = colors.BOLD + colors.BROWN + "COMMON" + colors.END
+    elif Item_Rolled in RareItems:
+        Item_Rarity = colors.BOLD + colors.BLUE + "RARE" + colors.END
+    elif Item_Rolled in LegendItems:
+        Item_Rarity = colors.BOLD + colors.YELLOW + "LEGEND" + colors.END
+    else:
+        Item_Rarity = colors.BOLD + colors.PURPLE + "MYTHIC" + colors.END
+        
+    for i in Item_Values:
+        if i == Item_Rolled:
+            Item_Values[i]['is_locked'] = colors.BOLD + colors.CYAN + "UNLOCKED" + colors.END
+  
+    Ex = False
+    while Ex == False:
+        os.system("cls")
+        print(f"You Rolled...............................\nWait For It..............\n OMG\n You Recieved a {Item_Rarity}\n It's....................................\n {colors.BOLD + str(Item_Rolled) + '!' + colors.END}")
+        
+        print(f'\n\n\n{colors.BOLD + colors.PURPLE + str(Item_Rolled) + " UNLOCKED" + colors.END}\n\n\n')
+
+        val = input("Go Back? (y/n): ")
+        if val == 'y' or val == 'Y':
+            DoRewards()
+        elif val == 'n' or val == 'N':
+            GameMenu()
+        else:
+            print("Please enter a devined value")
+            time.sleep(1)
+                  
 def DoInformation():
     global playing
     global colors
     global seperater
     while playing:
-        os.system('clear')
+        os.system('cls')
+
         print(f"""\nChoose Inquiry:\n
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} enter [O]
 {seperater}
@@ -1025,7 +1342,8 @@ Enter [X] to exit
               """)
         inquiry = input("> ")
         if inquiry == 'O' or inquiry == 'o':
-            os.system('clear')
+            os.system('cls')
+    
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1049,7 +1367,8 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'U' or inquiry == 'u':
-            os.system('clear')
+            os.system('cls')
+    
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1073,7 +1392,8 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'R' or inquiry == 'r':
-            os.system('clear')
+            os.system('cls')
+    
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1097,7 +1417,8 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'S' or inquiry == 's':
-            os.system('clear')
+            os.system('cls')
+    
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1121,7 +1442,8 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'I' or inquiry == 'i':
-            os.system('clear')
+            os.system('cls')
+    
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1145,7 +1467,8 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'C' or inquiry == 'c':
-            os.system('clear')
+            os.system('cls')
+    
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1169,7 +1492,8 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'M' or inquiry == 'm':
-            os.system('clear')
+            os.system('cls')
+    
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1193,7 +1517,8 @@ gamemodes may vary providing their own synopsis.
                     time.sleep(1)
                     delete_multiple_lines(2)
         elif inquiry == 'H' or inquiry == 'h':
-            os.system('clear')
+            os.system('cls')
+    
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
 The order station is where the customer selected order is broken into 
@@ -1222,7 +1547,6 @@ gamemodes may vary providing their own synopsis.
             print("Please enter a defined value")
             time.sleep(1)
 
-
 def DoSettings():
     global OverallRating
     global OverallScore
@@ -1231,7 +1555,8 @@ def DoSettings():
     global ChangeAVGDisplay, DisplayCustomers
     global Name
     while playing == True:
-        os.system('clear')
+        os.system('cls')
+
         if ChangeAVGDisplay == False:
             ScaleForm = "Average"
         else:
@@ -1322,49 +1647,160 @@ def DoOrder():
         else:
             ratings[i] = colors.BOLD + colors.PURPLE + 'EXTREME' + colors.END
 
-    return order
+    return order, ratings
 
-#def OrderMenu():
-#    global cash
-#    global seperater
-#    global Menu
-#    global playing
-#    global colors
-#    global level
-#    global ratings
-#    global OverallRating
-#    global OverallScore
-#    global ChangeAVGDisplay, customers, NumOrders
-#    class ORDERS:
-#        CUSTOM1 = []
-#        CUSTOM2 = []
-#        CUSTOM3 = []
-#        CUSTOM4 = []
-#        CUSTOM5 = []
-#    
-#    if customers <= 5:
-#        for i in range(customers.Count()):
-#            ORDERS[i] = DoOrderStation()
-#    else:
-#        pass
-
-
-def DoOrderStation():
-    os.system('clear')
+def DoOrderMenu():
     global cash
     global seperater
     global Menu
     global playing
     global colors
     global level
-    global ratings
+    global Ratings1, Ratings2, Ratings3
+    global OverallRating, CurrentOrders
+    global OverallScore
+    global ChangeAVGDisplay, customers, NumOrders, Order1, Order2, Order3, Order_Page
+    
+    while playing == True:
+        Order_Page = 0
+        os.system('cls')
+        
+        print(f"""
+              
+You have {colors.BOLD + colors.PURPLE + str(customers) + colors.END} Orders Available.
+
+Complete them to earn cash and unlock rewards!
+
+Enter [O] to view current orders
+              
+              
+              """)
+        if customers == 1:
+            print(f"""
+Enter [A] to complete order 1
+                  """)
+        if customers == 2:
+            print("""
+Enter [A] to complete order 1
+Enter [B] to complete order 2     
+                  """)
+        if customers == 3:
+            print("""
+Enter [A] to complete order 1
+Enter [B] to complete order 2   
+Enter [C] to complete order 3  
+                  """)
+        
+        print(
+            Order1,
+            Order2,
+            Order3
+        )
+        val = input("> ")
+        if val == "o" or val == "O":
+            if customers >= 1:
+                ExWord = False
+                if Order1 != []:
+                    ViewPage = 1
+                elif Order2 != []:
+                    ViewPage = 2
+                elif Order3 != []:
+                    ViewPage = 3
+                while ExWord == False:
+                    os.system("cls")
+
+                    if ViewPage == 1:
+                        order = Order1
+                        ratings = Ratings1
+                    elif ViewPage == 2:
+                        order = Order2
+                        ratings = Ratings2
+                    elif ViewPage == 3:
+                        order = Order3
+                        ratings = Ratings3
+
+                    print(f"""
+
+    Bread:  {order[0]} [{ratings[0]}]
+    Vegetables:  {order[1]} [{ratings[1]}]
+    Sauces:  {order[2]} [{ratings[2]}]
+    Meats:  {order[3]} [{ratings[3]}]\n  
+
+    Enter [>] for next order
+    Enter [>] for previous order
+    Enter [X] to exit                                       Order: {colors.BOLD+colors.CYAN+str(ViewPage)+colors.END}
+                              """)
+                    InVal = input("> ")
+                    if InVal == ">":
+                        if ViewPage < customers:
+                            ViewPage += 1
+                        else:
+                            print("No next page!")
+                            time.sleep(1)
+                    elif InVal == "<":
+                        if ViewPage != 1:
+                            ViewPage -= 1
+                        else:
+                            print("No next page!")
+                            time.sleep(1)
+                    elif InVal == "x" or InVal =='X':
+                        ExWord = True
+            else:
+                print("No Current Orders!")
+                time.sleep(1)
+                         
+        elif val == 'a' or val == 'A':
+            if Order1 != []:
+                Order_Page = 1
+            else:
+                print("Invalid")
+                time.sleep(1)
+        elif val == 'B' or val == 'b':
+            if Order2 != []:
+                Order_Page = 2
+            else:
+                print("Invalid")
+                time.sleep(1)
+        elif val == 'C' or val == 'c':
+            if Order3 != []:
+                Order_Page = 3
+            else:
+                print("Invalid")
+                time.sleep(1)
+        elif val == 'x' or val == 'X':
+            GameMenu()
+            
+        
+        try:
+            if Order_Page == 1:
+                if customers != 0:
+                    DoOrderStation(Order1, Ratings1)
+            elif Order_Page == 2:
+                if customers >= 2:
+                    DoOrderStation(Order2, Ratings2)
+            elif Order_Page == 3:
+                if customers == 3:
+                    DoOrderStation(Order3, Ratings3)
+            else:
+                pass
+        except NameError:
+            pass
+        
+     
+    
+
+def DoOrderStation(order, ratings):
+    os.system('cls')
+    global cash
+    global seperater
+    global Menu
+    global playing
+    global colors
+    global level
+    global ratings1, ratings2, ratings3
     global OverallRating
     global OverallScore
-    global ChangeAVGDisplay, customers, NumOrders
-    order = DoOrder()
-    #NumOrders = 0
-    #for i in range(customers):
-     #   NumOrders += 1
+    global ChangeAVGDisplay, customers, NumOrders, Order1, Order2, Order3        
     difficulties = [['Easy', 1], ['Medium', 2], ['Hard', 3], ['EXTREME', 4]]
     DifficultyRaw = difficulties[OverallRating]
     level = DifficultyRaw[1]
@@ -1394,17 +1830,17 @@ Vegetables:  {order[1]} [{ratings[1]}]
 Sauces:  {order[2]} [{ratings[2]}]
 Meats:  {order[3]} [{ratings[3]}]\n
 {seperater}""")
-
+    
     while playing == True:
         print(colors.CYAN + colors.BOLD + "[S] - Variables" + colors.END)
         print(colors.RED + colors.BOLD + "\n[R] - Ready" + colors.END)
         print(colors.BOLD + '\n[X] - Exit' + colors.END)
         val = input("> ")
         if val == 'X' or val == 'x':
-            GameMenu()
+            DoOrderMenu()
         elif val == 'R' or val == 'r':
             delete_multiple_lines(6)
-            DoSandwichMaker()
+            DoSandwichMaker(ratings)
         elif val == 'S' or val == 's':
             delete_multiple_lines(6)
             DoVariables()
@@ -1412,14 +1848,14 @@ Meats:  {order[3]} [{ratings[3]}]\n
             print("Please enter a defined option")
             time.sleep(1)
             delete_multiple_lines(7)
-
-def DoSandwichMaker():
+            
+def DoSandwichMaker(ratings):
     global cash
     global cash_color
-    global ratings
+    global Ratings1, Ratings2, Ratings3, Order1, Order2, Order3
     global playing
     global SeshCash
-    global multiplier, operation
+    global multiplier, operation, customers
     SeshCash = 0
     CorrectAns = []
     NumCorrect = 0 
@@ -1488,7 +1924,7 @@ def DoSandwichMaker():
             time.sleep(2)
             delete_multiple_lines(4)
     else:
-        os.system("clear")
+        os.system("cls")
 
         SeshMultiplier = 0
 
@@ -1545,11 +1981,23 @@ Total Cash Earned = {colors.BOLD + colors.GREEN + str(TotalSeshCash) + colors.EN
                 print(f"""{seperater}
 {colors.BOLD + colors.UNDERLINE + colors.PURPLE + 'MULTIPLIER UNLOCKED!' + colors.END}\n""")
                 multiplier = 1
+        
+        if ratings == Ratings1:
+            Ratings1 = []
+            Order1 = []
+        elif ratings == Ratings2:
+            Ratings2 = []
+            Order2 = []
+        else:
+            Ratings3 = []
+            Order3 = []
+            
+        customers -= 1
 
         while playing:
-            PlAgn = input("Play again? (Y/N): ")
+            PlAgn = input("Go Back? (Y/N): ")
             if PlAgn == "Y" or PlAgn == 'y':
-                DoOrderStation()
+                DoOrderMenu()
             elif PlAgn == "N" or PlAgn == 'n':
                 GameMenu()
             else:
@@ -1590,51 +2038,51 @@ class colors:
 
 Item_Values = {
   "DUSTY_BROOM": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "RUST_BUCKET": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "CHUM_SIGN": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "KELP_SEVICHE_HAT": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "TACO_TUESDAY_HAT": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "TACO_TUESDAY_STICKER": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "MACRONALD_DONALD": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "GOLDEN_TUXEDO": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "GOLDEN_GLOVES": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "PLATINUM_TOWEL": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "HOLY_DUSTY_BROOM": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "HOLY_RUST_BUCKET": {
-      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
 
@@ -1646,7 +2094,21 @@ def delete_multiple_lines(n=1):
         sys.stdout.write("\x1b[1A")  # cursor up one line
         sys.stdout.write("\x1b[2K")  # delete the last line
 
+Order1 = []
+Order2 = []
+Order3 = []
+Ratings1 = []
+Ratings2 = []
+Ratings3 = []
+
+CurrentOrders = [[Order1, Ratings1], [Order2, Ratings2], [Order3, Ratings3]]
+
+OrderPage = 0
+
 start_time = time.time()
+Cash_start_time = time.time()
+Spin_start_time = time.time()
+Dungen_start_time = time.time()
 Inventory_Slot = []
 seperater = "----------------------------------------------------------------"
 cash = float(0).__round__(2)
@@ -1658,6 +2120,7 @@ Name = "Paulie's"
 cpm = 0
 StaffNum = 0
 customers = 0
+Customer_Wait_Time = 3
 Shop_Multiplier = 1
 DungenMultiplier = 1
 Last_Dungen_Score = 0
@@ -1667,9 +2130,11 @@ Items_Page = 1
 DisplayCustomers = False
 cash_color = colors.GREEN + colors.BOLD + "Cash:" + colors.END 
 Cash_Reset = False
-Spin_Period = 15
-Dungen_Cooldown = 0
+Spin_Period = 0
+Dungen_Cooldown = 30
 current_time_sec = time.time() - start_time
 current_time_min = int(current_time_sec / 60)
-ChangeAVGDisplay = False  
+cpm_current_time_min = int(current_time_sec / 60)
+ChangeAVGDisplay = False
+  
 start = GameMenu()
