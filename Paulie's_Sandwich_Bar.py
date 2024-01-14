@@ -136,7 +136,7 @@ Enter [X] to EXIT
             time.sleep(1)
 
 def DoShop():
-    global cpm_Reset, cpm_current_time_sec, cpm_start_time, cpm_current_time_min, current_time_sec, StaffNum, Ratings1, Ratings2, Ratings3, Order1, Order2, Order3, multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm
+    global cpm_Reset, cpm_current_time_sec, cpm_start_time, cpm_current_time_min, current_time_sec, StaffNum, Ratings1, Ratings2, Ratings3, Order1, Order2, Order3, Ovr_Ratings1, Ovr_Ratings2, Ovr_Ratings3, Ovr_Scores1, Ovr_Scores2, Ovr_Scores3, multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm
     while playing == True:
         os.system('cls')
         if Shop_Rating != "LOCKED" and multiplier != "LOCKED":
@@ -278,16 +278,22 @@ Enter [X] to EXIT
                     Order1_RAW = DoOrder()
                     Order1 = Order1_RAW[0]
                     Ratings1 = Order1_RAW[1]
+                    Ovr_Ratings1 = Order1_RAW[2]
+                    Ovr_Scores1 = Order1_RAW[3]
                 elif customers == 1:
                     customers += 1
                     Order2_RAW = DoOrder()
                     Order2 = Order2_RAW[0]
                     Ratings2 = Order2_RAW[1]
+                    Ovr_Ratings2 = Order2_RAW[2]
+                    Ovr_Scores2 = Order2_RAW[3]
                 else:
                     customers += 1
                     Order3_RAW = DoOrder()
                     Order3 = Order3_RAW[0]
                     Ratings3 = Order3_RAW[1]
+                    Ovr_Ratings3 = Order3_RAW[2]
+                    Ovr_Scores3 = Order3_RAW[3]
             else:
                 print("too many customers right now")
                 time.sleep(1)
@@ -1637,9 +1643,6 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
             time.sleep(1)
 
 def DoOrder():
-    global OverallScore
-    global OverallRating
-    global ratings
     global Menu
     order = []
     ratings = []
@@ -1689,14 +1692,14 @@ def DoOrder():
         else:
             ratings[i] = colors.BOLD + colors.PURPLE + 'EXTREME' + colors.END
 
-    return order, ratings
+    return order, ratings, OverallRating, OverallScore
 
 def DoOrderMenu():
     global cash
     global seperater
     global Menu
     global playing
-    global colors
+    global colors, NoOrder, NoRatings
     global level
     global Ratings1, Ratings2, Ratings3
     global OverallRating, CurrentOrders
@@ -1760,9 +1763,10 @@ Enter [C] to complete order 3
                     elif ViewPage == 3:
                         order = Order3
                         ratings = Ratings3
-
+                    if order == []:
+                        order = NoOrder
+                        ratings = NoRatings
                     print(f"""
-
     Bread:  {order[0]} [{ratings[0]}]
     Vegetables:  {order[1]} [{ratings[1]}]
     Sauces:  {order[2]} [{ratings[2]}]
@@ -1774,7 +1778,7 @@ Enter [C] to complete order 3
                               """)
                     InVal = input("> ")
                     if InVal == ">":
-                        if ViewPage < customers:
+                        if ViewPage < 3:
                             ViewPage += 1
                         else:
                             print("No next page!")
@@ -2025,14 +2029,20 @@ Total Cash Earned = {colors.BOLD + colors.GREEN + str(TotalSeshCash) + colors.EN
                 multiplier = 1
         
         if ratings == Ratings1:
-            Ratings1 = []
-            Order1 = []
-        elif ratings == Ratings2:
-            Ratings2 = []
-            Order2 = []
-        else:
-            Ratings3 = []
+            Order1 = Order2
+            Ratings1 = Ratings2
+            Ratings2 = Ratings3
+            Order2 = Order3
             Order3 = []
+            Ratings3 = []
+        elif ratings == Ratings2:
+            Order2 = Order3
+            Ratings2 = Ratings3
+            Order3 = []
+            Ratings3 = []
+        else:
+            Order3 = []
+            Ratings3 = []
             
         customers -= 1
 
@@ -2142,6 +2152,17 @@ Order3 = []
 Ratings1 = []
 Ratings2 = []
 Ratings3 = []
+Ovr_Ratings1 = []
+Ovr_Ratings2 = []
+Ovr_Ratings3 = []
+Ovr_Scores1 = []
+Ovr_Scores2 = []
+Ovr_Scores3 = []
+
+NoOrder = ['NaN', 'NaN', 'NaN', 'NaN', 'NaN']
+NoRatings = ['NaN', 'NaN', 'NaN', 'NaN', 'NaN']
+NoOvrRatings = -1
+NoOvrScores = -1
 
 CurrentOrders = [[Order1, Ratings1], [Order2, Ratings2], [Order3, Ratings3]]
 
