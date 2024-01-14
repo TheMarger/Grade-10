@@ -1700,7 +1700,7 @@ def DoOrderMenu():
     global Menu
     global playing
     global colors, NoOrder, NoRatings
-    global level
+    global level, Ovr_Scores1, Ovr_Scores2, Ovr_Scores3, Ovr_Ratings1, Ovr_Ratings2, Ovr_Ratings3
     global Ratings1, Ratings2, Ratings3
     global OverallRating, CurrentOrders
     global OverallScore
@@ -1820,13 +1820,13 @@ Enter [C] to complete order 3
         try:
             if Order_Page == 1:
                 if customers != 0:
-                    DoOrderStation(Order1, Ratings1)
+                    DoOrderStation(Order1, Ratings1, Ovr_Ratings1, Ovr_Scores1)
             elif Order_Page == 2:
                 if customers >= 2:
-                    DoOrderStation(Order2, Ratings2)
+                    DoOrderStation(Order2, Ratings2, Ovr_Ratings2, Ovr_Scores2)
             elif Order_Page == 3:
                 if customers == 3:
-                    DoOrderStation(Order3, Ratings3)
+                    DoOrderStation(Order3, Ratings3, Ovr_Ratings3, Ovr_Scores3)
             else:
                 pass
         except NameError:
@@ -1835,7 +1835,7 @@ Enter [C] to complete order 3
      
     
 
-def DoOrderStation(order, ratings):
+def DoOrderStation(order, ratings, OverallRating, OverallScore):
     os.system('cls')
     global cash
     global seperater
@@ -1844,8 +1844,6 @@ def DoOrderStation(order, ratings):
     global colors
     global level
     global ratings1, ratings2, ratings3
-    global OverallRating
-    global OverallScore
     global ChangeAVGDisplay, customers, NumOrders, Order1, Order2, Order3        
     difficulties = [['Easy', 1], ['Medium', 2], ['Hard', 3], ['EXTREME', 4]]
     DifficultyRaw = difficulties[OverallRating]
@@ -1899,7 +1897,7 @@ def DoSandwichMaker(ratings):
     global cash
     global cash_color
     global Ratings1, Ratings2, Ratings3, Order1, Order2, Order3
-    global playing
+    global playing,Ovr_Scores1, Ovr_Scores2, Ovr_Scores3, Ovr_Ratings1, Ovr_Ratings2, Ovr_Ratings3
     global SeshCash
     global multiplier, operation, customers
     SeshCash = 0
@@ -2033,16 +2031,28 @@ Total Cash Earned = {colors.BOLD + colors.GREEN + str(TotalSeshCash) + colors.EN
             Ratings1 = Ratings2
             Ratings2 = Ratings3
             Order2 = Order3
+            Ovr_Ratings1 = Ovr_Ratings2
+            Ovr_Ratings2 = Ovr_Ratings3
+            Ovr_Scores1 = Ovr_Scores2
+            Ovr_Scores2 = Ovr_Scores3
             Order3 = []
             Ratings3 = []
+            Ovr_Ratings3 = 0
+            Ovr_Scores3 = 0
         elif ratings == Ratings2:
             Order2 = Order3
             Ratings2 = Ratings3
+            Ovr_Ratings2 = Ovr_Ratings3
+            Ovr_Scores2 = Ovr_Scores3
             Order3 = []
             Ratings3 = []
+            Ovr_Ratings3 = 0
+            Ovr_Scores3 = 0
         else:
             Order3 = []
             Ratings3 = []
+            Ovr_Ratings3 = 0
+            Ovr_Scores3 = 0
             
         customers -= 1
 
@@ -2152,17 +2162,15 @@ Order3 = []
 Ratings1 = []
 Ratings2 = []
 Ratings3 = []
-Ovr_Ratings1 = []
-Ovr_Ratings2 = []
-Ovr_Ratings3 = []
-Ovr_Scores1 = []
-Ovr_Scores2 = []
-Ovr_Scores3 = []
+Ovr_Ratings1 = 0
+Ovr_Ratings2 = 0
+Ovr_Ratings3 = 0
+Ovr_Scores1 = 0
+Ovr_Scores2 = 0
+Ovr_Scores3 = 0
 
 NoOrder = ['NaN', 'NaN', 'NaN', 'NaN', 'NaN']
 NoRatings = ['NaN', 'NaN', 'NaN', 'NaN', 'NaN']
-NoOvrRatings = -1
-NoOvrScores = -1
 
 CurrentOrders = [[Order1, Ratings1], [Order2, Ratings2], [Order3, Ratings3]]
 
