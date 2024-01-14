@@ -136,7 +136,7 @@ Enter [X] to EXIT
             time.sleep(1)
 
 def DoShop():
-    global cpm_current_time_min, current_time_sec, StaffNum, Ratings1, Ratings2, Ratings3, Order1, Order2, Order3, multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm
+    global cpm_Reset, cpm_current_time_sec, cpm_start_time, cpm_current_time_min, current_time_sec, StaffNum, Ratings1, Ratings2, Ratings3, Order1, Order2, Order3, multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm
     while playing == True:
         os.system('cls')
         if Shop_Rating != "LOCKED" and multiplier != "LOCKED":
@@ -297,8 +297,19 @@ Enter [X] to EXIT
             DoShop()
         elif val == 'M' or val == 'm':
             ex = False
+            cpm_current_time_sec = time.time() - cpm_start_time
+            cpm_current_time_min = int(cpm_current_time_sec / 60)
             Cash_Earned = cpm * cpm_current_time_min
             while ex == False:
+                if cpm_Reset == True:
+                    cash += (Cash_Earned * Shop_Multiplier)
+                    Cash_Earned = 0
+                    cpm_start_time = time.time()
+                    print("Claimed!")
+                    time.sleep(1)
+                    cpm_Reset = False
+                else:
+                    pass
                 os.system('cls')
 
                 print(f"""
@@ -309,7 +320,7 @@ Enter [X] to EXIT
     |          {colors.UNDERLINE + colors.BOLD + colors.PURPLE + str(current_time_min) + ' min' + colors.END + '          |'}           
     |-------------------------|
     |                         |
-    |     CPM:{colors.BOLD + colors.CYAN + str(cpm) + colors.END}                |     
+    |         CPM: {colors.BOLD + colors.CYAN + str(cpm) + colors.END}/cpm        |     
     |                         |
     |-------------------------|
     |                         |
@@ -317,11 +328,19 @@ Enter [X] to EXIT
     |                         |
     |-------------------------|
     
-    Enter         
+    Enter [x] to exit        
                       """)
                 inval = input("> ")
-                if inval == '':
-                    pass
+                if inval == 'c' or inval == 'C':
+                    cpm_Reset = True
+                elif inval == 'x' or val == 'X':
+                    DoShop()
+                else:
+                    print("Please enter ad defined value")
+                    time.sleep(1)
+                    
+            
+
                 
         elif val == 't' or val == 'T':
             Staff_Cost = StaffNum * 200
@@ -874,8 +893,10 @@ To exit, {colors.BOLD + 'enter [X]' + colors.END}
             time.sleep(1)
 
 def DoRewards():
-    global Cash_start_time, Spin_start_time, Dungen_start_time, cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors, Cash_Reset
+    global Spin_Overide, Cash_start_time, Spin_start_time, Dungen_start_time, cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors, Cash_Reset
     global Rewards_Page, Dungen_Cooldown, Spin_Period, section, Last_Dungen_Score, High_Dungen_Score
+    Rewards_Page = 1
+    
     Cash_current_time_sec = time.time() - Cash_start_time
     Spin_current_time_sec = time.time() - Spin_start_time
     Dungen_current_time_sec = time.time() - Dungen_start_time
@@ -899,7 +920,7 @@ def DoRewards():
             Dungen_Time_To_Wait_Countdown = colors.BG_CYAN + colors.BOLD + "   READY!   " + colors.END 
         Spin_Time_To_Wait_Min = Spin_Period - Spin_current_time_min
         Spin_Time_To_Wait_Countdown = colors.CYAN + colors.BOLD + f"{Spin_Time_To_Wait_Min}" + colors.END
-        if Spin_Time_To_Wait_Min < 0:
+        if Spin_Time_To_Wait_Min < 0 or Spin_Overide == True:
             Spin_Time_To_Wait_Countdown = colors.BG_GREEN + colors.BOLD + "   READY!   " + colors.END 
 
 
@@ -1062,7 +1083,7 @@ Enter [R] to refresh
             DoRewards()
         elif val == 'S' or val == 's':
             if Rewards_Page == 2:
-                if Spin_Time_To_Wait_Min < 0:
+                if Spin_Time_To_Wait_Min < 0 or Spin_Overide == True:
                     os.system('cls')
             
                     Rewards_Page = "SPIN"
@@ -1074,14 +1095,24 @@ Enter [R] to refresh
                 time.sleep(1)
         elif val == 'f' or val == 'F':
             if Rewards_Page == 2:
-                skip_cost = 200 * Spin_Time_To_Wait_Countdown
+                skip_cost = 200 * int(Spin_Time_To_Wait_Min)
                 prompt = input(f"Would you like pay {skip_cost} to skip cooldown? (y/n): ")
                 if prompt == 'y' or prompt == 'Y':
-                    if cash >= skip_cost
+                    if cash >= skip_cost:
                         cash -= skip_cost
+                        Spin_Overide = True
+                    else:
+                        print("Not enough cash")
+                        time.sleep(1)
+                elif prompt == 'n' or prompt == 'N':
+                    DoRewards()
+                else:
+                    print("Please enter a defined value")
+                    time.sleep(1)
         elif val == 'P' or val == 'p':
           if Rewards_Page == "SPIN":
             Spin_start_time = time.time()
+            Spin_Overide = False
             DoSpin()
           else:
             print("Please enter a denfined value")
@@ -1115,20 +1146,29 @@ def DoDungen():
             Wrong = False
             SeshCash = 0
             NumCorrect = 0
+            Tries_Counter = 1
+            DifficultyCounter = 0
  
             while Wrong == False:
                 os.system('cls')
+                
+                if Tries_Counter == 2:
+                    Wrong = True
         
                 num1 = random.randint(1, 100)
                 num2 = random.randint(1, 100)
                 opr1 = random.choice(operation)
                 if opr1 == operation[0]:
+                  DifficultyCounter += 0.5  
                   answer = num1 + num2
                 elif opr1 == operation[1]:
+                  DifficultyCounter += 0.5  
                   answer = num1 - num2
                 elif opr1 == operation[2]:
+                  DifficultyCounter += 1.25
                   answer = num1 * num2
                 else:
+                  DifficultyCounter += 1.75
                   answer = num1 / num2
 
                 print(f"{num1} {opr1} {num2}")
@@ -1151,7 +1191,7 @@ def DoDungen():
                   delete_multiple_lines(5)
                 else:
                   print(("Incorrect!"))
-                  Wrong = True
+                  Tries_Counter += 1
                   time.sleep(2)
                   delete_multiple_lines(4)
             else:
@@ -1180,6 +1220,8 @@ def DoDungen():
               print(f"""{seperater}
 
               Questions Correct (Score): {NumCorrect}
+              {seperater}
+              Difficulty Score: {colors.UNDERLINE + str(DifficultyCounter) + colors.END}
               {seperater}
               Dungen Cash Multiplier = {colors.BOLD + colors.PURPLE + str(DungenMultiplier) + colors.END}
               {seperater}
@@ -2107,6 +2149,7 @@ OrderPage = 0
 
 start_time = time.time()
 Cash_start_time = time.time()
+cpm_start_time = time.time()
 Spin_start_time = time.time()
 Dungen_start_time = time.time()
 Inventory_Slot = []
@@ -2130,8 +2173,10 @@ Items_Page = 1
 DisplayCustomers = False
 cash_color = colors.GREEN + colors.BOLD + "Cash:" + colors.END 
 Cash_Reset = False
-Spin_Period = 0
-Dungen_Cooldown = 30
+cpm_Reset = False
+Spin_Period = 60
+Spin_Overide = False
+Dungen_Cooldown = 0
 current_time_sec = time.time() - start_time
 current_time_min = int(current_time_sec / 60)
 cpm_current_time_min = int(current_time_sec / 60)
