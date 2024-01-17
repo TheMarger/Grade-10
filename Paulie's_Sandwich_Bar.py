@@ -1,6 +1,8 @@
 import os, time, random, sys, re
 
+
 def GameMenu():
+    # Define global variables that will be used in this function
     global Shop_Rating
     global multiplier
     global cash
@@ -8,107 +10,139 @@ def GameMenu():
     global colors
     global playing, Store_Keybind, Order_Station_Keybind, Upgrades_Keybind,Rewards_Keybind,Settings_Keybind
     global Name, customers, FirstOpening,Information_Keybind
+    # Set playing flag to True to enter the main game loop
     playing = True
+    # Start the main game loop
     while playing:
+        # Clear the console screen
         os.system('cls')
 
+        # Check if DisplayCustomers is True
         if DisplayCustomers == True:
+            # Display the menu with customers
             print(f"""\n{colors.BOLD + colors.UNDERLINE + "Welcome To " + Name + " Sandwich bar!" + colors.END}\n
-    Store              {colors.BOLD + "Enter ["+Store_Keybind+"]" + colors.END}
-    {seperater}
-    Order Station      {colors.BOLD + "Enter ["+Order_Station_Keybind+"]" + colors.END}
-    {seperater}
-    Upgrades           {colors.BOLD + "Enter ["+Upgrades_Keybind+"]" + colors.END}
-    {seperater}
-    Rewards            {colors.BOLD + "Enter ["+Rewards_Keybind+"]" + colors.END}
-    {seperater}   
-    Settings           {colors.BOLD + "Enter ["+Settings_Keybind+"]" + colors.END}
-    {seperater} 
-    Information        {colors.BOLD + "Enter ["+Information_Keybind+"]" + colors.END}
-    {seperater}
-    Exit               {colors.BOLD + "Enter [X]" + colors.END}
-                                            Cash: {colors.GREEN + colors.BOLD + str(cash.__round__(2)) + colors.END}
-                                            Multiplier: {colors.PURPLE + colors.BOLD + str(multiplier) + colors.END}
-                                            Shop Rating: {colors.CYAN + colors.BOLD + str(Shop_Rating) + colors.END}\n
+Store              {colors.BOLD + "Enter ["+Store_Keybind+"]" + colors.END}
+{seperater}
+Order Station      {colors.BOLD + "Enter ["+Order_Station_Keybind+"]" + colors.END}
+{seperater}
+Upgrades           {colors.BOLD + "Enter ["+Upgrades_Keybind+"]" + colors.END}
+{seperater}
+Rewards            {colors.BOLD + "Enter ["+Rewards_Keybind+"]" + colors.END}
+{seperater}   
+Settings           {colors.BOLD + "Enter ["+Settings_Keybind+"]" + colors.END}
+{seperater} 
+Information        {colors.BOLD + "Enter ["+Information_Keybind+"]" + colors.END}
+{seperater}
+Exit               {colors.BOLD + "Enter [X]" + colors.END}
+                                        Cash: {colors.GREEN + colors.BOLD + str(cash.__round__(2)) + colors.END}
+                                        Multiplier: {colors.PURPLE + colors.BOLD + str(multiplier) + colors.END}
+                                        Shop Rating: {colors.CYAN + colors.BOLD + str(Shop_Rating) + colors.END}\n
 
-                                            |------------------------
-                                            |
-                                            | Current Customers: {customers}
-                                            |
-                                            """)
+                                        |------------------------
+                                        |
+                                        | Current Customers: {customers}
+                                        |
+                                        """)
         else:
+            # Display the menu without customers
             print(f"""\n{colors.BOLD + colors.UNDERLINE + "Welcome To " + Name + " Sandwich bar!" + colors.END}\n
-    Store              {colors.BOLD + "Enter ["+Store_Keybind+"]" + colors.END}
-    {seperater}
-    Order Station      {colors.BOLD + "Enter ["+Order_Station_Keybind+"]" + colors.END}
-    {seperater}
-    Upgrades           {colors.BOLD + "Enter ["+Upgrades_Keybind+"]" + colors.END}
-    {seperater}
-    Rewards            {colors.BOLD + "Enter ["+Rewards_Keybind+"]" + colors.END}
-    {seperater}   
-    Settings           {colors.BOLD + "Enter ["+Settings_Keybind+"]" + colors.END}
-    {seperater} 
-    Information        {colors.BOLD + "Enter ["+Information_Keybind+"]" + colors.END}
-    {seperater}
-    Exit               {colors.BOLD + "Enter [X]" + colors.END}
-                                            Cash: {colors.GREEN + colors.BOLD + str(cash.__round__(2)) + colors.END}
-                                            Multiplier: {colors.PURPLE + colors.BOLD + str(multiplier) + colors.END}
-                                            Shop Rating: {colors.CYAN + colors.BOLD + str(Shop_Rating) + colors.END}\n""")
+Store              {colors.BOLD + "Enter ["+Store_Keybind+"]" + colors.END}
+{seperater}
+Order Station      {colors.BOLD + "Enter ["+Order_Station_Keybind+"]" + colors.END}
+{seperater}
+Upgrades           {colors.BOLD + "Enter ["+Upgrades_Keybind+"]" + colors.END}
+{seperater}
+Rewards            {colors.BOLD + "Enter ["+Rewards_Keybind+"]" + colors.END}
+{seperater}   
+Settings           {colors.BOLD + "Enter ["+Settings_Keybind+"]" + colors.END}
+{seperater} 
+Information        {colors.BOLD + "Enter ["+Information_Keybind+"]" + colors.END}
+{seperater}
+Exit               {colors.BOLD + "Enter [X]" + colors.END}
+                                        Cash: {colors.GREEN + colors.BOLD + str(cash.__round__(2)) + colors.END}
+                                        Multiplier: {colors.PURPLE + colors.BOLD + str(multiplier) + colors.END}
+                                        Shop Rating: {colors.CYAN + colors.BOLD + str(Shop_Rating) + colors.END}\n""")
+        # Get user input
         val = input("> ")
+        # Check if it's the first time the menu is opened
         if FirstOpening == True:
+            # If not in the store, prompt the user to set up the store first
             if val != Store_Keybind and val != Store_Keybind.lower():
                 print("Please set up store first!")
                 time.sleep(1)
+                # Restart the game menu
                 GameMenu()
             else:
+                # If in the store, go to the store menu
                 DoStore()
+        # Check if the user wants to go to the order station
         if val == Order_Station_Keybind or val == Order_Station_Keybind.lower():
-            DoOrderMenu()
+            #Open the order menu
+            DoOrderMenu() 
+        # Check if the user wants to go to the store
         elif val == Store_Keybind or val == Store_Keybind.lower():
+            #open the store menu
             DoStore()
+        # Check if the user wants information
         elif val == Information_Keybind or val == Information_Keybind.lower():
+            #Open the information menu
             DoInformation()
+        # Check if the user wants to exit
         elif val == 'X' or val == 'x':
+            # Ask for confirmation before exiting
             while playing:
-              choice = input(f"Are you sure you want to exit? (Y/N): ")
-              if choice == "Y" or choice == "y":
-                os.system('cls')
+                choice = input(f"Are you sure you want to exit? (Y/N): ")
+                if choice == "Y" or choice == "y":
+                    os.system('cls')
+                    # Print exit message and wait before exiting
+                    print(f"""
+                    \n\n\n\n\n\n
+                    {colors.BOLD + colors.UNDERLINE + 
+                    'Thank you for playing!' + colors.END}
 
-                print(f"""
-                \n\n\n\n\n\n
-                {colors.BOLD + colors.UNDERLINE + 
-                'Thank you for playing!' + colors.END}
-
-                """)
-                time.sleep(2)
-                playing = False
-              elif choice == "N" or choice == "n":
-                GameMenu()
-              else:
-                print("Please enter a defined option")
-                time.sleep(1)
-                delete_multiple_lines(2)
+                    """)
+                    time.sleep(2)
+                    # Set playing flag to False to exit the main loop
+                    playing = False
+                elif choice == "N" or choice == "n":
+                    # If not exiting, go back to the game menu
+                    GameMenu()
+                else:
+                    # Prompt the user to enter a valid option
+                    print("Please enter a defined option")
+                    time.sleep(1)
+                    # Clear the console screen and go back to the top of the loop
+                    delete_multiple_lines(2)
+        # Check if the user wants to go to the upgrades menu
         elif val == Upgrades_Keybind or val == Upgrades_Keybind.lower():
             DoUpgrades()
+        # Check if the user wants to go to the rewards menu
         elif val == Rewards_Keybind or val == Rewards_Keybind.lower():
             DoRewards()
+        # Check if the user wants to go to the settings menu
         elif val == Settings_Keybind or val == Settings_Keybind.lower():
             DoSettings()
+        # Check if the user wants to access the developer menu
         elif val == '$menu$':
             DoDevMenu()
         else:
+            # If none of the above options are selected, prompt the user to enter a valid option
             print("Please enter a defined option")
             time.sleep(1)
 
 def DoStore():
+    # Define global variables that will be used in this function
     global Name, FirstOpening, multiplier, Shop_Rating, Shop_Rating_Cost, cash, playing, multiplier_cost
 
+    # Check if it's the first time the store is being opened
     if FirstOpening == True:
+        # If it's the first time, loop until the user decides to proceed
         while playing == True:
+            # Clear the console screen
             os.system('cls')
 
+            # Display the welcome message and options
             print(f"""
-
     Welcome to Paulie's Sandwish Bar, this is a game where you run your own sandwich tycoon
     and make as much money as you can!
 
@@ -116,27 +150,38 @@ def DoStore():
     (Enter [P] to leave it as default, you can change it later in settings*)            
 
     Enter [X] to EXIT              
-
                   """)
+            # Get user input
             val = input("> ")
+            # Check user input
             if val == 'X' or val == 'x':
+                # If the user wants to exit, go back to the game menu
                 GameMenu()
             elif val == 'N' or val == 'n':
+                # If the user wants to set a new name, prompt for input and set the name
                 NewName = input("Enter New Name: ")
                 Name = NewName
-                print("Succesfully Set!")
+                print("Successfully Set!")
+                # Set FirstOpening to False to indicate that the store has been set up
                 FirstOpening = False
+                # Restart the store menu
                 DoStore()
             elif val == 'P' or val == 'p':
+                # If the user wants to leave the default name, set FirstOpening to False
                 FirstOpening = False
+                # Restart the store menu
                 DoStore()
             else:
-                print("Please enter a definned option")
+                # If the user enters an invalid option, prompt them to enter a valid one
+                print("Please enter a defined option")
                 time.sleep(1)
 
+    # If it's not the first time opening the store
     while playing == True:
+        # Clear the console screen
         os.system('cls')
 
+        # Display the store and inventory options
         print(f"""
 |----------------------------------------------------------------|
 |                              |                                 |
@@ -159,18 +204,24 @@ Enter [S] to enter SHOP
 Enter [I] to enter INVENTORY
 
 Enter [X] to EXIT              
-
               """)
+        # Get user input
         val = input("> ")
+        # Check user input
         if val == 'X' or val == 'x':
+            # If the user wants to exit, go back to the game menu
             GameMenu()
         elif val == 'I' or val == 'i':
+            # If the user wants to enter the inventory, go to the inventory menu
             DoInventory()
         elif val == 'S' or val == 's':
+            # If the user wants to enter the shop, go to the shop menu
             DoShop()
         else:
-            print("Please enter a definned option")
+            # If the user enters an invalid option, prompt them to enter a valid one
+            print("Please enter a defined option")
             time.sleep(1)
+
 
 def DoShop():
     global Order1_time, Order2_time, Order3_time, Inventory_Slot, cpm_Reset, cpm_current_time_sec, cpm_start_time, cpm_current_time_min, current_time_sec, StaffNum, Ratings1, Ratings2, Ratings3, Order1, Order2, Order3, Ovr_Ratings1, Ovr_Ratings2, Ovr_Ratings3, Ovr_Scores1, Ovr_Scores2, Ovr_Scores3, multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm, Staff_Cost
@@ -400,7 +451,7 @@ Enter [X] to EXIT
                 elif inval == 'x' or val == 'X':
                     DoShop()
                 else:
-                    print("Please enter ad defined value")
+                    print("Please enter a defined value")
                     time.sleep(1)
 
 
@@ -1026,7 +1077,7 @@ def DoUpgrades():
             if multiplier >= 5:
                 multiplier_cost = "MAX"
             else:
-                multiplier_cost = int(multiplier ** 2.5)
+                multiplier_cost = int(multiplier ** 5)
         else:
             pass
         if Shop_Rating != 'LOCKED':
@@ -1088,9 +1139,9 @@ def DoRewards():
     Cash_current_time_sec = time.time() - Cash_start_time
     Spin_current_time_sec = time.time() - Spin_start_time
     Dungeon_current_time_sec = time.time() - Dungeon_start_time
-    Cash_current_time_min = int(Cash_current_time_sec / 3)
-    Spin_current_time_min = int(Spin_current_time_sec / 3)
-    Dungeon_current_time_min = int(Dungeon_current_time_sec / 3)
+    Cash_current_time_min = int(Cash_current_time_sec / 60)
+    Spin_current_time_min = int(Spin_current_time_sec / 60)
+    Dungeon_current_time_min = int(Dungeon_current_time_sec / 60)
     Cash_Earned = Cash_current_time_min / 5
     while playing == True:
         if Cash_Reset == True:
@@ -1435,7 +1486,6 @@ def DoDungeon():
                     time.sleep(1)
                     delete_multiple_lines(2)
 
-
 def DoSpin():
     global Item_Values, colors
     CommonItems = ["DUSTY_BROOM", "RUST_BUCKET", "CHUM_SIGN"]
@@ -1500,211 +1550,75 @@ def DoInformation():
 Enter [X] to exit
               """)
         inquiry = input("> ")
-        if inquiry == 'O' or inquiry == 'o':
+        if inquiry.lower() == 'o':
             os.system('cls')
-
             print(f"""
 {colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
-The order station is where the customer selected order is broken into 
-sections, with each ingrediant having it's own random difficulty. This difficulty 
-will be averaged by default, and be displayed at the top of the screen (this can 
-be shanged in settings to show the numeral level of difficulty for more precision). 
+The order station is where the customer-selected order is broken into 
+sections, with each ingredient having its own random difficulty. This difficulty 
+will be averaged by default and be displayed at the top of the screen (this can 
+be changed in settings to show the numeral level of difficulty for more precision). 
 The game will wait for you to input that you're ready and begin to ask you a random
-math question based on the formula for each ingrediant difficulty. This gamemode is 
+math question based on the formula for each ingredient's difficulty. This game mode is 
 where you can earn cash, shop rating, and levels for your restaurant. Specialized 
-gamemodes may vary providing their own synopsis.               
-
+game modes may vary, providing their own synopsis.               
               """)
-            while playing:
-                WhatNext = input("Go Back? (Y/N): ")
-                if WhatNext == "N" or WhatNext == "n":
-                    GameMenu()
-                elif WhatNext == "Y" or WhatNext == "y":
-                    break
-                else:
-                    print("Please enter a defined option")
-                    time.sleep(1)
-                    delete_multiple_lines(2)
-        elif inquiry == 'U' or inquiry == 'u':
+            input("Press Enter to return to the main menu...")
+        elif inquiry.lower() == 'u':
             os.system('cls')
-
             print(f"""
-{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
-The order station is where the customer selected order is broken into 
-sections, with each ingrediant having it's own random difficulty. This difficulty 
-will be averaged by default, and be displayed at the top of the screen (this can 
-be shanged in settings to show the numeral level of difficulty for more precision). 
-The game will wait for you to input that you're ready and begin to ask you a random
-math question based on the formula for each ingrediant difficulty. This gamemode is 
-where you can earn cash, shop rating, and levels for your restaurant. Specialized 
-gamemodes may vary providing their own synopsis.               
-
+{colors.BOLD + colors.UNDERLINE + 'Upgrades:' + colors.END} \n
+The Upgrades is where you can upgrade your shop multiplier and increase your shop rating!           
               """)
-            while playing:
-                WhatNext = input("Go Back? (Y/N): ")
-                if WhatNext == "N" or WhatNext == "n":
-                    GameMenu()
-                elif WhatNext == "Y" or WhatNext == "y":
-                    break
-                else:
-                    print("Please enter a defined option")
-                    time.sleep(1)
-                    delete_multiple_lines(2)
-        elif inquiry == 'R' or inquiry == 'r':
+            input("Press Enter to return to the main menu...")
+        elif inquiry.lower() == 'r':
             os.system('cls')
-
             print(f"""
-{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
-The order station is where the customer selected order is broken into 
-sections, with each ingrediant having it's own random difficulty. This difficulty 
-will be averaged by default, and be displayed at the top of the screen (this can 
-be shanged in settings to show the numeral level of difficulty for more precision). 
-The game will wait for you to input that you're ready and begin to ask you a random
-math question based on the formula for each ingrediant difficulty. This gamemode is 
-where you can earn cash, shop rating, and levels for your restaurant. Specialized 
-gamemodes may vary providing their own synopsis.               
-
+{colors.BOLD + colors.UNDERLINE + 'Rewards:' + colors.END} \n
+Rewards is where you can earn passive income, complete a math dungeon game mode, or spin the lucky wheel for an item!           
               """)
-            while playing:
-                WhatNext = input("Go Back? (Y/N): ")
-                if WhatNext == "N" or WhatNext == "n":
-                    GameMenu()
-                elif WhatNext == "Y" or WhatNext == "y":
-                    break
-                else:
-                    print("Please enter a defined option")
-                    time.sleep(1)
-                    delete_multiple_lines(2)
-        elif inquiry == 'S' or inquiry == 's':
+            input("Press Enter to return to the main menu...")
+        elif inquiry.lower() == 's':
             os.system('cls')
-
             print(f"""
-{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
-The order station is where the customer selected order is broken into 
-sections, with each ingrediant having it's own random difficulty. This difficulty 
-will be averaged by default, and be displayed at the top of the screen (this can 
-be shanged in settings to show the numeral level of difficulty for more precision). 
-The game will wait for you to input that you're ready and begin to ask you a random
-math question based on the formula for each ingrediant difficulty. This gamemode is 
-where you can earn cash, shop rating, and levels for your restaurant. Specialized 
-gamemodes may vary providing their own synopsis.               
-
+{colors.BOLD + colors.UNDERLINE + 'Settings:' + colors.END} \n
+The Settings allow you to customize various aspects of the game, such as how difficulties are displayed and other game options.           
               """)
-            while playing:
-                WhatNext = input("Go Back? (Y/N): ")
-                if WhatNext == "N" or WhatNext == "n":
-                    GameMenu()
-                elif WhatNext == "Y" or WhatNext == "y":
-                    break
-                else:
-                    print("Please enter a defined option")
-                    time.sleep(1)
-                    delete_multiple_lines(2)
-        elif inquiry == 'I' or inquiry == 'i':
+            input("Press Enter to return to the main menu...")
+        elif inquiry.lower() == 'i':
             os.system('cls')
-
             print(f"""
-{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
-The order station is where the customer selected order is broken into 
-sections, with each ingrediant having it's own random difficulty. This difficulty 
-will be averaged by default, and be displayed at the top of the screen (this can 
-be shanged in settings to show the numeral level of difficulty for more precision). 
-The game will wait for you to input that you're ready and begin to ask you a random
-math question based on the formula for each ingrediant difficulty. This gamemode is 
-where you can earn cash, shop rating, and levels for your restaurant. Specialized 
-gamemodes may vary providing their own synopsis.               
-
+{colors.BOLD + colors.UNDERLINE + 'Information:' + colors.END} \n
+This section provides general information about the different game modes and how they function within the game.           
               """)
-            while playing:
-                WhatNext = input("Go Back? (Y/N): ")
-                if WhatNext == "N" or WhatNext == "n":
-                    GameMenu()
-                elif WhatNext == "Y" or WhatNext == "y":
-                    break
-                else:
-                    print("Please enter a defined option")
-                    time.sleep(1)
-                    delete_multiple_lines(2)
-        elif inquiry == 'C' or inquiry == 'c':
+            input("Press Enter to return to the main menu...")
+        elif inquiry.lower() == 'c':
             os.system('cls')
-
             print(f"""
-{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
-The order station is where the customer selected order is broken into 
-sections, with each ingrediant having it's own random difficulty. This difficulty 
-will be averaged by default, and be displayed at the top of the screen (this can 
-be shanged in settings to show the numeral level of difficulty for more precision). 
-The game will wait for you to input that you're ready and begin to ask you a random
-math question based on the formula for each ingrediant difficulty. This gamemode is 
-where you can earn cash, shop rating, and levels for your restaurant. Specialized 
-gamemodes may vary providing their own synopsis.               
-
+{colors.BOLD + colors.UNDERLINE + 'Cash:' + colors.END} \n
+The Cash mode allows you to earn currency within the game, which can be used for various purposes such as purchasing upgrades.           
               """)
-            while playing:
-                WhatNext = input("Go Back? (Y/N): ")
-                if WhatNext == "N" or WhatNext == "n":
-                    GameMenu()
-                elif WhatNext == "Y" or WhatNext == "y":
-                    break
-                else:
-                    print("Please enter a defined option")
-                    time.sleep(1)
-                    delete_multiple_lines(2)
-        elif inquiry == 'M' or inquiry == 'm':
+            input("Press Enter to return to the main menu...")
+        elif inquiry.lower() == 'm':
             os.system('cls')
-
             print(f"""
-{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
-The order station is where the customer selected order is broken into 
-sections, with each ingrediant having it's own random difficulty. This difficulty 
-will be averaged by default, and be displayed at the top of the screen (this can 
-be shanged in settings to show the numeral level of difficulty for more precision). 
-The game will wait for you to input that you're ready and begin to ask you a random
-math question based on the formula for each ingrediant difficulty. This gamemode is 
-where you can earn cash, shop rating, and levels for your restaurant. Specialized 
-gamemodes may vary providing their own synopsis.               
-
+{colors.BOLD + colors.UNDERLINE + 'Multipliers:' + colors.END} \n
+The Multipliers mode allows you to increase your shop's efficiency by applying multipliers to certain aspects of your business.           
               """)
-            while playing:
-                WhatNext = input("Go Back? (Y/N): ")
-                if WhatNext == "N" or WhatNext == "n":
-                    GameMenu()
-                elif WhatNext == "Y" or WhatNext == "y":
-                    break
-                else:
-                    print("Please enter a defined option")
-                    time.sleep(1)
-                    delete_multiple_lines(2)
-        elif inquiry == 'H' or inquiry == 'h':
+            input("Press Enter to return to the main menu...")
+        elif inquiry.lower() == 'h':
             os.system('cls')
-
             print(f"""
-{colors.BOLD + colors.UNDERLINE + 'Order Station:' + colors.END} \n
-The order station is where the customer selected order is broken into 
-sections, with each ingrediant having it's own random difficulty. This difficulty 
-will be averaged by default, and be displayed at the top of the screen (this can 
-be shanged in settings to show the numeral level of difficulty for more precision). 
-The game will wait for you to input that you're ready and begin to ask you a random
-math question based on the formula for each ingrediant difficulty. This gamemode is 
-where you can earn cash, shop rating, and levels for your restaurant. Specialized 
-gamemodes may vary providing their own synopsis.               
-
+{colors.BOLD + colors.UNDERLINE + 'Shop Rating:' + colors.END} \n
+The Shop Rating mode is where you can view and improve your shop's rating, which is essential for attracting more customers and growing your business.           
               """)
-            while playing:
-                WhatNext = input("Go Back? (Y/N): ")
-                if WhatNext == "N" or WhatNext == "n":
-                    GameMenu()
-                elif WhatNext == "Y" or WhatNext == "y":
-                    break
-                else:
-                    print("Please enter a defined option")
-                    time.sleep(1)
-                    delete_multiple_lines(2)
-        elif inquiry == 'X' or inquiry == 'x':
+            input("Press Enter to return to the main menu...")
+        elif inquiry.lower() == 'x':
             GameMenu()
         else:
-            print("Please enter a defined value")
-            time.sleep(1)
+            print("Please enter a valid option.")
+            input("Press Enter to continue...")
+
 
 def DoSettings():
     global OverallRating, keybinds
@@ -1890,20 +1804,32 @@ Enter [C] to complete order 3
                     if ViewPage == 1:
                         order = Order1
                         ratings = Ratings1
+                        TimeLeft = int((time.time() - Order1_time) - Customer_Wait_Time) * -1
+                        if TimeLeft < 0:
+                             TimeLeft = "FAILED"
                     elif ViewPage == 2:
                         order = Order2
                         ratings = Ratings2
+                        TimeLeft = int((time.time() - Order2_time) - Customer_Wait_Time) * -1
+                        if TimeLeft < 0:
+                             TimeLeft = "FAILED"
                     elif ViewPage == 3:
                         order = Order3
                         ratings = Ratings3
+                        TimeLeft = int((time.time() - Order3_time) - Customer_Wait_Time) * -1
+                        if TimeLeft < 0:
+                             TimeLeft = "FAILED"
                     if order == []:
                         order = NoOrder
                         ratings = NoRatings
+                        TimeLeft = "NaN" 
                     print(f"""
     Bread:  {order[0]} [{ratings[0]}]
     Vegetables:  {order[1]} [{ratings[1]}]
     Sauces:  {order[2]} [{ratings[2]}]
     Meats:  {order[3]} [{ratings[3]}]\n  
+
+    Time Left: {colors.BOLD + colors.CYAN + str(TimeLeft) + colors.END} seconds
 
     Enter [>] for next order
     Enter [>] for previous order
@@ -1924,6 +1850,9 @@ Enter [C] to complete order 3
                             time.sleep(1)
                     elif InVal == "x" or InVal =='X':
                         ExWord = True
+                    else:
+                        print("Please enter defined option")
+                        time.sleep(1)
             else:
                 print("No Current Orders!")
                 time.sleep(1)
@@ -2283,47 +2212,47 @@ class colors:
 
 Item_Values = {
   "DUSTY_BROOM": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "RUST_BUCKET": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "CHUM_SIGN": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "KELP_SEVICHE_HAT": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "TACO_TUESDAY_STICKER": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "MACRONALD_DONALD": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "GOLDEN_TUXEDO": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "GOLDEN_GLOVES": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "PLATINUM_TOWEL": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "HOLY_DUSTY_BROOM": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
   "HOLY_RUST_BUCKET": {
-      "is_locked": colors.RED + colors.BOLD + "uLOCKED" + colors.END,
+      "is_locked": colors.RED + colors.BOLD + "LOCKED" + colors.END,
       "is_equipped": colors.BOLD + colors.PURPLE + "UNEQUIPPED" + colors.END
   },
 
@@ -2353,7 +2282,7 @@ Order3_time = 0
 NoOrder = ['NaN', 'NaN', 'NaN', 'NaN', 'NaN']
 NoRatings = ['NaN', 'NaN', 'NaN', 'NaN', 'NaN']
 
-FirstOpening = False
+FirstOpening = True
 
 OrderPage = 0
 
@@ -2366,8 +2295,6 @@ Settings_Keybind = 'C'
 Information_Keybind = 'I'
 Upgrades_Keybind = 'U'
 
-keybinds = [Store_Keybind, Order_Station_Keybind, Upgrades_Keybind, Rewards_Keybind, Information_Keybind, Settings_Keybind]
-
 start_time = time.time()
 Cash_start_time = time.time()
 cpm_start_time = time.time()
@@ -2375,9 +2302,9 @@ Spin_start_time = time.time()
 Dungeon_start_time = time.time()
 Inventory_Slot = []
 seperater = "----------------------------------------------------------------"
-cash = 40000000
-multiplier = 1#"LOCKED"
-Shop_Rating = '*'#"LOCKED"
+cash = 0
+multiplier = "LOCKED"
+Shop_Rating = "LOCKED"
 multiplier_cost = "LOCKED"
 Shop_Rating_Cost = "LOCKED"
 Name = "Paulie's"
@@ -2398,7 +2325,7 @@ Cash_Reset = False
 cpm_Reset = False
 Spin_Period = 15
 Spin_Overide = False
-Dungeon_Cooldown = 0
+Dungeon_Cooldown = 30
 current_time_sec = time.time() - start_time
 current_time_min = int(current_time_sec / 60)
 cpm_current_time_min = int(current_time_sec / 60)
