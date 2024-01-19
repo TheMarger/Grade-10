@@ -1,3 +1,9 @@
+# name: Rafay
+# course: ICD2O0-A
+# Assignment: Final Project
+# Due date: 1/24/2024
+# Program Description: This game runs a text baseed graphical game Pauie's Sandwich Bar. All requirments are submittied previously and are followed in program. 
+
 #import all required modules 
 import os, time, random, sys, re
 
@@ -15,7 +21,7 @@ def GameMenu():
     playing = True
     # Start the main game loop
     while playing:
-        # clear the console screen
+        # cls the console screen
         os.system('cls')
 
         # Check if DisplayCustomers is True
@@ -229,7 +235,7 @@ def DoShop():
     #Define global variable
     global Order1_time, Order2_time, Order3_time, Inventory_Slot, cpm_Reset, cpm_current_time_sec, cpm_start_time, cpm_current_time_min, current_time_sec, StaffNum, Ratings1, Ratings2, Ratings3, Order1, Order2, Order3, Ovr_Ratings1, Ovr_Ratings2, Ovr_Ratings3, Ovr_Scores1, Ovr_Scores2, Ovr_Scores3, multiplier, Shop_Rating, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, customers, cpm, Staff_Cost
     while playing == True: #Check if playing variable is true
-        os.system('cls') #clear the screen
+        os.system('cls') #cls the screen
         if Shop_Rating == "LOCKED": #check if Shop rating is locked
             print("Dishes Dirty, Wash Them? [W]") #print acces to the gamemode
         if Shop_Rating != "LOCKED" and multiplier != "LOCKED": #check if Shop rating is not locked and multiplier is also not locked
@@ -428,7 +434,7 @@ Enter [X] to EXIT
                     cpm_Reset = False #set reset variable to False
                 else: #otherwise
                     pass # move forward
-                os.system('cls') #clear screen
+                os.system('cls') #cls screen
 
                 print(f"""
     |-------------------------|              
@@ -483,7 +489,7 @@ def DoDishes():
     global cash, Shop_Rating, colors
     # Loop until the shop rating is unlocked
     while Shop_Rating == "LOCKED":
-        # Clear the screen
+        # cls the screen
         os.system("cls")
 
         # Display the welcome message and instructions
@@ -506,7 +512,7 @@ Press [P] to begin!
 
             # Loop until the user reaches 5 points
             while points < 5:
-                # Clear the screen
+                # cls the screen
                 os.system('cls')
 
                 # Generate a random letter
@@ -555,7 +561,7 @@ def DoInventory():
     global multiplier,Customer_Wait_Time, Shop_Rating, PerkApplied, Shop_Rating_Cost, Shop_Multiplier, cash, playing, multiplier_cost, StaffNum, DungeonMultiplier, customers, cpm, Items_Page, Inventory_Slot, Item_Values, Staff_Cost
     #while main playing loop is True
     while playing == True:
-        #clear screen
+        #cls screen
         os.system('cls')
 
         #Define a class to hold all item cards
@@ -745,7 +751,7 @@ def DoInventory():
     |                         |
     |-------------------------|        
             """
-        
+
         #determine Common rarity items
         CommonItems = [Items.DUSTY_BROOM, Items.RUST_BUCKET, Items.CHUM_SIGN] 
         #determine Rare rarity items
@@ -784,8 +790,8 @@ def DoInventory():
                     # Check inventory slot to item and apply its effects
                     elif Inventory_Slot == "GOLDEN_TUXEDO":
                         DungeonMultiplier += 2
-                        Staff_Cost *= 1.5
-                        StaffNum += 2
+                        Staff_Cost *= 0.5
+                        StaffNum += 1
                     # Check inventory slot to item and apply its effects
                     elif Inventory_Slot == "GOLDEN_GLOVES":
                         cpm *= 1.5
@@ -793,7 +799,7 @@ def DoInventory():
                         StaffNum += 2
                     # Check inventory slot to item and apply its effects
                     elif Inventory_Slot == "PLATINUM_TOWEL":
-                        multiplier *= 2
+                        multiplier += 2
                         Customer_Wait_Time *= 3
                     # Check inventory slot to item and apply its effects
                     elif Inventory_Slot == "HOLY_DUSTY_BROOM":
@@ -804,7 +810,7 @@ def DoInventory():
                     # Check inventory slot to item and apply its effects
                     elif Inventory_Slot == "HOLY_RUST_BUCKET":
                         Customer_Wait_Time *= 3
-                        multiplier += 2
+                        Shop_Multiplier += 2
                         cpm += 1
                         Staff_Cost *= 0.5
                     PerkApplied = True  # Set check to True to show the perk has been applied
@@ -974,7 +980,7 @@ Enter [X] to EXIT
             pass #move on
 
         val = input("> ")  # Ask for user input
-        
+
         # Check if user input is '>'
         if val == '>':
             if Items_Page < 11:  # If current page is less than 11
@@ -982,7 +988,7 @@ Enter [X] to EXIT
             else:
                 print("No following page!")  # If already at the last page, print a message
                 time.sleep(1)  # Wait for 1 second
-        
+
         # Check if user input is '<'
         elif val == '<':
             if Items_Page > 1:  # If current page is greater than 1
@@ -990,12 +996,12 @@ Enter [X] to EXIT
             else:
                 print("No preceding page!")  # If already at the first page, print a message
                 time.sleep(1)  # Wait for 1 second
-        
+
         # Check if user input is 'x' or 'X'
         elif val == 'x' or val == 'X':
             Items_Page = 1  # Set current page to 1
             DoStore()  # Call the function DoStore()
-        
+
         # Check if user input is 'c' or 'C'
         elif val == 'c' or val == 'C':
             # Assign item based on the current page
@@ -1034,7 +1040,7 @@ Enter [X] to EXIT
             # Assign item based on the current page
             else:
                 item = None
-        
+
             # Check if the multiplier and shop rating are not locked
             if multiplier != "LOCKED" and Shop_Rating != "LOCKED":
                 # Check if the inventory slot is not empty and not the same as the selected item
@@ -1077,7 +1083,7 @@ Enter [X] to EXIT
                     elif Inventory_Slot == "GOLDEN_TUXEDO":
                         DungeonMultiplier -= 2
                         Staff_Cost /= 1.5
-                        StaffNum -= 2
+                        StaffNum -= 1
                     #check if inventory slot is certain item, then remove corresponding effect
                     elif Inventory_Slot == "GOLDEN_GLOVES":
                         cpm /= 1.5
@@ -1085,7 +1091,7 @@ Enter [X] to EXIT
                         StaffNum -= 2
                     #check if inventory slot is certain item, then remove corresponding effect
                     elif Inventory_Slot == "PLATINUM_TOWEL":
-                        multiplier /= 2
+                        multiplier -= 2
                         Customer_Wait_Time /= 3
                     #check if inventory slot is certain item, then remove corresponding effect
                     elif Inventory_Slot == "HOLY_DUSTY_BROOM":
@@ -1096,7 +1102,7 @@ Enter [X] to EXIT
                     #check if inventory slot is certain item, then remove corresponding effect
                     elif Inventory_Slot == "HOLY_RUST_BUCKET":
                         Customer_Wait_Time /= 3
-                        multiplier -= 2
+                        Shop_Multiplier -= 2
                         cpm -= 1
                         Staff_Cost /= 0.5
                     else: #otherwise
@@ -1114,45 +1120,115 @@ Enter [X] to EXIT
             else: #otherwise
                 print("Multiplier and Shop Rating have to be unlocked to equip items!") #output reason
                 time.sleep(1)  # Wait for 1 second
-        
+
         # If user input is none of the above options
         else:
             print("Please enter a defined option")  # Print a message asking for a defined option
             time.sleep(1)  # Wait for 1 second
 
+# Do developer testing menu
 def DoDevMenu():
-    global multiplier, Shop_Rating, Shop_Rating_Cost, cash, playing, multiplier_cost, Dungeon_Cooldown, Spin_Period
-    print("All changes occured here will be reflected when the menu is closed.")
+    # Define global variables
+    global multiplier, Shop_Rating, Shop_Rating_Cost, cash, multiplier_cost, Dungeon_Cooldown, Spin_Period
+    
+    # output that changes will be done when the menu is closed
+    print("All changes occurred here will be reflected when the dev menu is closed")
+    
+    # while main game variable playing is True
     while playing:
+        # Prompt the user for a command
         command = input("Dev Command > ")
+        
+        # if the command wants to change cash value
         if "cash=" in command:
-            new_cash_values = [int(num) for num in re.findall(r'\d+', command)]
-            if new_cash_values:
-                cash = new_cash_values[0]
+            # get the number from the input
+            match = command[5:]
+
+            # try this code
+            try:
+                # convert input to number value
+                match = int(match)
+            # if error occurs
+            except:
+                # set input to False
+                match = False
+
+            #if match is True (number is found in the input)
+            if match:
+                # Update the cash value with the input value
+                cash = match
+                # Print the updated cash value
                 print(f"Updated cash value: {cash}")
+                # wait 1 second
                 time.sleep(1)
+            #otherwise
             else:
+                # output error message
                 print("No numeric value found in the command.")
+                # wait for 1 second
                 time.sleep(1)
+        
+        # if the command wants to change the multiplier variable
         elif "multi=" in command:
-            new_multi_values = [int(num) for num in re.findall(r'\d+', command)]
-            if new_multi_values:
-                multiplier = new_multi_values[0]
+            # get the number fform the input
+            match = command[6:]
+            
+            # try this code
+            try:
+                # convert input to number value
+                match = int(match)
+            # if error occurs
+            except:
+                # set input to False
+                match = False
+            
+            #if match is True (number is found in the input)
+            if match:
+                # Update the multiplier value with the input
+                multiplier = match
+                # Print the updated multiplier value
                 print(f"Updated multiplier value: {multiplier}")
+                # Pause for 1 second
                 time.sleep(1)
+            #otherwise
             else:
+                # output error message
                 print("No numeric value found in the command.")
+                # wait for 1 second
                 time.sleep(1)
+        
+        # if the command wants to change the Dungeon Cooldown variable
         elif "DunCool=" in command:
-            new_Dungeon_values = [int(num) for num in re.findall(r'\d+', command)]
-            if new_Dungeon_values:
-                Dungeon_Cooldown = new_Dungeon_values[0]
+            # get the number fform the input
+            match = command[8:]
+            
+            # try this code
+            try:
+                # convert input to number value
+                match = int(match)
+            # if error occurs
+            except:
+                # set input to False
+                match = False
+                
+            #if match is True (number is found in the input)
+            if match:
+                # Update the Dungeon Cooldown value with the input
+                Dungeon_Cooldown = match
+                # Print the updated Dungeon Cooldown value
                 print(f"Updated Dungeon Cooldown value: {Dungeon_Cooldown}")
+                # Pause for 1 second
                 time.sleep(1)
+            #otherwise
             else:
+                # output error message
                 print("No numeric value found in the command.")
+                # wait for 1 second
                 time.sleep(1)
-        elif command == "X" or command == "x":
+        
+        # Check if the command is a form of 'x'
+        elif command.lower() == "x":
+            # open gamem menu page
             GameMenu()
 
 # Function for the upgrades menu
@@ -1168,7 +1244,7 @@ def DoUpgrades():
 
     # Loop while the main playing variable is True
     while playing:
-        # Clear screen
+        # cls screen
         os.system('cls')
 
         if multiplier != 'LOCKED':  # Check if the multiplier is not locked
@@ -1240,7 +1316,7 @@ def DoRewards():
     #Define global variables
     global Spin_Overide, Cash_start_time, Spin_start_time, Dungeon_start_time, cash, multiplier, Shop_Rating, Shop_Rating_Cost, multiplier_cost, seperater, start_time, colors, Cash_Reset
     global Rewards_Page, Dungeon_Cooldown, Spin_Period, section, Last_Dungeon_Score, High_Dungeon_Score
-    
+
     # Set page to default of 1 
     Rewards_Page = 1
 
@@ -1254,13 +1330,13 @@ def DoRewards():
     Dungeon_current_time_sec = time.time() - Dungeon_start_time
 
     # Convert the time elapsed for Cash activity to minutes
-    Cash_current_time_min = int(Cash_current_time_sec / 1)
+    Cash_current_time_min = int(Cash_current_time_sec / 60)
 
     # Convert the time elapsed for Spin activity to minutes
-    Spin_current_time_min = int(Spin_current_time_sec / 1)
+    Spin_current_time_min = int(Spin_current_time_sec / 60)
 
     # Convert the time elapsed for Dungeon activity to minutes
-    Dungeon_current_time_min = int(Dungeon_current_time_sec / 1)
+    Dungeon_current_time_min = int(Dungeon_current_time_sec / 60)
 
     # Calculate the amount of cash earned 
     Cash_Earned = Cash_current_time_min / 5
@@ -1309,11 +1385,11 @@ def DoRewards():
 
 
 
-        os.system('cls') #clear screen
+        os.system('cls') #cls screen
 
         #output page header
         print(colors.BOLD + colors.BG_RED + colors.ITALIC + " REWARDS " + colors.END)
-        
+
         #define class storing the diffrent pages 
         class section:  
             ONE = f"""
@@ -1407,7 +1483,7 @@ def DoRewards():
 |-------------------------------------------------------------
 
     """
-        
+
         #if current page is 1 output the corresponding page from the class
         if Rewards_Page == 1: 
             print(f"""
@@ -1449,7 +1525,7 @@ Enter [<] for previous page
 Enter [X] to exit                               Current page: {colors.DARKCYAN + colors.BOLD + str(Rewards_Page) + colors.END}
 Enter [R] to refresh
                 """)
-        
+
 
         val = input("> ")  # Get user input
 
@@ -1481,7 +1557,7 @@ Enter [R] to refresh
         elif val == 'S' or val == 's':
             if Rewards_Page == 2:  # Check if the current Rewards_Page is 2
                 if Spin_Time_To_Wait_Min < 0 or Spin_Overide == True:  # Check if Spin_Time_To_Wait_Min is less than 0 or Spin_Overide is True
-                    os.system('clear')  # Clear screen
+                    os.system('cls')  # cls screen
                     Rewards_Page = "SPIN"  # Set Rewards_Page to "SPIN"
                 else: #otherwise
                     print("SPIN NOT READY")  # Print "SPIN NOT READY" 
@@ -1516,7 +1592,7 @@ Enter [R] to refresh
             else: #otherwise
                 print("Please enter a defined value")  # Output "Please enter a defined value" 
                 time.sleep(1)  # wait 1 second
-        
+
         # Check if the user input is 'M' or 'm'
         elif val == 'M' or val == 'm':
             if Rewards_Page == 3:  # Check if the current Rewards_Page is 3
@@ -1542,12 +1618,12 @@ def DoDungeon():
 
     # Loop to keep the game running while the variable playing is True
     while playing == True:
-        # Clear the screen
+        # cls the screen
         os.system('cls')
 
         # Print the dungeon section
         print(section.Dungeon)
-        
+
         # Get user input for the next action
         val = input("> ")
 
@@ -1562,7 +1638,7 @@ def DoDungeon():
 
             # while questions wrong are less than 2
             while Wrong_Counter < 2:
-                # Clear the screen
+                # cls the screen
                 os.system('cls')
 
                 # Generate random number 1
@@ -1622,7 +1698,7 @@ def DoDungeon():
 
             # otherwise
             else:
-              os.system("cls") #clear screen
+              os.system("cls") #cls screen
 
               #if the game multiplier is a number
               if isinstance(multiplier, int):
@@ -1641,7 +1717,7 @@ def DoDungeon():
 
               #set high score to False
               HighScore = False
-              
+
               # if number of correct answer is greater the previous high score
               if NumCorrect > High_Dungeon_Score:
                 #update dungeon high score
@@ -1713,7 +1789,7 @@ def DoSpin():
 
     Ex = False  # Initialize the variable Ex as False
     while Ex == False:  # Continue looping while Ex is False
-        # Clear the screen
+        # cls the screen
         os.system("cls")
 
         # Print the rolled item and its rarity
@@ -1736,10 +1812,10 @@ def DoSpin():
 def DoInformation():
     #define global variables
     global playing,colors,seperater
-    
+
     #while main game playing variable is True
     while playing:
-        #clear screen
+        #cls screen
         os.system('cls')
 
         #output page cover
@@ -1762,7 +1838,7 @@ def DoInformation():
 
 Enter [X] to exit
               """)
-        
+
         #get input
         inquiry = input("> ")
         # if input lowered/is 'o' then output brief synopsis of the order station
@@ -1863,7 +1939,7 @@ def DoSettings():
 
     # while main game variable playing is True
     while playing == True:
-        # Clear the screen
+        # cls the screen
         os.system('cls')
 
         # if display change check is false
@@ -1921,7 +1997,7 @@ def DoSettings():
             # Prompt the user to enter new keybinds for menu actions
             print("\nEnter the new keybind for each action:")
             new_keybinds = {} #make holder list for new keybinds
-            
+
             # dictionary to store keybinds
             keybinds = {
                 "Store": Store_Keybind,
@@ -2031,8 +2107,9 @@ def DoOrder():
     # Return the order list, ratings list, overall rating, and overall score
     return order, ratings, OverallRating, OverallScore
 
-
+# Define Order menu page function
 def DoOrderMenu():
+  #define global variables
     global cash, Order1_time, Order2_time, Order3_time
     global seperater, Customer_Wait_Time    
     global Menu, Shop_Rating
@@ -2044,10 +2121,14 @@ def DoOrderMenu():
     global OverallScore
     global ChangeAVGDisplay, customers, NumOrders, Order1, Order2, Order3, Order_Page
 
+    # while main game playing variable is True
     while playing == True:
+      # set current order page to 0
         Order_Page = 0
+      #cls screen
         os.system('cls')
 
+      #out put number of orders
         print(f"""
 
 You have {colors.BOLD + colors.PURPLE + str(customers) + colors.END} Orders Available.
@@ -2057,7 +2138,9 @@ Complete them to earn cash and unlock rewards!
 Enter [O] to view current orders              
 
               """)
+      #if there is 1 customer
         if customers == 1:
+          #output ability prompt
             print(f"""
 Enter [A] to complete order 1
                   """)
@@ -2072,42 +2155,69 @@ Enter [A] to complete order 1
 Enter [B] to complete order 2   
 Enter [C] to complete order 3  
                   """)
-
+        #get input
         val = input("> ")
+      #if input is a form of 'o'
         if val == "o" or val == "O":
+          # if customers is greater than or equal to 1
             if customers >= 1:
+              #set exit variable check to False
                 ExWord = False
+              # if order 1 is not empty
                 if Order1 != []:
+                  #current page become 1
                     ViewPage = 1
+                #if order 2 is not empty
                 elif Order2 != []:
+                  #current page become 2
                     ViewPage = 2
+                #if order 3 is not empty
                 elif Order3 != []:
+                  #current page become 3
                     ViewPage = 3
+                # loop until exit variable check is False
                 while ExWord == False:
+                  #cls screen
                     os.system("cls")
-
-                    if ViewPage == 1:
-                        order = Order1
-                        ratings = Ratings1
+                  
+                    if ViewPage == 1: #if current page is 1
+                        order = Order1 #set order to order 1
+                        ratings = Ratings1 #set ratings to ratings 1
+                      #set time left to current time - order 1 start time times negative 1
                         TimeLeft = int((time.time() - Order1_time) - Customer_Wait_Time) * -1
+                        #if time left is less than 0 
                         if TimeLeft < 0:
+                            #time left is set to Failed
                              TimeLeft = "FAILED"
+                    # if currnet page is 2
                     elif ViewPage == 2:
-                        order = Order2
-                        ratings = Ratings2
+                        order = Order2 #order is set to order 2
+                        ratings = Ratings2 #ratings is set to ratings 2
+                        #set time left to current time - order 2 start time times negative 1
                         TimeLeft = int((time.time() - Order2_time) - Customer_Wait_Time) * -1
+                        #if time left is less than 0
                         if TimeLeft < 0:
+                          #set time left to Failed
                              TimeLeft = "FAILED"
+                    #if current page is 3
                     elif ViewPage == 3:
-                        order = Order3
-                        ratings = Ratings3
+                        order = Order3 #order is set to order 3
+                        ratings = Ratings3 #ratings is set to ratings 3
+                      # time left is set to current time - order 3 start time times negative 1
                         TimeLeft = int((time.time() - Order3_time) - Customer_Wait_Time) * -1
+                      #if time left is less than 0
                         if TimeLeft < 0:
+                            #set time left to Failed
                              TimeLeft = "FAILED"
+                      #if order is empty
                     if order == []:
+                        # set order to No Order list
                         order = NoOrder
+                        # set ratings to No Ratings list
                         ratings = NoRatings
+                        # set time left to not available or NaN
                         TimeLeft = "NaN" 
+                      #output order info 
                     print(f"""
     Bread:  {order[0]} [{ratings[0]}]
     Vegetables:  {order[1]} [{ratings[1]}]
@@ -2120,100 +2230,185 @@ Enter [C] to complete order 3
     Enter [>] for previous order
     Enter [X] to exit                                       Order: {colors.BOLD+colors.CYAN+str(ViewPage)+colors.END}
                               """)
+                  # get input
                     InVal = input("> ")
+                  #if input is >
                     if InVal == ">":
+                      # if current page is less than 3
                         if ViewPage < 3:
+                          # current page increase by 1
                             ViewPage += 1
+                          #otherwise
                         else:
+                          #outtput error message
                             print("No next page!")
+                            #wait 1 second
                             time.sleep(1)
+                    # if input is <
                     elif InVal == "<":
+                      # if current page is not 1
                         if ViewPage != 1:
+                            #current page reduce by 1
                             ViewPage -= 1
+                        #otherwise
                         else:
+                            #ouptut error message
                             print("No next page!")
+                          #wait 1 second
                             time.sleep(1)
+                      # if input is a form of 'x'
                     elif InVal == "x" or InVal =='X':
+                       #set exit variable check to True
                         ExWord = True
+                    #otherwise
                     else:
+                        #output error message
                         print("Please enter defined option")
+                        #wait 1 second
                         time.sleep(1)
+            #otherwise
             else:
+                #output error message
                 print("No Current Orders!")
+              # wait 1 second
                 time.sleep(1)
-
+        #if input is a form of 'a'
         elif val == 'a' or val == 'A':
+            #if order1 is not empty
             if Order1 != []:
+                #set order page to 1
                 Order_Page = 1
+            #otherwise
             else:
+                #output error message
                 print("Invalid")
+                #wait 1 second
                 time.sleep(1)
+        # if input is a form of 'b'
         elif val == 'B' or val == 'b':
+           #if order 2 is not empty
             if Order2 != []:
+                #set order page to 2
                 Order_Page = 2
+            #otherwise
             else:
+                #output error message
                 print("Invalid")
+                #wait 1 second
                 time.sleep(1)
+        #if input is a form of 'c'      
         elif val == 'C' or val == 'c':
+            #if order 3 is not empty
             if Order3 != []:
+                #set order page to 3
                 Order_Page = 3
+            #otherwise
             else:
+                #output error message
                 print("Invalid")
+                #wait 1 second
                 time.sleep(1)
+        # if input is a form of 'x'
         elif val == 'x' or val == 'X':
+            #open game menu page
             GameMenu()
 
 
-
+        # if order page is 1
         if Order_Page == 1:
+            # if customers are not 0
             if customers != 0:
+                #if current time minus order 1 start time is less than the allowed customer wait time
                 if time.time() - Order1_time < Customer_Wait_Time:
+                    #Open order station page
                     DoOrderStation(Order1, Ratings1, Ovr_Ratings1, Ovr_Scores1)
+                #otherwise
                 else:
+                    # if shop rating is not locked
                     if Shop_Rating != "LOCKED":
+                        #output error message
                         print("Too slow, customer left!")
+                        #wait 1 second
                         time.sleep(1)
+                        #set shop rating to itself replacing 1 start with empty (reducing 1 star)
                         Shop_Rating = Shop_Rating.replace("*", "", 1).replace(" ", "", 1)
+                        #output shop rating reduced 
                         print(colors.BOLD + colors.PURPLE + "SHOP RATING - 1" + colors.END)
+                        #wait 1 second
                         time.sleep(1)
+                        #do the reset orders function
                         ResetOrders(Ratings1)
+                    #otherwise
                     else:
+                        #output error message
                         print("Too slow, customer left!")
+                        #wait 1 second
                         time.sleep(1)
+                        #do the reset orders function
                         ResetOrders(Ratings1)
+        #if order page is 2
         elif Order_Page == 2:
+            #if customers is greater than or equal to 2 
             if customers >= 2:
+                #if current time minus order 2 start time is less than the allowed customer wait time
                 if time.time() - Order2_time < Customer_Wait_Time:
+                    # open the order station page
                     DoOrderStation(Order2, Ratings2, Ovr_Ratings2, Ovr_Scores2)
+                #otherwise
                 else:
+                    #if shop rating is not locked
                     if Shop_Rating != "LOCKED":
+                        #output error message
                         print("Too slow, customer left!")
+                        # set shop rating to its self replacing 1 start with empty (reducing 1 star)
                         Shop_Rating = Shop_Rating.replace("*", "", 1).replace(" ", "", 1)
+                        #output shop rating reduced
                         print(colors.BOLD + colors.PURPLE + "SHOP RATING - 1" + colors.END)
+                        #wait 1 second
                         time.sleep(1)
+                        #do the reset orders function
                         ResetOrders(Ratings2)
+                    #otherwise
                     else:
+                        #outtput error message
                         print("Too slow, customer left!")
+                        #wait 1 second
                         time.sleep(1)
+                        #do the reset orders function
                         ResetOrders(Ratings2)
-
+                      
+        #if order page is 3
         elif Order_Page == 3:
+            # if customers is 3
             if customers == 3:
+                # if current time minus order 3 start time is less than the allowed customer wait time
                 if time.time() - Order3_time < Customer_Wait_Time:
+                    #open the order station page
                     DoOrderStation(Order3, Ratings3, Ovr_Ratings3, Ovr_Scores3)
+                #otherwise
                 else:
+                    #if shop rating is not locked
                     if Shop_Rating != "LOCKED":
+                        #output error message
                         print("Too slow, customer left!")
+                        # set shop rating to its self replacing 1 start with empty (reducing 1 star)
                         Shop_Rating = Shop_Rating.replace("*", "", 1).replace(" ", "", 1)
+                        #output shop rating reduced
                         print(colors.BOLD + colors.PURPLE + "SHOP RATING - 1" + colors.END)
+                        # wait 1 second
                         time.sleep(1)
+                        # do reset orders function
                         ResetOrders(Ratings3)
+                    #otherwise
                     else:
+                        #output error message
                         print("Too slow, customer left!")
+                        #wait 1 second
                         time.sleep(1)
+                        # do the reset orders function
                         ResetOrders(Ratings3)
-        else:
-            pass
+        else: #otherwise 
+            pass #move on as this is not possible
 
 # define reset orders function
 def ResetOrders(ratings):
@@ -2224,7 +2419,7 @@ def ResetOrders(ratings):
     global playing, Ovr_Scores1, Ovr_Scores2, Ovr_Scores3, Ovr_Ratings1, Ovr_Ratings2, Ovr_Ratings3
     global SeshCash, Order1_time, Order2_time, Order3_time
     global multiplier, operation, customers
-    
+
     # Check if the provided ratings match Ratings1
     if ratings == Ratings1:
         # Shift the values of Order2 and Order3 to Order1 and Order2 
@@ -2266,7 +2461,7 @@ def ResetOrders(ratings):
         Ratings3 = []
         Ovr_Ratings3 = 0
         Ovr_Scores3 = 0
-    
+
     # reduce the number of customers by 1
     customers -= 1
 
@@ -2274,11 +2469,11 @@ def ResetOrders(ratings):
 #define Order station page function
 def DoOrderStation(order, ratings, OverallRating, OverallScore):
     # define global variables
-    global cash, seperator, Menu, playing, colors, level, ratings1, ratings2, ratings3, ChangeAVGDisplay, customers, NumOrders, Order1, Order2, Order3
-    
-    # Clear the console
+    global cash, seperater, Menu, playing, colors, level, ratings1, ratings2, ratings3, ChangeAVGDisplay, customers, NumOrders, Order1, Order2, Order3
+
+    # cls the console
     os.system('cls')
-    
+
     # Define the difficulties is a list with corresponding numbers
     difficulties = [['Easy', 1], ['Medium', 2], ['Hard', 3], ['EXTREME', 4]]
     # get the raw difficulty from the list
@@ -2293,36 +2488,36 @@ def DoOrderStation(order, ratings, OverallRating, OverallScore):
         #if level is 1
         if level == 1:
             #output average difficulty
-            print(f"\n\nDiffuculty: {colors['BOLD'] + colors['GREEN'] + Difficulty + colors['END']}\n{seperator}")
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.GREEN + Difficulty + colors.END}\n{seperater}")
         #if level is 2
         elif level == 2:
             #output average difficulty
-            print(f"\n\nDiffuculty: {colors['BOLD'] + colors['YELLOW'] + Difficulty + colors['END']}\n{seperator}")
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.YELLOW + Difficulty + colors.END}\n{seperater}")
         #if level is 3
         elif level == 3:
             #output average difficulty
-            print(f"\n\nDiffuculty: {colors['BOLD'] + colors['RED'] + Difficulty + colors['END']}\n{seperator}")
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.RED + Difficulty + colors.END}\n{seperater}")
         #if level is 4
         else:
             #output average difficulty
-            print(f"\n\nDiffuculty: {colors['BOLD'] + colors['PURPLE'] + Difficulty + colors['END']}\n{seperator}")
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.PURPLE + Difficulty + colors.END}\n{seperater}")
     else: #otherwise
         #if level is 1
         if level == 1:
             #output numerical difficulty
-            print(f"\n\nDiffuculty: {colors['BOLD'] + colors['GREEN'] + str(OverallScore) + colors['END']}\n{seperator}")
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.GREEN + str(OverallScore) + colors.END}\n{seperater}")
         #if level is 2
         elif level == 2:
             #output numerical difficulty
-            print(f"\n\nDiffuculty: {colors['BOLD'] + colors['YELLOW'] + str(OverallScore) + colors['END']}\n{seperator}")
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.YELLOW + str(OverallScore) + colors.END}\n{seperater}")
         #if level is 3
         elif level == 3:
             #output numerical difficulty
-            print(f"\n\nDiffuculty: {colors['BOLD'] + colors['RED'] + str(OverallScore) + colors['END']}\n{seperator}")
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.RED + str(OverallScore) + colors.END}\n{seperater}")
         #otherwise
         else:
             #output numerical difficulty
-            print(f"\n\nDiffuculty: {colors['BOLD'] + colors['PURPLE'] + str(OverallScore) + colors['END']}\n{seperator}")
+            print(f"\n\nDiffuculty: {colors.BOLD + colors.PURPLE + str(OverallScore) + colors.END}\n{seperater}")
 
     # Print the customer order details
     print(f"""\n Customer Order: \n
@@ -2330,14 +2525,14 @@ Bread:  {order[0]} [{ratings[0]}]
 Vegetables:  {order[1]} [{ratings[1]}]
 Sauces:  {order[2]} [{ratings[2]}]
 Meats:  {order[3]} [{ratings[3]}]\n
-{seperator}""")
+{seperater}""")
 
     # while main game playing function is True
     while playing == True:
         # Print the options
-        print(colors['CYAN'] + colors['BOLD'] + "[S] - Variables" + colors['END'])
-        print(colors['RED'] + colors['BOLD'] + "\n[R] - Ready" + colors['END'])
-        print(colors['BOLD'] + '\n[X] - Exit' + colors['END'])
+        print(colors.CYAN + colors.BOLD + "[S] - Variables" + colors.END)
+        print(colors.RED + colors.BOLD + "\n[R] - Ready" + colors.END)
+        print(colors.BOLD + '\n[X] - Exit' + colors.END)
 
         # Get user input
         val = input("> ")
@@ -2360,109 +2555,198 @@ Meats:  {order[3]} [{ratings[3]}]\n
             time.sleep(1) #wait 1 second
             delete_multiple_lines(7) #delete previous 7 lines from console
 
+#define sandwich maker page function
 def DoSandwichMaker(ratings):
+  # define global variables
     global cash
     global cash_color
     global Ratings1, Ratings2, Ratings3, Order1, Order2, Order3
     global playing,Ovr_Scores1, Ovr_Scores2, Ovr_Scores3, Ovr_Ratings1, Ovr_Ratings2, Ovr_Ratings3
     global SeshCash
     global multiplier, operation, customers
+    # set session cahs to 0
     SeshCash = 0
+    # set correct answer to empty
     CorrectAns = []
+    #set number of correct answers to 0
     NumCorrect = 0 
+    #define operation choices
     operation = ['+', '-', '*', '/']
+    #loop through the range of the length of the ratings list
     for i in range(len(ratings)): 
-        num1 = random.randint(1, 100) 
+        #define random number 1
+        num1 = random.randint(1, 100)
+        # define random number 2
         num2 = random.randint(1, 100)
+        # define random number 3
         num3 = random.randint(1, 100)
+        # output ingrediant at index plus 1 and rating at index
         print(f"Ingredient {i+1} Level: {ratings[i]}")
+        # if the rating at index is easy 
         if ratings[i] == '\x1b[1m\x1b[92mEasy\x1b[0m':
+            # set operation to random choice from operation choices index 0 to 2
             opr = random.choice(operation[0:2])
+            #if operation is same as operation choices and index 0
             if opr == operation[0]:
+                #set correct answer to number 1 + number 2
                 answer = num1 + num2
+            #otherwise
             else:
+                #set correct answer to number 1 - number 2
                 answer = num1 - num2
+            #output question
             print(f"{num1} {opr} {num2}")
+        # if rating at index is medium
         elif ratings[i] == '\x1b[1m\x1b[93mMedium\x1b[0m':
+            #set opeartion to random choice from operation choices index 2 to 4
             opr = random.choice(operation[2:4])
+            #if operation is same as operation choices and index 2
             if opr == operation[2]:
+                #set answer to number 1 * number 2
                 answer = num1 * num2
+            #otherwise
             else:
+                #set answer to number 1 / number 2
                 answer = num1 / num2
+            #output question
             print(f"{num1} {opr} {num2}")
+        #otherwise
         else:
+            #set operation 1 to random choice from operation choices
             opr1 = random.choice(operation)
+            #set operation 2 to random choice from operation choices
             opr2 = random.choice(operation)
+            #if operation 1 is same as operation choices at index 0
             if opr1 == operation[0]:
+                # set answer 1 to number 1 + number 2
                 answer1 = num1 + num2
+            # if operation 1 is same as operation choices at index 1
             elif opr1 == operation[1]:
+                # set answer 1 to number 1 - number 2
                 answer1 = num1 - num2
+            # if operation 1 is same as operation choices at index 2
             elif opr1 == operation[2]:
+                # set answer to number 1 * number 2
                 answer1 = num1 * num2
+            #otherwise
             else:
+                # set answer 1 to number 1 / number 2
                 answer1 = num1 / num2
+            # if operation 2 is same as operation choices at index 0
             if opr2 == operation[0]:
+                # set answer 2 to number 1 + number 3
                 answer2 = answer1 + num3
+            # if operation 2 is same as operation choices at index 1
             elif opr2 == operation[1]:
+                # set answer 2 to number 1 - number 3
                 answer2 = answer1 - num3
+            # if operation 2 is same as operation choices at index 2
             elif opr2 == operation[2]:
+                # set answer 2 to number 1 * number 3
                 answer2 = answer1 * num3
+            #otherwise
             else:
+                # set answer 2 to number 1 / number 3
                 answer2 = answer1 / num3
+            # set answer to answer 2
             answer = answer2
+            #output question
             print(f"({num1} {opr1} {num2}) {opr2} {num3}")
-
+        
+        # loop while main game playing variable is True    
         while playing:    
+            # try this code
             try:
+                # get answer input
                 response = float(input("Answer: "))
+            # if the tried code creates an error
             except:
+                #output error message
                 print("Please input a number value")
+                # wait 2 seconds
                 time.sleep(2)
+                # delete previous 2 lines from console
                 delete_multiple_lines(2)
+            #otherwise
             else:
+                #break out of loop
                 break
-
-        if response == answer.__round__(2): 
+        #if answer input is the naswer rounded to the second decimal place
+        if response == answer.__round__(2):
+            #output victory message 
             print(f"Good Job!\n{cash_color} + 1")
+            #update session cash by 1
             SeshCash += 1
+            # update number of correct answers by 1
             NumCorrect += 1
+            # update correct answers list by 1
             CorrectAns.append(1)
+            #wait 2 seconds
             time.sleep(2)
+            # delete previous 2 lines from console
             delete_multiple_lines(5)
+        #otherwise
         else:
+            #output error message
             print(("Incorrect!"))
+            # update correct answer list with 0
             CorrectAns.append(0)
+            #wait 2 seconds
             time.sleep(2)
+            # delete previous 4 lines from console
             delete_multiple_lines(4)
+    #otherwise
     else:
+        #cls screen
         os.system("cls")
 
+        #set session multiplier to 0
         SeshMultiplier = 0
 
+        # loop through range of length of Correct Answers list
         for i in range(len(CorrectAns)):
+            # if correct answers list at index is 1
             if CorrectAns[i] == 1:
+                # correct answer at index is set to COMPLETE
                 CorrectAns[i] = colors.BOLD + colors.GREEN + "COMPLETE" + colors.END
+            #otherwise
             else:
+                # correct answer at index is set to FAILED
                 CorrectAns[i] = colors.BOLD + colors.RED + "FAILED" + colors.END
 
+        # if Number of correct answers is less than or equal to 1
         if NumCorrect <= 1:
+            #session multiplier set to 1
             SeshMultiplier = 1
+        # if Number of correct answers is less than or equal to 2
         elif NumCorrect == 2:
+            #session multiplier set to 1.25
             SeshMultiplier = 1.25
+        # if Number of correct answers is less than or equal to 3
         elif NumCorrect == 3:
+            #session multiplier set to 1.5
             SeshMultiplier = 1.5
+        #otherwise
         else:
+            #session multiplier set to 2
             SeshMultiplier = 2 
 
+        # if game multiplier not locked
         if multiplier != 'LOCKED':
+            # Calculate total session cash with unlocked multiplier
             TotalSeshCash = (SeshCash * SeshMultiplier) * multiplier
+            # Update total cash with unlocked multiplier
             cash += (SeshCash * SeshMultiplier) * multiplier
+        #otherwise
         else:
+            # Calculate total session cash with locked multiplier
             TotalSeshCash = SeshCash * SeshMultiplier
+            # Update total cash with locked multiplier
             cash += SeshCash * SeshMultiplier
-
+        
+        # Print order completion message and invoice
         print(f"""\nOrder Complete!
-\nOrder Invoice:\n
+        \nOrder Invoice:\n
 Bread:  {CorrectAns[0]}
 {seperater} 
 Vegetables: {CorrectAns[1]}
@@ -2470,49 +2754,74 @@ Vegetables: {CorrectAns[1]}
 Meat:   {CorrectAns[2]}
 {seperater}
 Sauce:  {CorrectAns[3]}
-              """)
-
+                      """)
+        
+        # if number of correct answer is less than length of shop rating and shop rating is not locked
         if NumCorrect < len(Shop_Rating.split()) and Shop_Rating != "LOCKED":
+            #  print score with color-coded formatting
             print(f"Customer Satisfaction Score = {colors.BOLD + colors.RED + str(NumCorrect) + colors.END}")
+        # if number of correct answer is equal to length of shop rating and shop rating is not locked
         elif NumCorrect == len(Shop_Rating.split()) and Shop_Rating != "LOCKED":
+            # print score with color-coded formatting
             print(f"Customer Satisfaction Score = {colors.BOLD + colors.YELLOW + str(NumCorrect) + colors.END}")
-        else:
+        else: #otherwise
+            #  print score with color-coded formatting
             print(f"Customer Satisfaction Score = {colors.BOLD + colors.GREEN + str(NumCorrect) + colors.END}")
-
+        
+        # Print session and game cash multipliers, and total cash earned with color-coded formatting
         print(f"""{seperater}
 Session Cash Multiplier = {colors.BOLD + colors.PURPLE + str(SeshMultiplier) + colors.END}
 Game Cash Multiplier = {colors.BOLD + colors.PURPLE + str(multiplier) + colors.END}
 {seperater}
 Total Cash Earned = {colors.BOLD + colors.GREEN + str(TotalSeshCash) + colors.END}
-
-              """)
+        
+                      """)
+        
+        # if number of correct answers is 4
         if NumCorrect == 4:
+            #if game multiplier is locked
             if multiplier == 'LOCKED':
+                # delete prevoius line from console
                 delete_multiple_lines(1)
+                #output reward message
                 print(f"""{seperater}
-{colors.BOLD + colors.UNDERLINE + colors.PURPLE + 'MULTIPLIER UNLOCKED!' + colors.END}\n""")
+        {colors.BOLD + colors.UNDERLINE + colors.PURPLE + 'MULTIPLIER UNLOCKED!' + colors.END}\n""")
+                #set game multiplier to 1
                 multiplier = 1
-
+        
+        # call Reset orders function 
         ResetOrders(ratings)
-
+        
+        # while main game variable playing is True
         while playing:
+            # get input
             PlAgn = input("Go Back? (Y/N): ")
+            # if input is a form of 'y'
             if PlAgn == "Y" or PlAgn == 'y':
+                # open order menu page
                 DoOrderMenu()
+            # if input is a form of 'n'
             elif PlAgn == "N" or PlAgn == 'n':
+                # open game menu page
                 GameMenu()
+            #otherwise
             else:
+                # Print error message for invalid input
                 print("Please enter a defined option")
+                #wait 2 seconds
                 time.sleep(2)
+                #delete previous 2 lines from console
                 delete_multiple_lines(2)
 
+              
+      
 # Define variables function
 def DoVariables(order, ratings, OverallRating, OverallScore):
     # declare global variables
     global playing
     # while main game playing variable is True
     while playing:
-        # Clear screen
+        # cls screen
         os.system('cls')
         # output the menu of available variables
         print("Variables Include:\n\nAddition [+]\nSubtraction [-]\nMultiplication [x] \nDivision [/]\n")
@@ -2528,8 +2837,8 @@ def DoVariables(order, ratings, OverallRating, OverallScore):
             print("Please enter a defined option")
             time.sleep(1) #wait 1 second
 
-        
-    
+
+
 #define class of all menu items
 class Menu:
     breads = [['regular', 1], ['sesame', 2], ['old-fashioned',3], ['4-cheese', 1], ['italian', 2], ['Chicago style', 3], ['Golden Yeast', 4]]
@@ -2675,10 +2984,10 @@ seperater = "----------------------------------------------------------------"
 cash = 0
 
 # Initial multiplier (locked initially)
-multiplier = 1  # "LOCKED"
+multiplier = "LOCKED"
 
 # Shop rating (locked initially)
-Shop_Rating = '*'  # "LOCKED"
+Shop_Rating = "LOCKED"
 
 # Cost of unlocking the multiplier and shop rating (locked initially)
 multiplier_cost = "LOCKED"
@@ -2727,9 +3036,9 @@ Cash_Reset = False
 cpm_Reset = False
 
 # Variables for spin period and dungeon cooldown
-Spin_Period = 0
+Spin_Period = 15
 Spin_Overide = False
-Dungeon_Cooldown = 0
+Dungeon_Cooldown = 30
 
 # Current time in seconds and minutes since the start of the program
 current_time_sec = time.time() - start_time
